@@ -1,0 +1,32 @@
+﻿{
+    "updatedAt":  "2026-10-18T13:20:20Z",
+    "orders":  [
+                   {
+                       "id":  "ALX-1001",
+                       "createdAt":  "2026-10-18T08:00:00.000Z",
+                       "customer":  {
+                                        "name":  "Hamza Malik",
+                                        "phone":  "03001234567",
+                                        "city":  "Lahore",
+                                        "address":  "House 12, Street 4, Gulberg III",
+                                        "payment":  "Easypaisa - confirm manually",
+                                        "notes":  "Please call before delivery"
+                                    },
+                       "items":  [
+                                     {
+                                         "productId":  2,
+                                         "name":  "NOVA RUSH",
+                                         "color":  "Solar Red",
+                                         "size":  "8",
+                                         "price":  4546,
+                                         "quantity":  1,
+                                         "image":  "images/shoe-red.png"
+                                     }
+                                 ],
+                       "subtotal":  4546,
+                       "currency":  "PKR",
+                       "status":  "Pending",
+                       "source":  "Web Checkout"
+                   }
+               ]
+}

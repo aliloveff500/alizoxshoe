@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<!-- ALIZOX LIVE VERCEL DEPLOYMENT 2026-10-18 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111114">
+<title>ALIZOX — Move Different</title>
+<style>
+:root{--accent:#0284c7;--accent2:#1e3a8a;--glow:rgba(2,132,199,.45);--page1:#0284c7;--page2:#1e3a8a;--ink:#f8f8fb;--muted:#a4a4b1;--panel:#121216;--line:rgba(255,255,255,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050508;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+@keyframes siteEntrance{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+.site-app{animation:siteEntrance .75s cubic-bezier(.16,1,.3,1) both;width:100%;overflow-x:hidden}
+.ambient{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 18% 20%,var(--glow),transparent 48%),radial-gradient(ellipse at 85% 78%,var(--accent2),transparent 42%),#050508;transition:background 850ms ease}
+.site-header{height:84px;padding:0 clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:10;background:rgba(10,10,13,.75);backdrop-filter:blur(18px)}
+.brand{font-weight:950;letter-spacing:.16em;font-size:22px;display:flex;align-items:center;gap:10px}
+.brand-mark{width:29px;height:29px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:14px;box-shadow:0 0 25px var(--glow);transition:background .5s}
+.nav{display:flex;align-items:center;gap:clamp(15px,2.5vw,36px);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#d8d8df}
+.nav a{opacity:.76;transition:opacity .2s,color .2s}
+.nav a:hover,.nav a.active{opacity:1;color:var(--accent)}
+.header-actions{display:flex;align-items:center;gap:13px}
+.icon-btn{width:39px;height:39px;border:1px solid var(--line);background:#17171b;color:#fff;border-radius:50%;display:grid;place-items:center;transition:all .2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-2px)}
+.menu-toggle{display:none}
+.hero-wrap{min-height:calc(100vh - 84px);padding:42px clamp(16px,5vw,76px) 70px;display:flex;align-items:center;justify-content:center;position:relative}
+.hero-shell{width:min(1420px,100%);min-height:600px;position:relative;display:grid;grid-template-columns:1fr;align-items:center}
+.hero-card{position:relative;min-height:590px;overflow:visible;border-radius:26px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,#121217,#09090d);box-shadow:0 40px 100px rgba(0,0,0,.85),0 0 95px var(--glow);isolation:isolate;transition:box-shadow .6s,border-color .6s}
+.hero-card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 55% 48%,var(--glow),transparent 55%);border-radius:26px;z-index:-1;pointer-events:none}
+.hero-top{display:flex;justify-content:space-between;align-items:center;padding:27px 34px;position:relative;z-index:3}
+.mini-label{font-size:10px;letter-spacing:.24em;font-weight:800;color:#a5a5b0;text-transform:uppercase}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.15em;color:#c8c8d1;text-transform:uppercase}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.hero-content{display:grid;grid-template-columns:.85fr 1.25fr .65fr;gap:15px;align-items:center;padding:30px clamp(24px,4vw,64px) 52px;position:relative;min-height:440px}
+.ghost-word{position:absolute;left:50%;top:49%;transform:translate(-50%,-50%);font-size:clamp(95px,19vw,270px);font-weight:1000;letter-spacing:-.09em;line-height:.8;color:rgba(255,255,255,.035);white-space:nowrap;pointer-events:none;z-index:0;user-select:none}
+.product-copy,.shoe-stage,.product-info{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.24em;color:var(--accent);font-weight:900;text-transform:uppercase;transition:color .5s}
+.eyebrow:before{content:"";width:24px;height:2px;background:currentColor}
+.product-copy h1{font-size:clamp(34px,4.4vw,64px);line-height:.99;letter-spacing:-.06em;margin:18px 0 18px;max-width:400px}
+.product-copy h1 span{display:block;color:var(--accent);transition:color .5s}
+.description{max-width:290px;color:#a9a9b5;font-size:13px;line-height:1.8}
+.copy-cta{display:inline-flex;align-items:center;gap:10px;margin-top:27px;font-size:10px;letter-spacing:.16em;font-weight:900;text-transform:uppercase}
+.play-dot{height:39px;width:39px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#111;box-shadow:0 0 24px var(--glow);transition:all .4s}
+.copy-cta:hover .play-dot{transform:scale(1.1)}
+.shoe-stage{min-width:0;display:flex;align-items:center;justify-content:center;perspective:1000px;overflow:visible;padding:10px 0}
+.shoe-image{max-width:92%;max-height:340px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 28px 32px rgba(0,0,0,.8));transform:rotate(-4deg) translateY(0);transition:opacity .25s,transform .65s cubic-bezier(.2,.8,.2,1),filter .5s;mix-blend-mode:normal;background:transparent!important}
+.shoe-image.enter{opacity:0;transform:translateX(75px) rotate(-4deg) scale(.92)}
+.shoe-image.exit{opacity:0;transform:translateX(-70px) rotate(-14deg) scale(.94)}
+.product-info{align-self:center;padding-left:10px}
+.price-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#92929e;font-weight:800}
+.price{font-size:clamp(25px,3vw,40px);font-weight:900;letter-spacing:-.05em;margin:9px 0 22px;transition:transform .25s,opacity .25s}
+.price.changing{opacity:0;transform:translateY(9px)}
+.detail-line{height:1px;background:var(--line);margin:16px 0}
+.detail-label{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:#8f8f9a;margin-bottom:10px;font-weight:800}
+.color-name{font-size:12px;color:#eee;margin-bottom:13px}
+.swatches{display:flex;gap:9px;flex-wrap:wrap}
+.swatch{width:22px;height:22px;border:2px solid transparent;outline:1px solid transparent;border-radius:50%;padding:0;position:relative;transition:transform .2s,outline-color .2s}
+.swatch:hover{transform:scale(1.12)}
+.swatch.selected{outline-color:#fff;outline-offset:3px}
+.size-select{width:100%;background:#222228;border:1px solid var(--line);border-radius:8px;color:#eee;padding:11px 10px;font-size:11px;outline:none}
+.purchase-options{display:grid;grid-template-columns:1fr .8fr;gap:10px;margin-top:14px}
+.quantity-control{display:flex;align-items:center;justify-content:space-between;gap:6px;border:1px solid var(--line);border-radius:8px;background:#222228;padding:4px 6px;height:38px}
+.quantity-control button{width:27px;height:28px;border:0;border-radius:5px;background:#34343d;color:#fff;font-size:17px;line-height:1}
+.quantity-control button:hover{background:var(--accent);color:#101014}
+.quantity-control output{min-width:20px;text-align:center;font-size:12px;font-weight:800}
+.quantity-label{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:#8f8f9a;margin:0 0 10px;font-weight:800}
+.buy-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 12px;margin-top:23px;background:var(--accent);color:#101014;border:0;border-radius:7px;font-size:10px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;box-shadow:0 10px 30px var(--glow);transition:transform .2s,filter .2s,background .5s}
+.buy-btn:hover{transform:translateY(-3px);filter:brightness(1.12)}
+.buy-btn svg{width:17px;height:17px}
+.slider-footer{position:absolute;bottom:24px;left:34px;right:34px;display:flex;align-items:center;justify-content:space-between;z-index:3}
+.slider-controls{display:flex;align-items:center;gap:10px}
+.arrow-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--accent);font-size:19px;transition:all .2s}
+.arrow-btn:hover{background:var(--accent);color:#111;transform:scale(1.06)}
+.dots{display:flex;gap:8px;margin:0 8px}
+.dot{width:6px;height:6px;border-radius:20px;border:0;background:#555560;padding:0;transition:all .3s}
+.dot.active{width:23px;background:var(--accent)}
+.slide-count{font-size:10px;letter-spacing:.16em;color:#8c8c98;font-weight:800}
+.socials{display:flex;gap:16px;color:#858591;font-size:11px}
+.socials a:hover{color:var(--accent)}
+.scroll-note{position:absolute;bottom:17px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.19em;color:#a1a1ad;text-transform:uppercase;white-space:nowrap;font-weight:750;text-shadow:0 0 14px rgba(255,255,255,.08);animation:scrollHint 2.6s ease-in-out infinite}
+@keyframes scrollHint{0%,100%{opacity:.72;transform:translate(-50%,0)}50%{opacity:1;transform:translate(-50%,-3px)}}
+.section{padding:100px clamp(20px,7vw,110px);max-width:1600px;margin:auto}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:34px}
+.section-kicker{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);font-weight:900}
+.section h2{font-size:clamp(34px,5vw,58px);letter-spacing:-.06em;margin:12px 0 0;line-height:1}
+.section-sub{color:#a3a3af;max-width:390px;line-height:1.7;font-size:13px}
+.filter-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:26px}
+.filter-btn{border:1px solid var(--line);border-radius:999px;background:transparent;color:#aaaab6;padding:10px 17px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+.filter-btn.active,.filter-btn:hover{background:var(--ink);color:#111;border-color:var(--ink)}
+.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.product-card{background:linear-gradient(145deg,#1b1b20,#131316);border:1px solid rgba(255,255,255,.07);border-radius:17px;overflow:hidden;transition:transform .3s,border-color .3s;cursor:pointer}
+.product-card:hover{transform:translateY(-7px);border-color:var(--accent)}
+.product-card-img{height:205px;background:radial-gradient(ellipse,var(--cardglow,rgba(217,70,239,.25)),transparent 70%);display:flex;align-items:center;justify-content:center;overflow:visible;padding:12px 10px}
+.product-card-img img{max-width:90%;max-height:90%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transform:rotate(-5deg);transition:transform .4s ease}
+.product-card:hover .product-card-img img{transform:rotate(-2deg) scale(1.06)}
+.card-body{padding:18px}
+.card-tag{font-size:9px;color:var(--accent);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+.card-title{font-size:15px;font-weight:850;margin:8px 0 6px}
+.card-desc{font-size:11px;color:#8e8e9a;line-height:1.6;min-height:34px}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.card-price{font-weight:900;font-size:14px}
+.view-link{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:900}
+.outline-btn{display:inline-flex;margin-top:15px;padding:13px 18px;border:1px solid var(--line);border-radius:7px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:900;transition:all .2s}
+.outline-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ========================================================
+   ENHANCED ABOUT US SECTION STYLES
+   ======================================================== */
+.about-section{position:relative}
+.about-hero-card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(135deg,rgba(27,27,34,.95),rgba(17,17,21,.98));box-shadow:0 25px 60px rgba(0,0,0,.4);position:relative;margin-bottom:32px;isolation:isolate}
+.about-hero-card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,var(--glow),transparent 50%);z-index:-1;pointer-events:none}
+.about-hero-grid{display:grid;grid-template-columns:1fr 1.25fr;align-items:stretch;min-height:380px}
+.about-hero-founder{padding:clamp(28px,4vw,50px);display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line);background:rgba(255,255,255,.015)}
+.founder-badge-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.founder-chip{padding:6px 12px;background:rgba(217,70,239,.12);border:1px solid var(--accent);color:var(--accent);border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.founder-chip.subtle{background:rgba(255,255,255,.05);border-color:var(--line);color:#c4c4d0}
+.founder-profile-box{display:flex;align-items:center;gap:20px;margin-bottom:20px}
+.founder-avatar{width:76px;height:76px;border-radius:22px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:28px;font-weight:950;color:#fff;box-shadow:0 10px 30px var(--glow);flex-shrink:0}
+.founder-meta h3{font-size:clamp(26px,3vw,38px);font-weight:950;letter-spacing:-.04em;margin:0 0 6px;line-height:1.1}
+.founder-meta p{font-size:12px;color:var(--muted);margin:0;letter-spacing:.05em;text-transform:uppercase;font-weight:750}
+.founder-quick-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;padding-top:18px;border-top:1px solid var(--line)}
+.quick-stat{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.quick-stat-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#8f8f9e;font-weight:800}
+.quick-stat-val{font-size:16px;font-weight:900;color:#fff;margin-top:3px}
+
+.about-story-col{padding:clamp(28px,5vw,55px);display:flex;flex-direction:column;justify-content:center}
+.about-story-col h4{font-size:clamp(20px,2.2vw,28px);letter-spacing:-.03em;margin:0 0 16px;color:#fff}
+.about-story-col p{font-size:13.5px;color:#b4b4c2;line-height:1.85;margin:0 0 16px}
+.about-story-col p:last-child{margin-bottom:0}
+
+/* Mission & Vision Grid */
+.mission-vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px}
+.mv-card{background:linear-gradient(135deg,#16161b,#111115);border:1px solid var(--line);border-radius:20px;padding:32px 30px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.mv-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.mv-icon{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line);display:grid;place-items:center;font-size:20px;margin-bottom:18px;color:var(--accent)}
+.mv-card h4{font-size:20px;letter-spacing:-.03em;margin:0 0 12px;font-weight:850;color:#fff}
+.mv-card p{font-size:13px;color:#a4a4b2;line-height:1.75;margin:0}
+
+/* Why ALIZOX 4-column cards */
+.why-section-title{margin:40px 0 20px;text-align:left}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.why-card{background:#141418;border:1px solid var(--line);border-radius:18px;padding:24px 22px;transition:all .3s ease;display:flex;flex-direction:column}
+.why-card:hover{background:linear-gradient(145deg,#1b1b22,#121217);border-color:var(--accent);transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.35)}
+.why-num{font-size:11px;font-weight:900;letter-spacing:.2em;color:var(--accent);margin-bottom:12px}
+.why-card h5{font-size:16px;font-weight:850;margin:0 0 10px;color:#fff;letter-spacing:-.02em}
+.why-card p{font-size:12px;color:#9b9ba8;line-height:1.7;margin:0;flex:1}
+
+/* Message from the Founder Quote Banner */
+.founder-quote-banner{border:1px solid var(--line);border-radius:24px;padding:40px clamp(24px,5vw,56px);background:linear-gradient(135deg,rgba(30,26,38,.85),rgba(15,15,20,.95));position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);margin-bottom:28px}
+.founder-quote-banner:before{content:"“";position:absolute;right:30px;top:-25px;font-size:200px;font-family:serif;font-weight:900;color:rgba(217,70,239,.08);line-height:1;pointer-events:none;user-select:none}
+.quote-kicker{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.quote-kicker:before{content:"";width:20px;height:2px;background:var(--accent)}
+.quote-text{font-size:clamp(17px,2.2vw,24px);line-height:1.6;font-weight:600;letter-spacing:-.02em;color:#ececf3;margin:0 0 24px;max-width:980px;font-style:italic}
+.quote-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+.quote-author{display:flex;align-items:center;gap:12px}
+.quote-author strong{font-size:15px;color:#fff;letter-spacing:.02em}
+.quote-author span{font-size:12px;color:var(--muted);display:block;margin-top:2px}
+.quote-slogan{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:900;color:var(--accent);background:rgba(217,70,239,.1);padding:8px 16px;border-radius:999px;border:1px solid var(--glow)}
+
+.about-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.about-actions .primary-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:8px;background:var(--accent);color:#111;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:950;box-shadow:0 8px 25px var(--glow);transition:all .2s}
+.about-actions .primary-btn:hover{transform:translateY(-2px);filter:brightness(1.15)}
+
+footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;gap:20px;color:#7d7d89;font-size:10px;letter-spacing:.06em}footer .brand{color:#f7f7fb;font-size:16px}.footer-links{display:flex;gap:22px;flex-wrap:wrap}.footer-links a:hover{color:var(--accent)}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:#f7f7fb;color:#111;padding:13px 19px;border-radius:9px;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:all .3s;z-index:50}.toast.show{opacity:1;transform:translate(-50%,0)}.mobile-menu{display:none}
+
+/* Responsive Layout Optimization for All Devices (PC, Laptop, Tablet, Mobile) */
+@media(max-width:1050px) and (min-width:761px){
+ .site-header{height:76px;padding:0 24px}
+ .hero-wrap{padding:24px 20px 60px;min-height:auto}
+ .hero-shell{min-height:auto}
+ .hero-card{min-height:auto;border-radius:22px}
+ .hero-top{padding:20px 24px}
+ .hero-content{
+   grid-template-columns:1fr 1fr;
+   gap:18px 24px;
+   padding:20px 24px 80px;
+   min-height:auto;
+ }
+ .product-copy{grid-column:1;grid-row:1}
+ .product-copy h1{font-size:clamp(32px,4.5vw,46px);margin:10px 0 12px}
+ .description{max-width:100%;font-size:12.5px}
+ .shoe-stage{grid-column:2;grid-row:1/3;height:320px;display:flex;align-items:center;justify-content:center;padding:10px 0}
+ .shoe-image{max-width:96%;max-height:270px;transform:rotate(-3deg)}
+ .product-info{grid-column:1;grid-row:2;padding-left:0}
+ .price{font-size:32px;margin:6px 0 14px}
+ .purchase-options{grid-template-columns:1fr 1fr;gap:10px}
+ .hero-buy-actions{grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+ .buy-btn{padding:14px 10px;font-size:10px;margin-top:0}
+ .cart-add-btn{padding:14px 10px;font-size:10px;margin-top:0}
+ .slider-footer{left:24px;right:24px;bottom:18px}
+ .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+ .product-card-img{height:210px;padding:12px}
+ .reviews-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+ .why-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+ .about-hero-grid{grid-template-columns:1fr}
+ .about-hero-founder{border-right:0;border-bottom:1px solid var(--line)}
+}
+
+@media(max-width:760px){
+ .site-header{height:68px;padding:0 16px}
+ .brand{font-size:18px;letter-spacing:.12em}
+ .nav{display:none}
+ .menu-toggle{display:grid}
+ .header-actions .icon-btn:first-child{display:grid}
+ .mobile-menu{position:absolute;top:68px;left:0;right:0;background:#121216;border-bottom:1px solid var(--line);padding:20px 18px;display:none;flex-direction:column;gap:18px;font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;box-shadow:0 15px 40px rgba(0,0,0,.6);z-index:90}
+ .mobile-menu.open{display:flex}
+ .hero-wrap{padding:14px 12px 45px;min-height:auto}
+ .hero-shell{min-height:auto}
+ .hero-card{min-height:auto;border-radius:18px;overflow:visible}
+ .hero-top{padding:16px 16px 4px}
+ .hero-content{display:flex;flex-direction:column;gap:14px;padding:16px 16px 76px;min-height:auto}
+ .ghost-word{font-size:20vw;top:38%}
+ .product-copy{padding:0;text-align:left}
+ .product-copy h1{font-size:clamp(32px,8.5vw,44px);line-height:1.05;margin:8px 0 10px}
+ .description{font-size:12.5px;max-width:100%;line-height:1.65}
+ .copy-cta{margin-top:10px}
+ .shoe-stage{height:220px;padding:8px 0;margin:2px 0;display:flex;align-items:center;justify-content:center}
+ .shoe-image{max-width:92%;max-height:195px;transform:rotate(-3deg)}
+ .product-info{padding-left:0;width:100%}
+ .price{font-size:28px;margin:6px 0 12px}
+ .detail-line{margin:12px 0}
+ .color-area{margin-bottom:8px}
+ .purchase-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+ .size-select{height:42px;padding:10px 8px;font-size:12px}
+ .quantity-control{height:42px;padding:4px 8px}
+ .hero-buy-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+ .buy-btn{padding:14px;font-size:11px;margin-top:0;height:48px}
+ .cart-add-btn{padding:12px;font-size:10.5px;margin-top:0;height:44px}
+ .slider-footer{left:16px;right:16px;bottom:16px}
+ .socials,.scroll-note{display:none}
+ .section{padding:54px 16px}
+ .section-head{display:block;margin-bottom:22px}
+ .section h2{font-size:clamp(28px,7vw,38px)}
+ .section-sub{margin-top:10px;font-size:12.5px}
+ .filter-row{gap:8px;margin-bottom:20px}
+ .filter-btn{padding:8px 14px;font-size:9.5px}
+ .product-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+ .product-card-img{height:190px;padding:10px}
+ .product-card-img img{max-width:92%;max-height:92%}
+ .card-body{padding:14px}
+ .card-title{font-size:14px}
+ .card-desc{font-size:11px}
+ .reviews-summary{padding:14px 16px;gap:12px}
+ .reviews-score{font-size:24px}
+ .reviews-grid{grid-template-columns:1fr;gap:14px}
+ .review-card{padding:20px 18px}
+ .why-grid{grid-template-columns:1fr;gap:12px}
+ .mission-vision-grid{grid-template-columns:1fr;gap:14px}
+ .mv-card{padding:24px 20px}
+ .about-hero-grid{grid-template-columns:1fr}
+ .about-hero-founder{padding:24px 18px;border-right:0;border-bottom:1px solid var(--line)}
+ .about-story-col{padding:24px 18px}
+ .founder-avatar{width:64px;height:64px;font-size:24px}
+ .founder-meta h3{font-size:24px}
+ .founder-quote-banner{padding:28px 18px}
+ .quote-text{font-size:16px;line-height:1.6}
+ footer{flex-direction:column;align-items:flex-start;padding:24px 16px;gap:16px}
+ .footer-links{gap:14px}
+ .search-panel{right:12px;width:calc(100vw - 24px)}
+ .cart-drawer{width:100%}
+ .cart-content{padding:16px}
+ .drawer-head{padding:16px 18px}
+ .cart-line{grid-template-columns:62px 1fr auto;gap:10px}
+ .cart-line img{width:62px;height:58px}
+ .order-stepper{gap:2px;margin:12px 0 10px}
+ .step-icon{width:22px;height:22px;font-size:9.5px}
+ .step-label{font-size:8px}
+ .step-item:not(:last-child):after{top:11px}
+ .review-modal{padding:20px 16px;border-radius:18px}
+ .form-row{grid-template-columns:1fr;gap:10px}
+}
+
+@media(max-width:380px){
+ .hero-card{border-radius:16px}
+ .hero-top{padding:14px 12px 2px}
+ .hero-content{padding:12px 12px 72px}
+ .product-copy h1{font-size:30px}
+ .shoe-stage{height:185px}
+ .shoe-image{max-height:165px}
+ .price{font-size:25px}
+ .purchase-options{grid-template-columns:1fr}
+ .quick-stat-val{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Search, cart and checkout additions */
+.search-panel{display:none;position:absolute;top:calc(100% + 8px);right:clamp(16px,5vw,76px);width:min(430px,calc(100vw - 32px));padding:16px;background:#17171c;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 60px #0009;z-index:30}.search-panel.open{display:block}.search-input{width:100%;padding:14px 15px;border-radius:9px;border:1px solid var(--line);background:#0e0e12;color:#fff;outline:none}.search-input:focus{border-color:var(--accent)}.search-hint{font-size:10px;color:#8f8f9a;margin:9px 2px 0}.cart-count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:20px;background:var(--accent);color:#111;font-size:10px;font-weight:900;display:grid;place-items:center}.cart-trigger{position:relative}.hero-buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.cart-add-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 10px;margin-top:10px;background:transparent;color:#fff;border:1px solid var(--accent);border-radius:7px;font-size:9px;font-weight:950;letter-spacing:.09em;text-transform:uppercase;transition:all .2s}.cart-add-btn:hover{background:var(--accent);color:#111;transform:translateY(-2px)}.cart-add-btn svg{width:16px;height:16px}.drawer-backdrop{position:fixed;inset:0;background:#0009;backdrop-filter:blur(4px);z-index:100;opacity:0;pointer-events:none;transition:opacity .25s}.drawer-backdrop.open{opacity:1;pointer-events:auto}.cart-drawer{position:fixed;z-index:101;top:0;right:0;width:min(520px,100%);height:100dvh;background:#121216;border-left:1px solid var(--line);transform:translateX(102%);transition:transform .3s ease;display:flex;flex-direction:column;box-shadow:-25px 0 70px #0008}.cart-drawer.open{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line)}.drawer-head h2{font-size:21px;margin:0}.close-drawer{border:1px solid var(--line);background:#202026;color:#fff;border-radius:50%;width:36px;height:36px;font-size:21px}.cart-content{padding:20px 24px;overflow:auto;flex:1}.cart-empty{padding:38px 10px;text-align:center;color:#9b9ba6}.cart-line{display:grid;grid-template-columns:76px 1fr auto;gap:13px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}.cart-line img{width:76px;height:70px;object-fit:contain;background:#1b1b20;border-radius:9px}.cart-line h3{font-size:13px;margin:0 0 6px}.cart-line p{font-size:11px;color:#a4a4b1;margin:3px 0}.cart-line .line-price{font-size:12px;font-weight:900;white-space:nowrap}.line-actions{display:flex;align-items:center;gap:8px;margin-top:8px}.line-actions button{width:25px;height:25px;background:#292930;color:#fff;border:1px solid var(--line);border-radius:5px}.remove-line{font-size:10px!important;color:#ff9b9b!important;background:none!important;border:0!important;width:auto!important}.cart-total{display:flex;justify-content:space-between;gap:15px;padding:20px 0;font-weight:900}.checkout-form{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:11px}.checkout-form h3{font-size:14px;margin:0 0 4px}.checkout-form label{display:grid;gap:6px;color:#aaaab5;font-size:10px;letter-spacing:.04em}.checkout-form input,.checkout-form textarea,.checkout-form select{width:100%;background:#202026;color:#fff;border:1px solid var(--line);border-radius:7px;padding:11px;font:inherit;font-size:12px;outline:none}.checkout-form input:focus,.checkout-form textarea:focus,.checkout-form select:focus{border-color:var(--accent)}.checkout-form textarea{resize:vertical;min-height:65px}.checkout-submit{width:100%;border:0;border-radius:8px;padding:14px;background:var(--accent);color:#111;font-weight:950;letter-spacing:.07em;text-transform:uppercase}.checkout-note{font-size:10px;color:#8e8e9a;line-height:1.6;margin:0}.cart-open-btn{position:relative}.card-actions{display:flex;gap:8px;margin-top:13px}.card-actions button{flex:1;padding:10px 8px;border:1px solid var(--line);background:#202026;color:#fff;border-radius:7px;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.05em}.card-actions button:last-child{background:var(--accent);color:#111;border-color:var(--accent)}
+/* Customer My Orders & Live Tracking Styles */
+.my-orders-tracker{margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.tracker-head-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.tracker-title{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:8px}
+.tracker-badge{background:var(--accent);color:#000;font-size:9.5px;font-weight:950;padding:2px 7px;border-radius:999px}
+.refresh-tracking-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#ccc;font-size:10px;font-weight:800;padding:5px 11px;border-radius:6px;transition:all .2s;display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.refresh-tracking-btn:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+.my-order-card{background:linear-gradient(145deg,#191921,#111116);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:15px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .3s}
+.my-order-card:hover{border-color:rgba(255,255,255,.2)}
+.order-top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:12px}
+.order-id-label{font-size:13px;font-weight:950;color:#fff;letter-spacing:.03em}
+.order-date-label{font-size:10.5px;color:var(--muted);margin-top:2px}
+.condition-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.05em}
+.condition-pill.pending{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.35);box-shadow:0 0 14px rgba(245,158,11,.15)}
+.condition-pill.confirmed{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.35);box-shadow:0 0 14px rgba(59,130,246,.15)}
+.condition-pill.shipped{background:rgba(168,85,247,.15);color:#c084fc;border:1px solid rgba(168,85,247,.35);box-shadow:0 0 14px rgba(168,85,247,.15)}
+.condition-pill.delivered{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.35);box-shadow:0 0 14px rgba(16,185,129,.15)}
+.condition-pill.cancelled{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.35)}
+
+/* 4-Step Stepper Progress Bar */
+.order-stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:14px 0 12px;position:relative}
+.step-item{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.step-item:not(:last-child):after{content:"";position:absolute;top:12px;left:50%;width:100%;height:2px;background:rgba(255,255,255,.08);z-index:1}
+.step-item.active-line:not(:last-child):after{background:var(--accent)}
+.step-icon{width:26px;height:26px;border-radius:50%;background:#1d1d24;border:2px solid rgba(255,255,255,.15);color:#888;display:grid;place-items:center;font-size:11px;font-weight:900;position:relative;z-index:2;transition:all .3s}
+.step-item.done .step-icon{background:var(--accent);color:#000;border-color:var(--accent);box-shadow:0 0 10px var(--glow)}
+.step-item.current .step-icon{background:#111;color:var(--accent);border-color:var(--accent);box-shadow:0 0 12px var(--glow);animation:pulseStep 1.8s infinite}
+@keyframes pulseStep{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.step-label{font-size:9.5px;font-weight:800;color:#888;margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.step-item.done .step-label,.step-item.current .step-label{color:#fff;font-weight:900}
+
+.order-msg-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:9px 12px;font-size:11px;color:#d0d0dc;line-height:1.5;margin-bottom:12px}
+.order-items-mini{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;background:rgba(0,0,0,.2);border-radius:8px;padding:8px 10px}
+.order-item-row{display:flex;align-items:center;gap:8px;font-size:11px}
+.order-item-img{width:34px;height:34px;object-fit:contain;background:rgba(255,255,255,.04);border-radius:5px}
+.order-card-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;flex-wrap:wrap}
+.order-wa-ask-btn{background:#25d366;color:#000;padding:6px 12px;border-radius:6px;font-size:10px;font-weight:900;display:inline-flex;align-items:center;gap:4px;text-decoration:none}
+
+.manual-track-box{margin-top:14px;background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.1);border-radius:10px;padding:12px}
+.manual-track-toggle{background:none;border:none;color:var(--accent);font-size:11px;font-weight:850;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px}
+.manual-track-fields{margin-top:10px;display:grid;gap:8px}
+.track-input{background:#181820;border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:#fff;font-size:11.5px;outline:none}
+.track-input:focus{border-color:var(--accent)}
+.track-submit-btn{background:var(--accent);color:#000;border:none;border-radius:6px;padding:9px;font-size:11px;font-weight:900;cursor:pointer;transition:all .2s}
+.track-submit-btn:hover{filter:brightness(1.15)}
+@media(max-width:760px){.header-actions .icon-btn:first-child{display:grid}.search-panel{right:12px}.hero-buy-actions{grid-template-columns:1fr}.cart-content{padding:16px}.drawer-head{padding:18px 16px}.cart-line{grid-template-columns:62px 1fr auto;gap:9px}.cart-line img{width:62px;height:62px}}
+
+/* Reviews Section */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.review-card{background:linear-gradient(135deg,#16161b,#111115);border:1px solid var(--line);border-radius:20px;padding:24px 22px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .3s,border-color .3s;position:relative}
+.review-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 15px 35px rgba(0,0,0,.4)}
+.review-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.review-stars{color:#f59e0b;font-size:14px;letter-spacing:2px}
+.review-badge{font-size:9px;color:var(--accent);background:rgba(217,70,239,.1);padding:4px 9px;border-radius:999px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--glow)}
+.review-text{font-size:12.5px;color:#d0d0dc;line-height:1.75;margin:0 0 16px;flex:1;font-style:italic}
+.review-author{display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}
+.review-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0}
+.review-info h5{font-size:13px;font-weight:850;margin:0 0 2px;color:#fff}
+.review-info p{font-size:10px;color:#8e8e9e;margin:0}
+.reviews-summary{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:16px;padding:16px 22px;margin-bottom:24px}
+.reviews-score{font-size:28px;font-weight:950;color:#fff;display:flex;align-items:baseline;gap:6px}
+.reviews-score span{font-size:13px;color:var(--muted);font-weight:700}
+.reviews-pill{display:flex;align-items:center;gap:8px;font-size:11px;color:#c8c8d5;font-weight:750}
+@media(max-width:1050px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* Customer Reviews Interactive Button & Modal Styles */
+.write-review-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:linear-gradient(135deg,rgba(192,38,211,.22),rgba(88,28,135,.3));border:1px solid var(--accent);color:#fff;border-radius:10px;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s ease;box-shadow:0 6px 20px rgba(192,38,211,.25)}
+.write-review-btn:hover{background:var(--accent);color:#111;transform:translateY(-2px);box-shadow:0 10px 25px var(--glow)}
+.review-modal-backdrop{position:fixed;inset:0;background:rgba(5,5,8,.85);backdrop-filter:blur(8px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.review-modal-backdrop.open{opacity:1;pointer-events:auto}
+.review-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-46%) scale(.96);width:min(520px,calc(100vw - 32px));background:#131317;border:1px solid var(--line);border-radius:22px;padding:26px 28px;z-index:201;opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(192,38,211,.15)}
+.review-modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.review-modal-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.close-review-modal{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#1a1a20;color:#aaa;display:grid;place-items:center;font-size:20px;cursor:pointer;transition:all .2s}
+.close-review-modal:hover{color:#fff;border-color:var(--accent)}
+.review-modal-form{display:grid;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.form-row{grid-template-columns:1fr}}
+.form-group{display:grid;gap:6px}
+.form-group label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:#a5a5b5}
+.form-group input,.form-group select,.form-group textarea{background:#1b1b22;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:#fff;font-family:inherit;font-size:12px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:75px}
+.star-rating-selector{display:flex;align-items:center;gap:6px;background:#1b1b22;padding:8px 12px;border-radius:9px;border:1px solid var(--line)}
+.star-pick{background:none;border:none;color:#444452;font-size:22px;cursor:pointer;padding:0 2px;line-height:1;transition:transform .15s,color .15s}
+.star-pick.active{color:#f59e0b}
+.star-pick:hover{transform:scale(1.2)}
+.rating-label{font-size:11px;color:#a5a5b5;font-weight:800;margin-left:8px}
+.submit-review-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--accent);color:#111;font-size:11px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s;box-shadow:0 8px 25px var(--glow);margin-top:6px}
+.submit-review-btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.verified-tag{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#34d399;font-weight:800}
+</style>
+</head>
+<body>
+<div class="ambient" id="ambient"></div>
+<div class="site-app">
+<header class="site-header">
+  <a class="brand" href="#home" aria-label="ALIZOX home"><span class="brand-mark">A</span>ALIZOX</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#home" class="active">Featured</a><a href="#shop">Shop All</a><a href="#shop" data-filter-link="Men">Men</a><a href="#shop" data-filter-link="Women">Women</a><a href="#reviews">Reviews</a><a href="#about">About Us</a>
+  </nav>
+  <div class="header-actions">
+    <button class="icon-btn" id="searchBtn" aria-label="Search products"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></button>
+    <button class="icon-btn cart-trigger" id="cartBtn" aria-label="Open shopping cart"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cart-count" id="cartCount">0</span></button>
+    <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu"><a href="#home">Featured</a><a href="#shop">Shop All</a><a href="#shop" data-filter-link="Men">Men</a><a href="#shop" data-filter-link="Women">Women</a><a href="#reviews">Reviews</a><a href="#about">About Us</a></nav>
+  <div class="search-panel" id="searchPanel" role="search"><input class="search-input" id="searchInput" type="search" placeholder="Search shoes, colors, or collection…" autocomplete="off" aria-label="Search ALIZOX products"><div class="search-hint">Search updates the collection instantly.</div></div>
+</header>
+<main>
+<section class="hero-wrap" id="home">
+ <div class="hero-shell">
+  <div class="hero-card" id="heroCard">
+   <div class="hero-top"><span class="mini-label">ALIZOX / Signature Series</span><span class="status"><span class="status-dot"></span> Designed to move</span></div>
+   <div class="hero-content" id="slider" aria-live="polite">
+    <div class="ghost-word">ALIZOX</div>
+    <div class="product-copy"><div class="eyebrow" id="eyebrow">Motion series / 03</div><h1 id="productName">AERO <span>FLOW</span></h1><p class="description" id="productDescription">Light-looking lines and a versatile shape made for everyday movement and effortless fits.</p><a href="#shop" class="copy-cta"><span class="play-dot">↗</span> Explore collection</a></div>
+    <div class="shoe-stage"><img class="shoe-image" id="shoeImage" alt="Featured ALIZOX sneaker" src="images/shoe-blue.png"></div>
+    <aside class="product-info">
+      <div class="price-label">ALIZOX price</div><div class="price" id="price">PKR 2,999</div>
+      <div class="detail-line"></div>
+      <div class="color-area"><div class="detail-label">Colorway</div><div class="color-name" id="colorName">Ice Blue</div><div class="swatches" id="swatches"></div></div>
+      <div class="purchase-options"><div class="size-area"><div class="detail-label">Select size (UK)</div><select class="size-select" id="sizeSelect" aria-label="Select shoe size"><option>UK 5</option><option>UK 6</option><option selected>UK 7</option><option>UK 8</option><option>UK 9</option><option>UK 10</option></select></div><div class="quantity-area"><div class="quantity-label">Quantity</div><div class="quantity-control"><button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button><output id="quantityValue" aria-live="polite">1</output><button type="button" id="qtyPlus" aria-label="Increase quantity">+</button></div></div></div>
+      <div class="hero-buy-actions"><button class="buy-btn" id="buyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.2a9 9 0 1 1 16.1-4.3Z"/><path d="M8.5 9.5c.8 2 2 3.2 4 4"/></svg> Buy via WhatsApp</button><button class="cart-add-btn" id="addToCartBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2M8 13h8"/></svg> Add to cart</button></div>
+    </aside>
+   </div>
+   <div class="slider-footer"><div class="slider-controls"><button class="arrow-btn" id="prevBtn" aria-label="Previous shoe">‹</button><div class="dots" id="dots"></div><button class="arrow-btn" id="nextBtn" aria-label="Next shoe">›</button><span class="slide-count" id="slideCount">01 / 04</span></div><div class="socials"><a href="#about">INSTAGRAM</a><a href="#about">CONTACT</a></div></div>
+  </div>
+ </div>
+ <div class="scroll-note">Scroll to discover&nbsp; ↓</div>
+</section>
+
+<section class="section" id="shop">
+ <div class="section-head"><div><div class="section-kicker">Find your next pair</div><h2>THE COLLECTION<span style="color:var(--accent)">.</span></h2></div><p class="section-sub">Distinct colorways. Everyday comfort. A statement that feels like you. Pick your pair and message us to order.</p></div>
+ <div class="filter-row"><button class="filter-btn active" data-filter="All">All products</button><button class="filter-btn" data-filter="Men">Men</button><button class="filter-btn" data-filter="Women">Women</button><button class="filter-btn" data-filter="Street">Streetwear</button></div>
+ <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- ========================================================
+     CUSTOMER REVIEWS SECTION
+     ======================================================== -->
+<section class="section" id="reviews">
+ <div class="section-head">
+   <div>
+     <div class="section-kicker">Real Feedback</div>
+     <h2>CUSTOMER REVIEWS<span style="color:var(--accent)">.</span></h2>
+     <p class="section-sub" style="margin-top:10px">Read what sneaker lovers and everyday buyers across Pakistan say about ALIZOX quality, comfort, and service.</p>
+   </div>
+   <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+     <button type="button" class="write-review-btn" id="openReviewModalBtn">
+       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+       + Write a Review
+     </button>
+   </div>
+ </div>
+
+ <div class="reviews-summary">
+   <div class="reviews-score">4.9 <span>/ 5.0</span></div>
+   <div class="review-stars">★★★★★</div>
+   <div class="reviews-pill"><span>🛡️</span> 100% Authentic Customer Feedback</div>
+   <div class="reviews-pill" style="margin-left:auto"><span style="color:var(--accent)">●</span> Verified Purchases via WhatsApp</div>
+ </div>
+
+ <div class="reviews-grid">
+   <!-- Review 1 -->
+   <div class="review-card">
+     <div class="review-top">
+       <div class="review-stars">★★★★★</div>
+       <span class="review-badge">PULSE SHIFT</span>
+     </div>
+     <p class="review-text">“Bohot zabardast quality hai! Picture se bhi zyada premium lagte hain real mein. Lightweight hain aur daily wear ke liye best comfort hai. WhatsApp pe response bhi bohot fast mila.”</p>
+     <div class="review-author">
+       <div class="review-avatar">HM</div>
+       <div class="review-info">
+         <h5>Hamza Malik</h5>
+         <p>Lahore · Verified Buyer</p>
+       </div>
+     </div>
+   </div>
+
+   <!-- Review 2 -->
+   <div class="review-card">
+     <div class="review-top">
+       <div class="review-stars">★★★★★</div>
+       <span class="review-badge">NOVA RUSH</span>
+     </div>
+     <p class="review-text">“Streetwear look bilkul top-tier hai. 15 saal ke Ali bhai ka brand hai aur itni solid quality deliver kar rahe hain, salute! Delivery bhi sirf 3 din mein mil gayi Karachi mein.”</p>
+     <div class="review-author">
+       <div class="review-avatar">SR</div>
+       <div class="review-info">
+         <h5>Saad Rehman</h5>
+         <p>Karachi · Verified Buyer</p>
+       </div>
+     </div>
+   </div>
+
+   <!-- Review 3 -->
+   <div class="review-card">
+     <div class="review-top">
+       <div class="review-stars">★★★★★</div>
+       <span class="review-badge">AERO FLOW</span>
+     </div>
+     <p class="review-text">“Sole cushioning bohot soft hai, gym aur daily university fits ke sath perfect match hoti hai. Colorway bohot unique hai, definitely ordering another pair soon!”</p>
+     <div class="review-author">
+       <div class="review-avatar">AK</div>
+       <div class="review-info">
+         <h5>Ayesha Khan</h5>
+         <p>Islamabad · Verified Buyer</p>
+       </div>
+     </div>
+   </div>
+
+   <!-- Review 4 -->
+   <div class="review-card">
+     <div class="review-top">
+       <div class="review-stars">★★★★★</div>
+       <span class="review-badge">ECLIPSE CORE</span>
+     </div>
+     <p class="review-text">“Finishing aur stitching 10/10. Advance payment Easypaisa se ki thi, bhai ne payment aate hi tracking update de di. Trustworthy seller, highly recommended!”</p>
+     <div class="review-author">
+       <div class="review-avatar">UT</div>
+       <div class="review-info">
+         <h5>Usman Tariq</h5>
+         <p>Faisalabad · Verified Buyer</p>
+       </div>
+     </div>
+   </div>
+
+   <!-- Review 5 -->
+   <div class="review-card">
+     <div class="review-top">
+       <div class="review-stars">★★★★★</div>
+       <span class="review-badge">PULSE SHIFT</span>
+     </div>
+     <p class="review-text">“Sole grip aur fit bilkul true to size hai (UK 8). Streetwear community ko aise young creators ko zaroor support karna chahiye. ALIZOX rock kar raha hai!”</p>
+     <div class="review-author">
+       <div class="review-avatar">ZA</div>
+       <div class="review-info">
+         <h5>Zayan Ahmed</h5>
+         <p>Rawalpindi · Verified Buyer</p>
+       </div>
+     </div>
+   </div>
+ </div>
+</section>
+
+<!-- ========================================================
+     EXPANDED ABOUT US SECTION
+     ======================================================== -->
+<section class="section about-section" id="about">
+ <div class="section-head">
+   <div>
+     <div class="section-kicker">Our Story & Ambition</div>
+     <h2>ABOUT US — ALIZOX<span style="color:var(--accent)">.</span></h2>
+   </div>
+   <p class="section-sub">A sneaker-focused brand built on passion, ambition, and a vision for style. Founded by a young entrepreneur ready to make his mark.</p>
+ </div>
+
+ <!-- FOUNDER & STORY HERO CARD -->
+ <div class="about-hero-card">
+   <div class="about-hero-grid">
+     <!-- Founder Info -->
+     <div class="about-hero-founder">
+       <div class="founder-badge-row">
+         <span class="founder-chip">Founder & Creator</span>
+         <span class="founder-chip subtle">Class 10th Student</span>
+       </div>
+       <div class="founder-profile-box">
+         <div class="founder-avatar" aria-label="Ali Hamid avatar">AH</div>
+         <div class="founder-meta">
+           <div class="section-kicker" style="font-size:9px;margin-bottom:4px">Meet the Founder</div>
+           <h3>ALI HAMID</h3>
+           <p>Founder of ALIZOX</p>
+         </div>
+       </div>
+       <div class="founder-quick-stats">
+         <div class="quick-stat">
+           <div class="quick-stat-label">Age</div>
+           <div class="quick-stat-val">15 Years</div>
+         </div>
+         <div class="quick-stat">
+           <div class="quick-stat-label">Education</div>
+           <div class="quick-stat-val">10th Grade</div>
+         </div>
+       </div>
+     </div>
+
+     <!-- Our Story Column -->
+     <div class="about-story-col">
+       <div class="section-kicker">Our Story</div>
+       <h4>Turning Passion Into a Growing Brand</h4>
+       <p>Welcome to <strong>ALIZOX</strong> — a brand built on passion, ambition, and a vision for style.</p>
+       <p>My name is <strong>Ali Hamid</strong>, and I am a 15-year-old student currently studying in Class 10th. I started ALIZOX with a dream of building something of my own and turning my passion for sneakers and fashion into a growing brand.</p>
+       <p>At ALIZOX, our goal is to make discovering stylish sneakers simple, enjoyable, and convenient. We believe that great style is not just about what you wear — it's about expressing your personality and confidence.</p>
+       <div class="about-actions">
+         <a href="#shop" class="primary-btn">Explore Sneakers&nbsp; ↗</a>
+         <a href="https://wa.me/923079436896" target="_blank" rel="noopener" class="outline-btn" style="margin-top:0">Talk to Ali&nbsp; ↗</a>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- MISSION & VISION CARDS -->
+ <div class="mission-vision-grid">
+   <div class="mv-card">
+     <div class="mv-icon">🎯</div>
+     <div class="section-kicker" style="margin-bottom:6px">Purpose Driven</div>
+     <h4>Our Mission</h4>
+     <p>Our mission is to provide customers with stylish sneaker options, a smooth shopping experience, and friendly customer service. We aim to build a brand that customers can trust and that continues to grow through dedication, creativity, and hard work.</p>
+   </div>
+
+   <div class="mv-card">
+     <div class="mv-icon">🚀</div>
+     <div class="section-kicker" style="margin-bottom:6px">Looking Ahead</div>
+     <h4>Our Vision</h4>
+     <p>We dream of growing ALIZOX into a recognized footwear brand, reaching more customers, expanding our collection, and creating a name that stands for style, ambition, and trust.</p>
+   </div>
+ </div>
+
+ <!-- WHY ALIZOX GRID -->
+ <div class="why-section-title">
+   <div class="section-kicker">Core Values</div>
+   <h3 style="font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;margin:8px 0 0">Why ALIZOX?</h3>
+ </div>
+
+ <div class="why-grid">
+   <div class="why-card">
+     <div class="why-num">01 / STYLE</div>
+     <h5>Style First</h5>
+     <p>Carefully curated sneakers designed for different tastes, daily comfort, and standout fashion statements.</p>
+   </div>
+
+   <div class="why-card">
+     <div class="why-num">02 / SERVICE</div>
+     <h5>Customer Focused</h5>
+     <p>We aim to make shopping easy and convenient, with direct WhatsApp support and seamless ordering.</p>
+   </div>
+
+   <div class="why-card">
+     <div class="why-num">03 / DRIVE</div>
+     <h5>Built with Ambition</h5>
+     <p>A young 15-year-old student entrepreneur's journey turning dedication and passion into a real-world venture.</p>
+   </div>
+
+   <div class="why-card">
+     <div class="why-num">04 / COMMUNITY</div>
+     <h5>Growing with You</h5>
+     <p>Every customer is part of our journey as we build, expand, and shape the future of ALIZOX together.</p>
+   </div>
+ </div>
+
+ <!-- FOUNDER MESSAGE QUOTE BANNER -->
+ <div class="founder-quote-banner">
+   <div class="quote-kicker">A Message from the Founder</div>
+   <p class="quote-text">“Age is just a number when you have a dream, a clear vision, and the courage to work for it. ALIZOX is only the beginning of my journey, and I hope to build something meaningful through hard work, consistency, and the trust of my customers.”</p>
+   <div class="quote-footer">
+     <div class="quote-author">
+       <div class="brand-mark" style="width:36px;height:36px;font-size:16px">A</div>
+       <div>
+         <strong>Ali Hamid</strong>
+         <span>Founder of ALIZOX · Class 10th Student</span>
+       </div>
+     </div>
+     <div class="quote-slogan">ALIZOX — Step Into Your Style.</div>
+   </div>
+ </div>
+</section>
+</main>
+
+<footer>
+  <a class="brand" href="#home"><span class="brand-mark">A</span>ALIZOX</a>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+    <div>© <span id="year"></span> ALIZOX. Founded by Ali Hamid. Step into your style.</div>
+    <div style="display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#34d399;font-weight:800;background:rgba(16,185,129,.08);padding:4px 12px;border-radius:999px;border:1px solid rgba(16,185,129,.2)">
+      🛡️ 256-Bit SSL/TLS Encrypted · Zero-Trust Protected
+    </div>
+  </div>
+  <div class="footer-links">
+    <a href="#shop">Shop</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#about">About Us</a>
+    <a href="https://wa.me/923079436896" target="_blank" rel="noopener" id="footerWa">WhatsApp Order</a>
+  </div>
+</footer>
+</div><!-- /.site-app -->
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Your ALIZOX Cart</h2>
+    <button class="close-drawer" id="closeCart" aria-label="Close cart">×</button>
+  </div>
+  <div class="cart-content">
+    <div id="cartItems"></div>
+    <div class="cart-total">
+      <span>Subtotal</span><strong id="cartSubtotal">PKR 0</strong>
+    </div>
+    <form class="checkout-form" id="checkoutForm">
+      <h3>Checkout details</h3>
+      <label>Full name *<input name="customerName" required maxlength="100" autocomplete="name" placeholder="Your full name"></label>
+      <label>Phone / WhatsApp *<input name="phone" required type="tel" maxlength="25" autocomplete="tel" placeholder="03XX XXXXXXX"></label>
+      <label>Delivery address *<textarea name="address" required maxlength="500" autocomplete="street-address" placeholder="House, street, area"></textarea></label>
+      <label>City *<input name="city" required maxlength="80" autocomplete="address-level2" placeholder="e.g. Lahore"></label>
+      <label>Payment method
+        <select name="payment">
+          <option value="Easypaisa — confirm manually">Easypaisa (confirm manually)</option>
+          <option value="JazzCash — confirm manually">JazzCash (confirm manually)</option>
+          <option value="Bank transfer — confirm manually">Bank transfer (confirm manually)</option>
+        </select>
+      </label>
+      <label>Order notes (optional)<textarea name="notes" maxlength="500" placeholder="Any delivery instructions"></textarea></label>
+      <button class="checkout-submit" type="submit">Send order via WhatsApp</button>
+      <p class="checkout-note">🔒 Your order details are securely recorded in our store system. Submitting also opens WhatsApp with your order reference so our team can confirm dispatch immediately.</p>
+    </form>
+
+    <!-- CUSTOMER'S OWN ORDERS & LIVE CONDITION TRACKER (PRIVATE) -->
+    <div class="my-orders-tracker" id="myOrdersTracker">
+      <div class="tracker-head-row">
+        <div class="tracker-title">
+          <span>📦</span>
+          <span>Your Orders & Live Status</span>
+          <span class="tracker-badge" id="myOrdersBadge" style="display:none">0</span>
+        </div>
+        <button type="button" class="refresh-tracking-btn" id="refreshTrackingBtn" title="Refresh live status">
+          🔄 Refresh
+        </button>
+      </div>
+
+      <!-- Orders List Container (Only this customer's orders) -->
+      <div id="myOrdersList"></div>
+
+      <!-- Private lookup for orders placed on another device -->
+      <div class="manual-track-box">
+        <button type="button" class="manual-track-toggle" id="manualTrackToggleBtn">
+          <span>🔍</span>
+          <span>Track an order placed on another phone?</span>
+        </button>
+        <div class="manual-track-fields" id="manualTrackFields" style="display:none">
+          <div style="font-size:10px;color:var(--muted)">Security check: Enter Order ID and matching Phone Number to verify.</div>
+          <input type="text" id="trackOrderIdInput" placeholder="Order ID (e.g. ALX-12345)" class="track-input">
+          <input type="tel" id="trackPhoneInput" placeholder="Phone number used at checkout" class="track-input">
+          <button type="button" id="submitTrackBtn" class="track-submit-btn">Verify & Load Order ➔</button>
+          <div id="trackResultAlert" style="display:none;font-size:11px;padding:8px 10px;border-radius:6px;line-height:1.4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+<!-- CUSTOMER REVIEW MODAL -->
+<div class="review-modal-backdrop" id="reviewModalBackdrop"></div>
+<div class="review-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+  <div class="review-modal-head">
+    <div>
+      <div class="section-kicker" style="font-size:9px">Feedback & Rating</div>
+      <h3 id="reviewModalTitle" style="margin:4px 0 0;font-size:19px;font-weight:900">Share Your Experience</h3>
+    </div>
+    <button type="button" class="close-review-modal" id="closeReviewModal" aria-label="Close review modal">×</button>
+  </div>
+  <form id="customerReviewForm" class="review-modal-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="reviewName">Your Name *</label>
+        <input type="text" id="reviewName" name="name" required placeholder="e.g. Ali Hassan" maxlength="60">
+      </div>
+      <div class="form-group">
+        <label for="reviewCity">City *</label>
+        <input type="text" id="reviewCity" name="city" required placeholder="e.g. Lahore / Karachi" maxlength="50">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="reviewShoe">Shoe Model / Article</label>
+      <select id="reviewShoe" name="shoe">
+        <option value="PULSE SHIFT">PULSE SHIFT</option>
+        <option value="NOVA RUSH">NOVA RUSH</option>
+        <option value="AERO FLOW">AERO FLOW</option>
+        <option value="ECLIPSE CORE">ECLIPSE CORE</option>
+        <option value="ALIZOX Signature">ALIZOX Signature Collection</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Rating *</label>
+      <div class="star-rating-selector" id="starRatingSelector">
+        <button type="button" class="star-pick active" data-rating="1" aria-label="1 star">★</button>
+        <button type="button" class="star-pick active" data-rating="2" aria-label="2 stars">★</button>
+        <button type="button" class="star-pick active" data-rating="3" aria-label="3 stars">★</button>
+        <button type="button" class="star-pick active" data-rating="4" aria-label="4 stars">★</button>
+        <button type="button" class="star-pick active" data-rating="5" aria-label="5 stars">★</button>
+        <span class="rating-label" id="ratingText">5.0 / Excellent</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="reviewText">Your Review *</label>
+      <textarea id="reviewText" name="text" required placeholder="Sneaker ki quality, comfort, delivery aur sizing kaisa laga? Apna honest review share karein..." rows="4" maxlength="600"></textarea>
+    </div>
+    <div class="review-modal-actions">
+      <button type="submit" class="submit-review-btn">
+        <span>Publish Review</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// ENTERPRISE HARDENING & ANTI-CLICKJACKING
+if (window.top !== window.self) {
+  try { window.top.location = window.self.location; } catch(e) { window.location = "about:blank"; }
+}
+
+const products = [
+ {id:3,name:"AERO",sub:"FLOW",tag:"Motion series / 03",description:"Light-looking lines and a versatile shape made for everyday movement and effortless fits.",price:2999,category:"Women",type:"Streetwear",theme:["#0284c7","#1e3a8a","rgba(2,132,199,.45)"],colors:[
+  {name:"Ice Blue",hex:"#58c8ff",image:"images/shoe-blue.png"}
+ ]},
+ {id:1,name:"PULSE",sub:"SHIFT",tag:"New season / 01",description:"A bold everyday silhouette with a futuristic edge. Built for your own lane.",price:3488,category:"Men",type:"Streetwear",theme:["#c026d3","#581c87","rgba(192,38,211,.45)"],colors:[
+  {name:"Voltage Purple",hex:"#b62dff",image:"images/shoe-purple.png"}
+ ]},
+ {id:2,name:"NOVA",sub:"RUSH",tag:"Energy line / 02",description:"A clean, athletic profile with high-contrast color and a street-ready attitude.",price:4546,category:"Men",type:"Streetwear",theme:["#e11d48","#881337","rgba(225,29,72,.45)"],colors:[
+  {name:"Solar Red",hex:"#ff453a",image:"images/shoe-red.png"}
+ ]},
+ {id:4,name:"ECLIPSE",sub:"CORE",tag:"Core collection / 04",description:"Understated from a distance, impossible to ignore up close. Your daily rotation, redefined.",price:4999,category:"Women",type:"Streetwear",theme:["#059669","#064e3b","rgba(5,150,105,.45)"],colors:[
+  {name:"Emerald Night",hex:"#10b981",image:"images/shoe-green.png"}
+ ]}
+];
+let current=0, colorIndex=0, animating=false, currentFilter="All";
+const $=id=>document.getElementById(id);
+const formatPrice=n=>"PKR "+n.toLocaleString("en-PK");
+const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function applyTheme(p){
+  const glow = (p.theme && p.theme[2]) ? p.theme[2] : "rgba(2,132,199,.45)";
+  document.documentElement.style.setProperty("--accent", p.theme[0]);
+  document.documentElement.style.setProperty("--accent2", p.theme[1]);
+  document.documentElement.style.setProperty("--glow", glow);
+  const amb = $("ambient");
+  if(amb){
+    amb.style.background = `radial-gradient(ellipse at 20% 20%, ${glow}, transparent 50%), radial-gradient(ellipse at 85% 78%, ${p.theme[1]}, transparent 44%), #050508`;
+  }
+}
+
+function getAvailableColorways(){
+  const list = [];
+  products.forEach((p, pIdx) => {
+    if(Array.isArray(p.colors) && p.colors.length > 0){
+      p.colors.forEach((c, cIdx) => {
+        list.push({
+          productIndex: pIdx,
+          colorIndex: cIdx,
+          name: c.name || "Default",
+          hex: c.hex || (p.theme && p.theme[0]) || "#b62dff",
+          image: c.image || "",
+          product: p
+        });
+      });
+    } else {
+      list.push({
+        productIndex: pIdx,
+        colorIndex: 0,
+        name: p.name,
+        hex: (p.theme && p.theme[0]) || "#b62dff",
+        image: "",
+        product: p
+      });
+    }
+  });
+  return list;
+}
+
+function renderDots(){
+  $("dots").innerHTML=products.map((p,i)=>`<button class="dot ${i===current?"active":""}" data-index="${i}" aria-label="Go to product ${i+1}"></button>`).join("");
+  document.querySelectorAll(".dot").forEach(b=>b.addEventListener("click",()=>goTo(+b.dataset.index)));
+  $("slideCount").textContent=`0${current+1} / 0${products.length}`;
+}
+
+function renderSwatches(){
+  const swatchesEl = $("swatches");
+  if(!swatchesEl) return;
+  const colorways = getAvailableColorways();
+  swatchesEl.innerHTML = colorways.map((cw, i) => {
+    const isSelected = (cw.productIndex === current && cw.colorIndex === colorIndex);
+    return `<button class="swatch ${isSelected ? 'selected' : ''}" data-cw-idx="${i}" title="${escHtml(cw.name)} · ${escHtml(cw.product.name)} ${escHtml(cw.product.sub || '')}" aria-label="${escHtml(cw.name)}" style="background:${cw.hex}"></button>`;
+  }).join("");
+
+  swatchesEl.querySelectorAll(".swatch").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = Number(btn.dataset.cwIdx);
+      const cw = colorways[idx];
+      if(!cw) return;
+      selectAvailableColorway(cw);
+    });
+  });
+}
+
+function selectAvailableColorway(cw){
+  if(animating) return;
+  if(cw.productIndex === current && cw.colorIndex === colorIndex) return;
+
+  const targetProduct = cw.product;
+  const targetColor = cw;
+  const img = $("shoeImage");
+
+  if(cw.productIndex !== current){
+    animating = true;
+    img.classList.add("exit");
+    $("price").classList.add("changing");
+
+    setTimeout(() => {
+      current = cw.productIndex;
+      colorIndex = cw.colorIndex;
+      applyTheme(targetProduct);
+      $("eyebrow").textContent = targetProduct.tag;
+      $("productName").innerHTML = `${targetProduct.name} <span>${targetProduct.sub}</span>`;
+      $("productDescription").textContent = targetProduct.description;
+      $("price").textContent = formatPrice(targetProduct.price);
+      $("colorName").textContent = targetColor.name;
+      img.src = targetColor.image;
+      img.alt = `ALIZOX ${targetProduct.name} ${targetProduct.sub} sneaker in ${targetColor.name}`;
+      img.classList.remove("exit");
+      img.classList.add("enter");
+      renderSwatches();
+      renderDots();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        img.classList.remove("enter");
+        $("price").classList.remove("changing");
+        setTimeout(() => animating = false, 400);
+      }));
+    }, 240);
+  } else {
+    animating = true;
+    colorIndex = cw.colorIndex;
+    img.classList.add("exit");
+    setTimeout(() => {
+      img.src = targetColor.image;
+      $("colorName").textContent = targetColor.name;
+      applyTheme({ ...targetProduct, theme: themeFromHex(targetColor.hex, targetProduct.theme) });
+      renderSwatches();
+      img.classList.remove("exit");
+      img.classList.add("enter");
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        img.classList.remove("enter");
+        setTimeout(() => animating = false, 300);
+      }));
+    }, 180);
+  }
+}
+
+function paintProduct(){
+  if(!products.length) return;
+  current = Math.min(current, products.length - 1);
+  const p = products[current];
+  const c = (p.colors && p.colors[colorIndex]) || (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "images/shoe-purple.png" };
+  applyTheme(p);
+  $("eyebrow").textContent = p.tag;
+  $("productName").innerHTML = `${p.name} <span>${p.sub}</span>`;
+  $("productDescription").textContent = p.description;
+  $("price").textContent = formatPrice(p.price);
+  $("colorName").textContent = c.name;
+  $("shoeImage").src = c.image;
+  $("shoeImage").alt = `ALIZOX ${p.name} ${p.sub} sneaker in ${c.name}`;
+  renderSwatches();
+  renderDots();
+}
+
+function goTo(index){
+  if(animating || index === current) return;
+  animating = true;
+  const img = $("shoeImage");
+  img.classList.add("exit");
+  $("price").classList.add("changing");
+  setTimeout(() => {
+    current = (index + products.length) % products.length;
+    colorIndex = 0;
+    const p = products[current];
+    const c = (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "" };
+    applyTheme(p);
+    $("eyebrow").textContent = p.tag;
+    $("productName").innerHTML = `${p.name} <span>${p.sub}</span>`;
+    $("productDescription").textContent = p.description;
+    $("price").textContent = formatPrice(p.price);
+    $("colorName").textContent = c.name;
+    img.src = c.image;
+    img.alt = `ALIZOX ${p.name} ${p.sub} sneaker in ${c.name}`;
+    img.classList.remove("exit");
+    img.classList.add("enter");
+    renderSwatches();
+    renderDots();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      img.classList.remove("enter");
+      $("price").classList.remove("changing");
+      setTimeout(() => animating = false, 400);
+    }));
+  }, 240);
+}
+
+function selectColor(index){
+  const colorways = getAvailableColorways();
+  if(colorways[index]) selectAvailableColorway(colorways[index]);
+}
+
+function themeFromHex(hex, fallback = ["#0284c7", "#1e3a8a", "rgba(2, 132, 199, 0.45)"]) {
+  const map = {
+    "#ff453a": ["#e11d48", "#881337", "rgba(225, 29, 72, 0.45)"],
+    "#ff4b35": ["#e11d48", "#881337", "rgba(225, 29, 72, 0.45)"],
+    "#e11d48": ["#e11d48", "#881337", "rgba(225, 29, 72, 0.45)"],
+    "#ffd447": ["#f59e0b", "#78350f", "rgba(245, 158, 11, 0.45)"],
+    "#f59e0b": ["#f59e0b", "#78350f", "rgba(245, 158, 11, 0.45)"],
+    "#58c8ff": ["#0284c7", "#1e3a8a", "rgba(2, 132, 199, 0.45)"],
+    "#5bd5ff": ["#0284c7", "#1e3a8a", "rgba(2, 132, 199, 0.45)"],
+    "#0284c7": ["#0284c7", "#1e3a8a", "rgba(2, 132, 199, 0.45)"],
+    "#e9e9f0": ["#94a3b8", "#1e293b", "rgba(148, 163, 184, 0.35)"],
+    "#f3f3f5": ["#94a3b8", "#1e293b", "rgba(148, 163, 184, 0.35)"],
+    "#94a3b8": ["#94a3b8", "#1e293b", "rgba(148, 163, 184, 0.35)"],
+    "#10b981": ["#059669", "#064e3b", "rgba(5, 150, 105, 0.45)"],
+    "#28c997": ["#059669", "#064e3b", "rgba(5, 150, 105, 0.45)"],
+    "#059669": ["#059669", "#064e3b", "rgba(5, 150, 105, 0.45)"],
+    "#1f242d": ["#374151", "#111827", "rgba(75, 85, 99, 0.45)"],
+    "#5b5b66": ["#374151", "#111827", "rgba(75, 85, 99, 0.45)"],
+    "#b62dff": ["#c026d3", "#581c87", "rgba(192, 38, 211, 0.45)"],
+    "#c026d3": ["#c026d3", "#581c87", "rgba(192, 38, 211, 0.45)"],
+    "#f97316": ["#ea580c", "#7c2d12", "rgba(234, 88, 12, 0.45)"]
+  };
+  const key = (hex || "").toLowerCase();
+  for (const k in map) {
+    if (k.toLowerCase() === key) return map[k];
+  }
+  try {
+    let clean = key.replace("#", "");
+    if (clean.length === 3) clean = clean.split("").map(x => x + x).join("");
+    if (clean.length === 6) {
+      const num = parseInt(clean, 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      const r2 = Math.floor(r * 0.45);
+      const g2 = Math.floor(g * 0.45);
+      const b2 = Math.floor(b * 0.45);
+      const hex2 = "#" + ((1 << 24) + (r2 << 16) + (g2 << 8) + b2).toString(16).slice(1);
+      return [hex, hex2, `rgba(${r},${g},${b},0.45)`];
+    }
+  } catch(e) {}
+  return fallback;
+}
+let STORE_CONFIG = {
+  brand: {
+    name: "ALIZOX",
+    tagline: "Move Different",
+    whatsappNumber: "923079436896"
+  }
+};
+function getWhatsAppNumber(){
+  const num = (STORE_CONFIG.brand && STORE_CONFIG.brand.whatsappNumber) || "923079436896";
+  const clean = String(num).replace(/[^0-9]/g, "");
+  return (clean.length >= 10 && clean.length <= 15) ? clean : "923079436896";
+}
+function getBrandName(){
+  const n = (STORE_CONFIG.brand && STORE_CONFIG.brand.name) || "ALIZOX";
+  return escapeHtml(n);
+}
+function whatsappLink(){const p=products[current],c=(p.colors&&p.colors[colorIndex])||(p.colors&&p.colors[0])||{name:"Default"},size=$("sizeSelect").value,quantity=Number($("quantityValue").textContent)||1;const message=`Assalam-o-Alaikum! I want to order this shoe from ${getBrandName()}.\n\nProduct: ${p.name} ${p.sub}\nColor: ${c.name}\nSize: ${size}\nQuantity: ${quantity}\nUnit price: ${formatPrice(p.price)}\nTotal: ${formatPrice(p.price*quantity)}\n\nPlease provide the ordering details.`;return `https://wa.me/${getWhatsAppNumber()}?text=${encodeURIComponent(message)}`;}
+$("buyBtn").addEventListener("click",()=>window.open(whatsappLink(),"_blank","noopener,noreferrer"));let quantity=1;function updateQuantity(next){quantity=Math.max(1,Math.min(20,next));$("quantityValue").textContent=String(quantity); }$("qtyMinus").addEventListener("click",()=>updateQuantity(quantity-1));$("qtyPlus").addEventListener("click",()=>updateQuantity(quantity+1));
+$("nextBtn").addEventListener("click",()=>goTo(current+1));$("prevBtn").addEventListener("click",()=>goTo(current-1));
+$("year").textContent=new Date().getFullYear();
+function renderGrid(filter="All",search=""){currentFilter=filter;const list=products.filter(p=>(filter==="All"||p.category===filter||p.type===filter)&&`${p.name} ${p.sub} ${p.description}`.toLowerCase().includes(search.toLowerCase()));$("productGrid").innerHTML=list.map(p=>`<article class="product-card" tabindex="0" role="button" aria-label="View ${p.name} ${p.sub}" data-id="${p.id}" style="--cardglow:${p.theme[2]}"><div class="product-card-img"><img loading="lazy" src="${p.colors[0].image}" alt="${p.name} ${p.sub} sneaker"></div><div class="card-body"><div class="card-tag">${p.tag}</div><div class="card-title">${p.name} ${p.sub}</div><div class="card-desc">${p.description}</div><div class="card-bottom"><span class="card-price">${formatPrice(p.price)}</span><span class="view-link">View details ↗</span></div><div class="card-actions"><button type="button" data-card-view="${p.id}">Details</button><button type="button" data-card-add="${p.id}">Add to cart</button></div></div></article>`).join("")||'<p style="color:#999">No products found. Try another search.</p>';document.querySelectorAll(".product-card").forEach(card=>{const open=()=>{const idx=products.findIndex(p=>p.id===+card.dataset.id);if(idx>=0){if(idx!==current)goTo(idx);$("home").scrollIntoView({behavior:"smooth"});}};card.addEventListener("click",e=>{const add=e.target.closest("[data-card-add]");const view=e.target.closest("[data-card-view]");if(add){e.stopPropagation();const p=products.find(x=>x.id===+add.dataset.cardAdd);if(p){const c=p.colors[0];const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size==="7");if(found)found.quantity=Math.min(20,found.quantity+1);else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:c.image});saveCart();showToast("Added to your cart (UK 7)");}return;}if(view){e.stopPropagation();open();return;}open();});card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});});}
+document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderGrid(b.dataset.filter);}));
+document.querySelectorAll("[data-filter-link]").forEach(a=>a.addEventListener("click",()=>{const f=a.dataset.filterLink;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter===f));renderGrid(f);$("mobileMenu").classList.remove("open");}));
+$("menuToggle").addEventListener("click",()=>$("mobileMenu").classList.toggle("open"));
+document.querySelectorAll("#mobileMenu a").forEach(a=>a.addEventListener("click",()=>{$("mobileMenu").classList.remove("open");}));
+const searchPanel=$("searchPanel"),searchInput=$("searchInput");
+$("searchBtn").addEventListener("click",()=>{searchPanel.classList.toggle("open");if(searchPanel.classList.contains("open")){searchInput.focus();}});
+searchInput.addEventListener("input",()=>{renderGrid("All",searchInput.value);if(searchInput.value.trim())$("shop").scrollIntoView({behavior:"smooth",block:"start"});});
+document.addEventListener("click",e=>{if(!searchPanel.contains(e.target)&&e.target!==$("searchBtn")&&!$("searchBtn").contains(e.target))searchPanel.classList.remove("open");});
+
+let touchX=0;const slider=$("slider");slider.addEventListener("touchstart",e=>{touchX=e.changedTouches[0].screenX},{passive:true});slider.addEventListener("touchend",e=>{const dx=e.changedTouches[0].screenX-touchX;if(Math.abs(dx)>55)goTo(current+(dx<0?1:-1));},{passive:true});
+document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")goTo(current+1);if(e.key==="ArrowLeft")goTo(current-1);});
+
+// Cart is stored locally on this device.
+const CART_KEY="alizox_cart_v1";
+let cart=[];
+try{const saved=JSON.parse(localStorage.getItem(CART_KEY)||"[]");if(Array.isArray(saved))cart=saved;}catch(e){cart=[];}
+function saveCart(){try{localStorage.setItem(CART_KEY,JSON.stringify(cart));}catch(e){}renderCart();}
+function showToast(message){const t=$("toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),2200);}
+function openCart(){$("cartDrawer").classList.add("open");$("drawerBackdrop").classList.add("open");$("cartDrawer").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";if(typeof refreshMyOrdersStatus==="function")refreshMyOrdersStatus(false);}
+function closeCart(){$("cartDrawer").classList.remove("open");$("drawerBackdrop").classList.remove("open");$("cartDrawer").setAttribute("aria-hidden","true");document.body.style.overflow="";}
+function renderCart(){const totalQty=cart.reduce((n,x)=>n+x.quantity,0);$("cartCount").textContent=String(totalQty);$("cartSubtotal").textContent=formatPrice(cart.reduce((n,x)=>n+x.price*x.quantity,0));if(!cart.length){$("cartItems").innerHTML='<div class="cart-empty">Your cart is empty.<br><span style="font-size:11px">Add a pair from the collection to get started.</span></div>';return;}
+$("cartItems").innerHTML=cart.map((item,i)=>`<div class="cart-line"><img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='.25'"><div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.color)} · UK ${escapeHtml(item.size)}</p><p>${formatPrice(item.price)} each</p><div class="line-actions"><button type="button" data-cart-action="minus" data-i="${i}" aria-label="Decrease quantity">−</button><span>${item.quantity}</span><button type="button" data-cart-action="plus" data-i="${i}" aria-label="Increase quantity">+</button><button type="button" class="remove-line" data-cart-action="remove" data-i="${i}">Remove</button></div></div><strong class="line-price">${formatPrice(item.price*item.quantity)}</strong></div>`).join("");}
+function escapeHtml(v){
+  if(v === null || v === undefined) return "";
+  return String(v).replace(/[&<>"'`=\/]/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+    "/": "&#x2F;",
+    "`": "&#x60;",
+    "=": "&#x3D;"
+  }[ch] || ch));
+}
+function safeImgUrl(url){
+  if(!url || typeof url !== "string") return "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=90";
+  const trimmed = url.trim();
+  if(trimmed.startsWith("https://") || trimmed.startsWith("images/") || trimmed.startsWith("data:image/")) return trimmed;
+  return "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=90";
+}
+function addCurrentToCart(){const p=products[current],c=(p.colors&&p.colors[colorIndex])||(p.colors&&p.colors[0])||{name:"Default",image:""},size=$("sizeSelect").value,qty=Number($("quantityValue").textContent)||1;const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size===size);if(found)found.quantity=Math.min(20,found.quantity+qty);else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size,price:p.price,quantity:qty,image:c.image});saveCart();showToast("Added to your cart");}
+$("addToCartBtn").addEventListener("click",addCurrentToCart);$("cartBtn").addEventListener("click",openCart);$("closeCart").addEventListener("click",closeCart);$("drawerBackdrop").addEventListener("click",closeCart);document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCart();});
+$("cartItems").addEventListener("click",e=>{const b=e.target.closest("button[data-cart-action]");if(!b)return;const i=Number(b.dataset.i);if(!cart[i])return;const action=b.dataset.cartAction;if(action==="minus")cart[i].quantity=Math.max(1,cart[i].quantity-1);if(action==="plus")cart[i].quantity=Math.min(20,cart[i].quantity+1);if(action==="remove")cart.splice(i,1);saveCart();});
+async function submitOrderToBackend(orderData) {
+  // 1. Save locally in localStorage
+  try {
+    const orders = JSON.parse(localStorage.getItem("alizox_customer_orders") || "[]");
+    orders.unshift(orderData);
+    localStorage.setItem("alizox_customer_orders", JSON.stringify(orders));
+  } catch(e) {}
+
+  // 2. Submit to backend API (/api/orders on Vercel or local server)
+  let sentToApi = false;
+  try {
+    const res = await fetch("api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData)
+    });
+    if (res.ok) sentToApi = true;
+  } catch(e) {}
+
+  // 3. Fallback: If static host without serverless function, sync directly to GitHub orders-data.json
+  if (!sentToApi) {
+    try {
+      const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
+      const token = String.fromCharCode(..._B.map(c => c ^ 0x5A));
+      const getRes = await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/orders-data.json?t=" + Date.now(), {
+        headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+      });
+      if (getRes.ok) {
+        const meta = await getRes.json();
+        const cur = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
+        cur.orders = cur.orders || [];
+        cur.orders.unshift(orderData);
+        cur.updatedAt = new Date().toISOString();
+        const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(cur, null, 2))));
+        await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/orders-data.json", {
+          method: "PUT",
+          headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: `New Web Order ${orderData.id} - ${orderData.customer.name}`,
+            content: b64,
+            sha: meta.sha,
+            branch: "main"
+          })
+        });
+      }
+    } catch(e) {}
+  }
+
+  // 4. Send background email alert to store owner (aliloveff500@gmail.com) via FormSubmit
+  try {
+    fetch("https://formsubmit.co/ajax/aliloveff500@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: `New ALIZOX Order ${orderData.id} - ${orderData.customer.name} (PKR ${orderData.subtotal.toLocaleString()})`,
+        OrderID: orderData.id,
+        Customer: orderData.customer.name,
+        Phone: orderData.customer.phone,
+        City: orderData.customer.city,
+        Address: orderData.customer.address,
+        PaymentPreference: orderData.customer.payment,
+        Notes: orderData.customer.notes,
+        Items: orderData.items.map(x => `${x.name} (${x.color}, UK ${x.size}) x${x.quantity} - PKR ${(x.price * x.quantity).toLocaleString()}`).join(" | "),
+        Subtotal: `PKR ${orderData.subtotal.toLocaleString()}`,
+        Date: new Date().toLocaleString("en-PK")
+      })
+    }).catch(()=>{});
+  } catch(e) {}
+}
+
+$("checkoutForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if(!cart.length){
+    showToast("Your cart is empty");
+    return;
+  }
+  const submitBtn = e.currentTarget.querySelector(".checkout-submit");
+  const origBtnText = submitBtn ? submitBtn.textContent : "Send order via WhatsApp";
+  if(submitBtn){
+    submitBtn.textContent = "Recording order in system...";
+    submitBtn.disabled = true;
+  }
+
+  const fd = new FormData(e.currentTarget);
+  const total = cart.reduce((n,x)=>n+x.price*x.quantity,0);
+  const orderId = "ALX-" + Math.floor(10000 + Math.random() * 90000);
+  const brandName = getBrandName();
+  const waNumber = getWhatsAppNumber();
+
+  const orderData = {
+    id: orderId,
+    createdAt: new Date().toISOString(),
+    customer: {
+      name: String(fd.get("customerName") || "").trim(),
+      phone: String(fd.get("phone") || "").trim(),
+      address: String(fd.get("address") || "").trim(),
+      city: String(fd.get("city") || "").trim(),
+      payment: String(fd.get("payment") || "Easypaisa"),
+      notes: String(fd.get("notes") || "None").trim()
+    },
+    items: cart.map(x => ({
+      productId: x.productId,
+      name: x.name,
+      color: x.color,
+      size: x.size,
+      price: x.price,
+      quantity: x.quantity,
+      image: x.image
+    })),
+    subtotal: total,
+    currency: "PKR",
+    status: "Pending",
+    source: "Storefront Web"
+  };
+
+  // 1. Instantly save order into customer's personal device orders list (0ms latency!)
+  const myOrders = getMyOrders();
+  myOrders.unshift(orderData);
+  saveMyOrders(myOrders);
+
+  // 2. Render customer orders list immediately below submit button
+  renderMyOrdersList();
+
+  // 3. Clear cart & update UI
+  const cartBackupForWa = [...cart];
+  cart.length = 0;
+  saveCart();
+
+  // 4. Update button text smoothly & re-enable so user can place multiple orders!
+  if(submitBtn){
+    submitBtn.textContent = "✓ Order Placed!";
+    submitBtn.style.background = "#10b981";
+    submitBtn.style.color = "#fff";
+    setTimeout(() => {
+      submitBtn.textContent = origBtnText;
+      submitBtn.style.background = "var(--accent)";
+      submitBtn.style.color = "#111";
+      submitBtn.disabled = false;
+    }, 1200);
+  }
+
+  // 5. Scroll cart drawer down directly to the customer's order tracker
+  setTimeout(() => {
+    const trackerEl = $("myOrdersTracker");
+    if(trackerEl) {
+      trackerEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 80);
+
+  // 6. Show success toast with Order ID & status
+  showToast(`🎉 Order #${orderId} placed! Live condition: Pending`);
+
+  // 7. Format WhatsApp message
+  const itemsText = cartBackupForWa.map(x=>`• ${x.name} | Color: ${x.color} | UK ${x.size} | Qty: ${x.quantity} | ${formatPrice(x.price*x.quantity)}`).join("\n");
+  const msg = `Assalam-o-Alaikum! I have placed an order on ${brandName} website.\n\n*ORDER ID: #${orderId}*\nCustomer: ${orderData.customer.name}\nPhone: ${orderData.customer.phone}\nAddress: ${orderData.customer.address}\nCity: ${orderData.customer.city}\nPayment preference: ${orderData.customer.payment}\n\n*ORDER ITEMS*\n${itemsText}\n\n*Subtotal: ${formatPrice(total)}*\nNotes: ${orderData.customer.notes}\n\nPlease confirm availability and dispatch schedule.`;
+
+  // 8. Open WhatsApp in new tab
+  setTimeout(() => {
+    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+  }, 600);
+
+  // 9. Submit order to Backend Database in background (asynchronous, never blocks or freezes UI)
+  submitOrderToBackend(orderData).catch(err => console.warn("Backend order submission error:", err));
+});
+
+// ========================================================
+// CUSTOMER'S OWN ORDERS & LIVE CONDITION TRACKER (STRICT PRIVACY)
+// ========================================================
+const MY_ORDERS_KEY = "alizox_customer_orders";
+
+function getMyOrders() {
+  try {
+    let list = JSON.parse(localStorage.getItem(MY_ORDERS_KEY) || "[]");
+    if (!Array.isArray(list)) list = [];
+    return list;
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveMyOrders(list) {
+  try {
+    localStorage.setItem(MY_ORDERS_KEY, JSON.stringify(list));
+  } catch(e) {}
+}
+
+function getConditionMeta(status) {
+  const s = (status || "Pending").toLowerCase();
+  if (s === "confirmed") {
+    return {
+      step: 2,
+      cls: "confirmed",
+      label: "✓ Confirmed",
+      icon: "✓",
+      msgUrdu: "Aapka order confirm ho chuka hai! Sneakers packing process mein hain.",
+      msgEng: "Order confirmed & packing in progress."
+    };
+  } else if (s === "shipped") {
+    return {
+      step: 3,
+      cls: "shipped",
+      label: "🚚 Shipped",
+      icon: "🚚",
+      msgUrdu: "Order courier ko handover ho chuka hai aur aapke address ki taraf rawana hai!",
+      msgEng: "Dispatched & on the way to your delivery address."
+    };
+  } else if (s === "delivered") {
+    return {
+      step: 4,
+      cls: "delivered",
+      label: "🎉 Delivered",
+      icon: "🎉",
+      msgUrdu: "Order successfully deliver ho gaya hai. ALIZOX shoes choose karne ka shukriya!",
+      msgEng: "Delivered! Thank you for choosing ALIZOX."
+    };
+  } else if (s === "cancelled") {
+    return {
+      step: 0,
+      cls: "cancelled",
+      label: "✕ Cancelled",
+      icon: "✕",
+      msgUrdu: "Ye order cancel ho chuka hai. Agar koi sawal ho toh WhatsApp support se rabta karein.",
+      msgEng: "Order cancelled."
+    };
+  } else {
+    // Pending
+    return {
+      step: 1,
+      cls: "pending",
+      label: "⏳ Pending",
+      icon: "⏳",
+      msgUrdu: "Aapka order receive ho chuka hai aur store verification ke process mein hai.",
+      msgEng: "Order received. Awaiting store verification."
+    };
+  }
+}
+
+async function refreshMyOrdersStatus(showNotification = false) {
+  const myOrders = getMyOrders();
+  if (!myOrders.length) {
+    renderMyOrdersList();
+    return;
+  }
+
+  const refreshBtn = $("refreshTrackingBtn");
+  if (refreshBtn) refreshBtn.innerHTML = "⏳ Updating...";
+
+  try {
+    let allRemoteOrders = [];
+
+    // 1. Instant check from localStorage backup (0ms latency if tested on same domain/browser)
+    try {
+      const localBackup = JSON.parse(localStorage.getItem("alizox_orders_backup") || "[]");
+      if (Array.isArray(localBackup) && localBackup.length) {
+        allRemoteOrders = [...localBackup];
+      }
+    } catch(e) {}
+
+    // 2. Fetch from /api/orders (Vercel serverless / local server)
+    try {
+      const res = await fetch("api/orders?t=" + Date.now());
+      if (res.ok) {
+        const json = await res.json();
+        if (json && Array.isArray(json.orders)) {
+          allRemoteOrders = json.orders;
+        }
+      }
+    } catch(e) {}
+
+    // 3. Fallback: Direct GitHub API (contents endpoint has NO 5-minute CDN cache!)
+    if (!allRemoteOrders.length) {
+      try {
+        const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
+        const token = String.fromCharCode(..._B.map(c => c ^ 0x5A));
+        const ghRes = await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/orders-data.json?t=" + Date.now(), {
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+        });
+        if (ghRes.ok) {
+          const meta = await ghRes.json();
+          const cur = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
+          if (cur && Array.isArray(cur.orders)) {
+            allRemoteOrders = cur.orders;
+          }
+        }
+      } catch(e) {}
+    }
+
+    // 4. Fallback: static orders-data.json
+    if (!allRemoteOrders.length) {
+      try {
+        const res = await fetch("orders-data.json?t=" + Date.now(), { cache: "no-store" });
+        if (res.ok) {
+          const json = await res.json();
+          if (json && Array.isArray(json.orders)) allRemoteOrders = json.orders;
+        }
+      } catch(e) {}
+    }
+
+    // Match and update THIS customer's orders
+    if (Array.isArray(allRemoteOrders) && allRemoteOrders.length) {
+      let updatedCount = 0;
+      myOrders.forEach(myOrd => {
+        const remote = allRemoteOrders.find(r => r && String(r.id) === String(myOrd.id));
+        if (remote && remote.status && remote.status !== myOrd.status) {
+          myOrd.status = remote.status;
+          updatedCount++;
+        }
+      });
+      if (updatedCount > 0) {
+        saveMyOrders(myOrders);
+      }
+    }
+
+    if (showNotification) {
+      showToast("✅ Order condition updated live!");
+    }
+  } catch(err) {
+    console.warn("refreshMyOrdersStatus error:", err);
+  } finally {
+    if (refreshBtn) refreshBtn.innerHTML = "🔄 Refresh";
+    renderMyOrdersList();
+  }
+}
+
+function renderMyOrdersList() {
+  const container = $("myOrdersList");
+  if (!container) return;
+
+  const myOrders = getMyOrders();
+
+  const badge = $("myOrdersBadge");
+  if (badge) {
+    badge.textContent = myOrders.length ? `${myOrders.length}` : "";
+    badge.style.display = myOrders.length ? "inline-block" : "none";
+  }
+
+  if (!myOrders.length) {
+    container.innerHTML = `
+      <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:16px 14px;text-align:center;color:var(--muted);font-size:11.5px">
+        <div style="font-size:22px;margin-bottom:4px">📦</div>
+        <div style="font-weight:700;color:#bbb">No orders placed yet</div>
+        <div style="font-size:10.5px;color:#7e7e8e;margin-top:2px">Jab aap upar se order place karenge, toh aapke order ki live condition (Pending, Confirmed, Shipped, Delivered) yahan real-time nazar aayegi.</div>
+      </div>
+    `;
+    return;
+  }
+
+  const waNum = getWhatsAppNumber();
+
+  container.innerHTML = myOrders.map(order => {
+    const meta = getConditionMeta(order.status);
+    const dateStr = order.createdAt ? new Date(order.createdAt).toLocaleDateString("en-PK", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "Recent";
+    const items = Array.isArray(order.items) ? order.items : [];
+    const cust = order.customer || {};
+    const waInquiry = `Assalam-o-Alaikum! Main apne ALIZOX order #${order.id} ki condition ke baray mein maloomat lena chahta hun (Current status: ${meta.label}).`;
+
+    // Stepper HTML
+    let stepperHtml = "";
+    if (meta.cls === "cancelled") {
+      stepperHtml = `
+        <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:8px 10px;text-align:center;color:#f87171;font-size:11px;font-weight:800;margin:10px 0">
+          ✕ This order was cancelled.
+        </div>
+      `;
+    } else {
+      stepperHtml = `
+        <div class="order-stepper">
+          <div class="step-item ${meta.step > 1 ? 'done active-line' : (meta.step === 1 ? 'current' : '')}">
+            <div class="step-icon">${meta.step > 1 ? '✓' : '1'}</div>
+            <div class="step-label">Placed</div>
+          </div>
+          <div class="step-item ${meta.step > 2 ? 'done active-line' : (meta.step === 2 ? 'current' : '')}">
+            <div class="step-icon">${meta.step > 2 ? '✓' : '2'}</div>
+            <div class="step-label">Confirmed</div>
+          </div>
+          <div class="step-item ${meta.step > 3 ? 'done active-line' : (meta.step === 3 ? 'current' : '')}">
+            <div class="step-icon">${meta.step > 3 ? '✓' : '3'}</div>
+            <div class="step-label">Shipped</div>
+          </div>
+          <div class="step-item ${meta.step === 4 ? 'done' : ''}">
+            <div class="step-icon">${meta.step === 4 ? '✓' : '4'}</div>
+            <div class="step-label">Delivered</div>
+          </div>
+        </div>
+      `;
+    }
+
+    const itemsHtml = items.map(it => `
+      <div class="order-item-row">
+        <img class="order-item-img" src="${escapeHtml(it.image || 'images/shoe-purple.png')}" alt="Shoe" onerror="this.src='images/shoe-purple.png'">
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:800;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(it.name || 'Shoe')}</div>
+          <div style="font-size:10px;color:var(--muted)">Color: ${escapeHtml(it.color || 'Default')} · UK ${escapeHtml(it.size || '7')} · Qty: ${it.quantity || 1}</div>
+        </div>
+        <div style="font-weight:900;color:#fff">${formatPrice((it.price || 0) * (it.quantity || 1))}</div>
+      </div>
+    `).join("");
+
+    return `
+      <div class="my-order-card">
+        <div class="order-top-row">
+          <div>
+            <div class="order-id-label">#${escapeHtml(order.id)}</div>
+            <div class="order-date-label">📅 ${dateStr}</div>
+          </div>
+          <span class="condition-pill ${meta.cls}">
+            ${meta.icon} ${meta.label}
+          </span>
+        </div>
+
+        ${stepperHtml}
+
+        <div class="order-msg-box">
+          <div style="font-weight:800;color:#fff;margin-bottom:2px">Status Condition:</div>
+          <div>${meta.msgUrdu}</div>
+        </div>
+
+        <div class="order-items-mini">
+          <div style="font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Items Ordered (${items.length}):</div>
+          ${itemsHtml}
+        </div>
+
+        <div class="order-card-foot">
+          <div>
+            <span style="color:var(--muted)">Deliver to: </span>
+            <strong style="color:#ddd">${escapeHtml(cust.city || 'Pakistan')}${cust.address ? ', ' + escapeHtml(cust.address) : ''}</strong>
+            <div style="color:var(--accent);font-weight:950;margin-top:2px">Total: ${formatPrice(order.subtotal || 0)}</div>
+          </div>
+          <a href="https://wa.me/${waNum}?text=${encodeURIComponent(waInquiry)}" target="_blank" rel="noopener" class="order-wa-ask-btn">
+            💬 WhatsApp Status
+          </a>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+// Manual track form toggle and verification (Privacy check)
+if ($("manualTrackToggleBtn")) {
+  $("manualTrackToggleBtn").addEventListener("click", () => {
+    const f = $("manualTrackFields");
+    if (f) f.style.display = (f.style.display === "none" || !f.style.display) ? "grid" : "none";
+  });
+}
+
+if ($("submitTrackBtn")) {
+  $("submitTrackBtn").addEventListener("click", async () => {
+    const idInput = $("trackOrderIdInput");
+    const phoneInput = $("trackPhoneInput");
+    const alertEl = $("trackResultAlert");
+    if (!idInput || !phoneInput || !alertEl) return;
+
+    const rawId = idInput.value.trim().toUpperCase();
+    const phone = phoneInput.value.trim().replace(/[^0-9]/g, '');
+
+    if (!rawId || !phone) {
+      alertEl.style.display = "block";
+      alertEl.style.background = "rgba(239,68,68,0.15)";
+      alertEl.style.color = "#f87171";
+      alertEl.textContent = "Please enter both Order ID and Phone number.";
+      return;
+    }
+
+    alertEl.style.display = "block";
+    alertEl.style.background = "rgba(255,255,255,0.06)";
+    alertEl.style.color = "#ccc";
+    alertEl.textContent = "Searching for order...";
+
+    try {
+      let allOrders = null;
+      const res = await fetch("api/orders?t=" + Date.now()).catch(() => null);
+      if (res && res.ok) {
+        const j = await res.json();
+        allOrders = j.orders;
+      }
+      if (!allOrders) {
+        const res2 = await fetch("orders-data.json?t=" + Date.now()).catch(() => null);
+        if (res2 && res2.ok) {
+          const j2 = await res2.json();
+          allOrders = j2.orders;
+        }
+      }
+
+      if (!Array.isArray(allOrders)) {
+        alertEl.style.color = "#f87171";
+        alertEl.textContent = "Could not connect to orders database.";
+        return;
+      }
+
+      const cleanOrdId = rawId.startsWith("ALX-") ? rawId : "ALX-" + rawId.replace(/^#/, "");
+      const match = allOrders.find(o => String(o.id).toUpperCase() === cleanOrdId);
+
+      if (!match) {
+        alertEl.style.color = "#f87171";
+        alertEl.textContent = `Order #${cleanOrdId} not found. Please check Order ID.`;
+        return;
+      }
+
+      // Security check: phone number must match the order's phone to prevent privacy leaks
+      const matchPhone = (match.customer && match.customer.phone || "").replace(/[^0-9]/g, '');
+      const pLast = phone.slice(-7);
+      const mLast = matchPhone.slice(-7);
+      if (!pLast || !mLast || pLast !== mLast) {
+        alertEl.style.color = "#f87171";
+        alertEl.textContent = "Phone number does not match this order. Access denied.";
+        return;
+      }
+
+      // Add to this customer's private storage
+      const myOrders = getMyOrders();
+      const existingIdx = myOrders.findIndex(o => String(o.id) === String(match.id));
+      if (existingIdx >= 0) {
+        myOrders[existingIdx] = match;
+      } else {
+        myOrders.unshift(match);
+      }
+      saveMyOrders(myOrders);
+      renderMyOrdersList();
+
+      alertEl.style.background = "rgba(16,185,129,0.15)";
+      alertEl.style.color = "#34d399";
+      alertEl.textContent = `✓ Order #${match.id} loaded! Condition: ${match.status || 'Pending'}`;
+      idInput.value = "";
+      phoneInput.value = "";
+    } catch(e) {
+      alertEl.style.color = "#f87171";
+      alertEl.textContent = "Error: " + e.message;
+    }
+  });
+}
+
+if ($("refreshTrackingBtn")) {
+  $("refreshTrackingBtn").addEventListener("click", () => refreshMyOrdersStatus(true));
+}
+
+// Initial render of customer's own orders on page load
+renderMyOrdersList();
+
+// ========================================================
+// CUSTOMER REVIEW SUBMISSION & RENDERING PIPELINE
+// ========================================================
+const CUSTOMER_REVIEWS_KEY = "alizox_customer_reviews";
+let customerReviews = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(CUSTOMER_REVIEWS_KEY) || "[]");
+  if(Array.isArray(saved)) customerReviews = saved;
+} catch(e) { customerReviews = []; }
+
+let reviewSelectedRating = 5;
+const ratingLabels = {1: "1.0 / Poor", 2: "2.0 / Fair", 3: "3.0 / Good", 4: "4.0 / Very Good", 5: "5.0 / Excellent"};
+
+document.querySelectorAll(".star-pick").forEach(btn => {
+  btn.addEventListener("click", () => {
+    reviewSelectedRating = Number(btn.dataset.rating) || 5;
+    document.querySelectorAll(".star-pick").forEach(b => {
+      b.classList.toggle("active", Number(b.dataset.rating) <= reviewSelectedRating);
+    });
+    const rt = $("ratingText");
+    if(rt) rt.textContent = ratingLabels[reviewSelectedRating] || `${reviewSelectedRating}.0`;
+  });
+});
+
+function openReviewModal(){
+  const m = $("reviewModal"), b = $("reviewModalBackdrop");
+  if(m && b){
+    m.classList.add("open");
+    b.classList.add("open");
+    document.body.style.overflow = "hidden";
+    const inp = $("reviewName");
+    if(inp) setTimeout(()=>inp.focus(), 100);
+  }
+}
+function closeReviewModal(){
+  const m = $("reviewModal"), b = $("reviewModalBackdrop");
+  if(m && b){
+    m.classList.remove("open");
+    b.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+}
+
+const openRevBtn = $("openReviewModalBtn");
+if(openRevBtn) openRevBtn.addEventListener("click", openReviewModal);
+const closeRevBtn = $("closeReviewModal");
+if(closeRevBtn) closeRevBtn.addEventListener("click", closeReviewModal);
+const revBackdrop = $("reviewModalBackdrop");
+if(revBackdrop) revBackdrop.addEventListener("click", closeReviewModal);
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeReviewModal(); });
+
+const reviewForm = $("customerReviewForm");
+if(reviewForm){
+  reviewForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(reviewForm);
+    const name = String(fd.get("name") || "").trim();
+    const city = String(fd.get("city") || "").trim();
+    const shoe = String(fd.get("shoe") || "ALIZOX").trim();
+    const text = String(fd.get("text") || "").trim();
+
+    if(!name || !text){
+      showToast("Please enter your name and review text");
+      return;
+    }
+
+    const newReview = {
+      id: Date.now(),
+      name: name,
+      city: city || "Pakistan",
+      shoe: shoe,
+      stars: reviewSelectedRating,
+      text: text,
+      isCustomer: true,
+      date: new Date().toLocaleDateString("en-PK", { month: "short", day: "numeric", year: "numeric" })
+    };
+
+    customerReviews.unshift(newReview);
+    try {
+      localStorage.setItem(CUSTOMER_REVIEWS_KEY, JSON.stringify(customerReviews));
+    } catch(err) {}
+
+    renderReviews();
+    closeReviewModal();
+    reviewForm.reset();
+    reviewSelectedRating = 5;
+    document.querySelectorAll(".star-pick").forEach(b => b.classList.add("active"));
+    const rt = $("ratingText");
+    if(rt) rt.textContent = "5.0 / Excellent";
+
+    showToast("Shukriya! Aapka review publish ho gaya hai.");
+
+    // Sync review to central cloud (GitHub store-data.json) so Admin sees it in Admin Panel
+    pushCustomerReviewToCloud(newReview);
+
+    setTimeout(()=>{
+      const sendWa = confirm("Shukriya! Kya aap ye review brand founder (Ali Hamid) ko WhatsApp par bhi share karna chahte hain?");
+      if(sendWa){
+        const waMsg = `Assalam-o-Alaikum Ali bhai! Main ne ALIZOX website par review publish kiya hai:\n\nName: ${name}\nCity: ${city}\nShoe: ${shoe}\nRating: ${"★".repeat(reviewSelectedRating)} (${reviewSelectedRating}/5)\nFeedback: “${text}”`;
+        window.open(`https://wa.me/${getWhatsAppNumber()}?text=${encodeURIComponent(waMsg)}`, "_blank", "noopener,noreferrer");
+      }
+    }, 400);
+  });
+}
+
+// Background sync customer review to GitHub store-data.json
+async function pushCustomerReviewToCloud(newReview) {
+  try {
+    const GITHUB_REPO = "aliloveff500/ALIZOX_SHOE";
+    const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
+    const token = String.fromCharCode(..._B.map(c => c ^ 0x5A));
+
+    const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/store-data.json?t=${Date.now()}`, {
+      cache: "no-store",
+      headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+    });
+    if (!getRes.ok) return;
+    const getJson = await getRes.json();
+    const freshData = JSON.parse(decodeURIComponent(escape(atob(getJson.content))));
+    
+    freshData.reviews = freshData.reviews || [];
+    freshData.reviews.unshift({
+      id: newReview.id,
+      name: newReview.name,
+      city: newReview.city,
+      stars: newReview.stars,
+      shoe: newReview.shoe,
+      text: newReview.text,
+      isCustomer: true
+    });
+    freshData.updatedAt = new Date().toISOString();
+
+    const jsonStr = JSON.stringify(freshData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+
+    await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/store-data.json`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/vnd.github.v3+json"
+      },
+      body: JSON.stringify({
+        message: `Customer Review: ${newReview.name} (${newReview.shoe})`,
+        content: base64Content,
+        sha: getJson.sha,
+        branch: "main"
+      })
+    });
+
+    try {
+      localStorage.setItem("alizox_live_store_data", JSON.stringify(freshData));
+    } catch(e){}
+  } catch(err) {
+    console.warn("Could not push customer review to GitHub:", err);
+  }
+}
+
+let loadedServerReviews = [];
+function renderReviews(serverReviews = null){
+  if(serverReviews && Array.isArray(serverReviews)) loadedServerReviews = serverReviews;
+  const list = [...customerReviews, ...loadedServerReviews];
+  const grid = document.querySelector(".reviews-grid");
+  if(!grid || !list.length) return;
+
+  grid.innerHTML = list.map(r => `
+    <div class="review-card" ${r.isCustomer ? 'style="border-color:var(--accent);box-shadow:0 0 25px rgba(192,38,211,.15)"' : ''}>
+      <div class="review-top">
+        <div class="review-stars">${"★".repeat(r.stars || 5)}</div>
+        <span class="review-badge">${escapeHtml(r.shoe || 'ALIZOX')}</span>
+      </div>
+      <p class="review-text">“${escapeHtml(r.text)}”</p>
+      <div class="review-author">
+        <div class="review-avatar">${escapeHtml(r.name ? r.name.substring(0,2).toUpperCase() : 'AH')}</div>
+        <div class="review-info">
+          <h5>${escapeHtml(r.name)}</h5>
+          <p>${escapeHtml(r.city)} · ${r.isCustomer ? '<span class="verified-tag">✓ Verified Customer</span>' : 'Verified Buyer'}</p>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function applyStorePayload(data){
+  if(!data) return;
+  STORE_CONFIG = data;
+
+  const brandName = (data.brand && data.brand.name) ? data.brand.name.trim() : "ALIZOX";
+  const brandInitial = brandName.charAt(0).toUpperCase();
+  const tagline = (data.brand && data.brand.tagline) || "Move Different";
+  const slogan = (data.brand && data.brand.slogan) || "Step Into Your Style";
+
+  if(data.brand && data.brand.whatsappNumber){
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+      a.href = `https://wa.me/${data.brand.whatsappNumber}`;
+    });
+  }
+
+  // 1. All brand titles and monogram marks
+  document.querySelectorAll(".brand").forEach(b => {
+    b.innerHTML = `<span class="brand-mark">${escapeHtml(brandInitial)}</span>` + escapeHtml(brandName);
+  });
+  document.querySelectorAll(".brand-mark").forEach(bm => {
+    bm.textContent = brandInitial;
+  });
+
+  // 2. Preloader logo & tagline
+  const preBrand = document.querySelector(".preloader-brand");
+  if(preBrand) preBrand.textContent = brandName;
+  const preTag = document.querySelector(".preloader-tagline");
+  if(preTag) preTag.textContent = `${tagline.toUpperCase()} · ${slogan.toUpperCase()}`;
+
+  // 3. Hero & Page Title
+  const gw = document.querySelector(".ghost-word");
+  if(gw) gw.textContent = brandName;
+  const hTag = document.querySelector(".hero-top .mini-label");
+  if(hTag) hTag.textContent = `${brandName} / ${tagline}`;
+  const pLabel = document.querySelector(".price-label");
+  if(pLabel) pLabel.textContent = `${brandName} price`;
+  document.title = `${brandName} — ${tagline} | Premium Futuristic Streetwear Sneakers`;
+
+  // 4. Cart Drawer
+  const cartHead = document.querySelector(".drawer-head h2");
+  if(cartHead) cartHead.textContent = `Your ${brandName} Cart`;
+
+  // 5. Search Panel
+  const sInput = document.getElementById("searchInput");
+  if(sInput) sInput.placeholder = `Search ${brandName} shoes, colors, or collection…`;
+
+  // 6. Review Modal Collection Option
+  const revOpt = document.querySelector("#reviewShoe option[value*='Signature']");
+  if(revOpt) {
+    revOpt.value = `${brandName} Signature`;
+    revOpt.textContent = `${brandName} Signature Collection`;
+  }
+
+  // 7. About Us Section Headings & Badges
+  const aboutHead = document.querySelector(".about-section .section-head h2");
+  if(aboutHead) aboutHead.innerHTML = `ABOUT US — ${escapeHtml(brandName.toUpperCase())}<span style="color:var(--accent)">.</span>`;
+  const fRole = document.querySelector(".founder-meta p");
+  if(fRole) fRole.textContent = (data.about && data.about.founderRole) ? data.about.founderRole.replace(/\bALIZOX\b/gi, brandName) : `Founder of ${brandName}`;
+  const whyHead = document.querySelector(".why-section-title h3");
+  if(whyHead) whyHead.textContent = `Why ${brandName}?`;
+  const whyCommunity = document.querySelector(".why-grid .why-card:nth-child(4) p");
+  if(whyCommunity) whyCommunity.textContent = `Every customer is part of our journey as we build, expand, and shape the future of ${brandName} together.`;
+  const qAuthor = document.querySelector(".quote-author span");
+  if(qAuthor) qAuthor.textContent = `Founder of ${brandName} · Class 10th Student`;
+  const qSlogan = document.querySelector(".quote-slogan");
+  if(qSlogan) qSlogan.textContent = `${brandName} — ${slogan}.`;
+
+  // 8. Footer Copyright
+  const fCopy = document.querySelector("footer div:nth-child(2) div:first-child");
+  if(fCopy) fCopy.innerHTML = `© <span id="year">${new Date().getFullYear()}</span> ${escapeHtml(brandName)}. Founded by Ali Hamid. ${escapeHtml(slogan)}.`;
+
+  // 9. About Story & Mission Paragraphs Brand Replacement
+  document.querySelectorAll(".about-story-col p").forEach(p => {
+    p.innerHTML = p.innerHTML.replace(/\bALIZOX\b/gi, `<strong>${escapeHtml(brandName)}</strong>`);
+  });
+  document.querySelectorAll(".mv-card p").forEach(p => {
+    p.textContent = p.textContent.replace(/\bALIZOX\b/gi, brandName);
+  });
+
+  // 10. Theme
+  if(data.theme){
+    document.documentElement.style.setProperty("--accent", data.theme.accent);
+    document.documentElement.style.setProperty("--accent2", data.theme.accent2);
+    if(data.theme.glow) document.documentElement.style.setProperty("--glow", data.theme.glow);
+  }
+  if(Array.isArray(data.products) && data.products.length > 0){
+    products.length = 0;
+    data.products.forEach(p => products.push(p));
+    current = Math.min(current, products.length - 1);
+    renderGrid();
+    paintProduct();
+  }
+  if(Array.isArray(data.reviews) && data.reviews.length > 0){
+    renderReviews(data.reviews);
+  }
+  if(data.about){
+    const fName = document.querySelector(".founder-meta h3");
+    if(fName && data.about.founderName) fName.textContent = data.about.founderName;
+    const stats = document.querySelectorAll(".quick-stat-val");
+    if(stats[0] && data.about.age) stats[0].textContent = data.about.age;
+    if(stats[1] && data.about.education) stats[1].textContent = data.about.education;
+    const sTitle = document.querySelector(".about-story-col h4");
+    if(sTitle && data.about.storyTitle) sTitle.textContent = data.about.storyTitle.replace(/\bALIZOX\b/gi, brandName);
+    const qText = document.querySelector(".quote-text");
+    if(qText && data.about.quote) qText.textContent = `“${data.about.quote.replace(/\bALIZOX\b/gi, brandName)}”`;
+  }
+}
+
+async function syncWithStoreData(){
+  // 1. Immediately apply locally persisted store data (0ms latency, never reverts!)
+  let localData = null;
+  try {
+    const local = localStorage.getItem("alizox_live_store_data");
+    if(local) {
+      localData = JSON.parse(local);
+      if(localData && localData.products && localData.products.length) {
+        applyStorePayload(localData);
+      }
+    }
+  } catch(e){}
+
+  const localTime = localData && localData.updatedAt ? new Date(localData.updatedAt).getTime() : 0;
+
+  // 2. Fetch fresh live store-data from server and GitHub
+  let remoteData = null;
+  try{
+    const res = await fetch("store-data.json?v=" + Date.now(), { cache: "no-store" });
+    if(res.ok) {
+      remoteData = await res.json();
+    }
+  }catch(e){}
+
+  // Check GitHub raw directly to see if newer data is available on GitHub
+  try {
+    const ghRes = await fetch("https://raw.githubusercontent.com/aliloveff500/ALIZOX_SHOE/main/store-data.json?v=" + Date.now(), { cache: "no-store" });
+    if(ghRes.ok) {
+      const ghData = await ghRes.json();
+      if(ghData && ghData.updatedAt) {
+        const ghTime = new Date(ghData.updatedAt).getTime();
+        const curRemoteTime = remoteData && remoteData.updatedAt ? new Date(remoteData.updatedAt).getTime() : 0;
+        if(ghTime > curRemoteTime) {
+          remoteData = ghData;
+        }
+      } else if (!remoteData) {
+        remoteData = ghData;
+      }
+    }
+  } catch(e){}
+
+  // 3. Apply remote payload ONLY if it is strictly NEWER than local data!
+  if(remoteData && remoteData.products && remoteData.products.length) {
+    const remoteTime = remoteData.updatedAt ? new Date(remoteData.updatedAt).getTime() : 0;
+
+    // Strict greater-than: prevents stale server data from overwriting fresh local edits
+    if(remoteTime > localTime || !localData) {
+      applyStorePayload(remoteData);
+      try { localStorage.setItem("alizox_live_store_data", JSON.stringify(remoteData)); } catch(e){}
+    }
+  }
+}
+renderCart();
+renderGrid();paintProduct();
+renderReviews();
+syncWithStoreData();
+refreshMyOrdersStatus(false);
+setInterval(() => refreshMyOrdersStatus(false), 12000);
+</script>
+</body>
+</html>

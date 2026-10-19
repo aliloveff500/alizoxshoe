@@ -1165,25 +1165,38 @@ function addCurrentToCart(){const p=products[current],c=(p.colors&&p.colors[colo
 $("addToCartBtn").addEventListener("click",addCurrentToCart);$("cartBtn").addEventListener("click",openCart);$("closeCart").addEventListener("click",closeCart);$("drawerBackdrop").addEventListener("click",closeCart);document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCart();});
 $("cartItems").addEventListener("click",e=>{const b=e.target.closest("button[data-cart-action]");if(!b)return;const i=Number(b.dataset.i);if(!cart[i])return;const action=b.dataset.cartAction;if(action==="minus")cart[i].quantity=Math.max(1,cart[i].quantity-1);if(action==="plus")cart[i].quantity=Math.min(20,cart[i].quantity+1);if(action==="remove")cart.splice(i,1);saveCart();});
 async function submitOrderToBackend(orderData) {
-  // 1. Save locally in localStorage
+  // 1. Save locally in customer's own device orders list
   try {
     const orders = JSON.parse(localStorage.getItem("alizox_customer_orders") || "[]");
-    orders.unshift(orderData);
-    localStorage.setItem("alizox_customer_orders", JSON.stringify(orders));
+    if (!orders.some(o => o.id === orderData.id)) {
+      orders.unshift(orderData);
+      localStorage.setItem("alizox_customer_orders", JSON.stringify(orders));
+    }
   } catch(e) {}
 
-  // 2. Submit to backend API (/api/orders on Vercel or local server)
+  // 2. Also save to admin orders backup (so if admin tests on this device it shows immediately with 0ms latency)
+  try {
+    const adminOrders = JSON.parse(localStorage.getItem("alizox_orders_backup") || "[]");
+    if (!adminOrders.some(o => o.id === orderData.id)) {
+      adminOrders.unshift(orderData);
+      localStorage.setItem("alizox_orders_backup", JSON.stringify(adminOrders));
+    }
+  } catch(e) {}
+
+  // 3. Submit to backend API (/api/orders on Vercel or local server) with keepalive: true!
+  // keepalive: true ensures the HTTP request is NEVER cancelled even if user navigates to WhatsApp!
   let sentToApi = false;
   try {
     const res = await fetch("api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderData)
+      body: JSON.stringify(orderData),
+      keepalive: true
     });
     if (res.ok) sentToApi = true;
   } catch(e) {}
 
-  // 3. Fallback: If static host without serverless function, sync directly to GitHub orders-data.json
+  // 4. Fallback: If static host without serverless function, sync directly to GitHub orders-data.json
   if (!sentToApi) {
     try {
       const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
@@ -1195,6 +1208,8 @@ async function submitOrderToBackend(orderData) {
         const meta = await getRes.json();
         const cur = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
         cur.orders = cur.orders || [];
+        cur.deletedIds = (cur.deletedIds || []).filter(id => String(id) !== String(orderData.id));
+        cur.orders = cur.orders.filter(o => String(o.id) !== String(orderData.id));
         cur.orders.unshift(orderData);
         cur.updatedAt = new Date().toISOString();
         const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(cur, null, 2))));
@@ -1206,13 +1221,14 @@ async function submitOrderToBackend(orderData) {
             content: b64,
             sha: meta.sha,
             branch: "main"
-          })
+          }),
+          keepalive: true
         });
       }
     } catch(e) {}
   }
 
-  // 4. Send background email alert to store owner (aliloveff500@gmail.com) via FormSubmit
+  // 5. Send background email alert to store owner (aliloveff500@gmail.com) via FormSubmit
   try {
     fetch("https://formsubmit.co/ajax/aliloveff500@gmail.com", {
       method: "POST",
@@ -1229,7 +1245,8 @@ async function submitOrderToBackend(orderData) {
         Items: orderData.items.map(x => `${x.name} (${x.color}, UK ${x.size}) x${x.quantity} - PKR ${(x.price * x.quantity).toLocaleString()}`).join(" | "),
         Subtotal: `PKR ${orderData.subtotal.toLocaleString()}`,
         Date: new Date().toLocaleString("en-PK")
-      })
+      }),
+      keepalive: true
     }).catch(()=>{});
   } catch(e) {}
 }
@@ -1320,13 +1337,17 @@ $("checkoutForm").addEventListener("submit", async e => {
   const itemsText = cartBackupForWa.map(x=>`• ${x.name} | Color: ${x.color} | UK ${x.size} | Qty: ${x.quantity} | ${formatPrice(x.price*x.quantity)}`).join("\n");
   const msg = `Assalam-o-Alaikum! I have placed an order on ${brandName} website.\n\n*ORDER ID: #${orderId}*\nCustomer: ${orderData.customer.name}\nPhone: ${orderData.customer.phone}\nAddress: ${orderData.customer.address}\nCity: ${orderData.customer.city}\nPayment preference: ${orderData.customer.payment}\n\n*ORDER ITEMS*\n${itemsText}\n\n*Subtotal: ${formatPrice(total)}*\nNotes: ${orderData.customer.notes}\n\nPlease confirm availability and dispatch schedule.`;
 
-  // 8. Open WhatsApp in new tab
-  setTimeout(() => {
-    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
-  }, 600);
+  // 8. Start submitting order to Backend Database immediately
+  const backendTask = submitOrderToBackend(orderData).catch(err => console.warn("Backend order submission error:", err));
 
-  // 9. Submit order to Backend Database in background (asynchronous, never blocks or freezes UI)
-  submitOrderToBackend(orderData).catch(err => console.warn("Backend order submission error:", err));
+  // 9. Wait briefly (up to 450ms) to ensure HTTP request is dispatched before switching to WhatsApp
+  await Promise.race([
+    backendTask,
+    new Promise(resolve => setTimeout(resolve, 450))
+  ]);
+
+  // 10. Open WhatsApp in new tab / mobile app
+  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
 });
 
 // ========================================================
@@ -1422,13 +1443,16 @@ async function refreshMyOrdersStatus(showNotification = false) {
       }
     } catch(e) {}
 
+    let remoteDeletedIds = [];
+
     // 2. Fetch from /api/orders (Vercel serverless / local server)
     try {
       const res = await fetch("api/orders?t=" + Date.now());
       if (res.ok) {
         const json = await res.json();
-        if (json && Array.isArray(json.orders)) {
-          allRemoteOrders = json.orders;
+        if (json) {
+          if (Array.isArray(json.deletedIds)) remoteDeletedIds = json.deletedIds;
+          if (Array.isArray(json.orders)) allRemoteOrders = json.orders;
         }
       }
     } catch(e) {}
@@ -1444,8 +1468,9 @@ async function refreshMyOrdersStatus(showNotification = false) {
         if (ghRes.ok) {
           const meta = await ghRes.json();
           const cur = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
-          if (cur && Array.isArray(cur.orders)) {
-            allRemoteOrders = cur.orders;
+          if (cur) {
+            if (Array.isArray(cur.deletedIds)) remoteDeletedIds = cur.deletedIds;
+            if (Array.isArray(cur.orders)) allRemoteOrders = cur.orders;
           }
         }
       } catch(e) {}
@@ -1457,9 +1482,23 @@ async function refreshMyOrdersStatus(showNotification = false) {
         const res = await fetch("orders-data.json?t=" + Date.now(), { cache: "no-store" });
         if (res.ok) {
           const json = await res.json();
-          if (json && Array.isArray(json.orders)) allRemoteOrders = json.orders;
+          if (json) {
+            if (Array.isArray(json.deletedIds)) remoteDeletedIds = json.deletedIds;
+            if (Array.isArray(json.orders)) allRemoteOrders = json.orders;
+          }
         }
       } catch(e) {}
+    }
+
+    // If any orders were deleted by admin, permanently remove them from customer's tracker
+    if (remoteDeletedIds.length) {
+      const delSet = new Set(remoteDeletedIds.map(String));
+      const filteredMy = myOrders.filter(o => !delSet.has(String(o.id)));
+      if (filteredMy.length !== myOrders.length) {
+        myOrders.length = 0;
+        filteredMy.forEach(o => myOrders.push(o));
+        saveMyOrders(myOrders);
+      }
     }
 
     // Match and update THIS customer's orders
@@ -1964,16 +2003,25 @@ function applyStorePayload(data){
     p.textContent = p.textContent.replace(/\bALIZOX\b/gi, brandName);
   });
 
-  // 10. Theme
+  // 10. Theme: Ensure Electric Ice Blue is default and never reverts to legacy purple
   if(data.theme){
-    document.documentElement.style.setProperty("--accent", data.theme.accent);
-    document.documentElement.style.setProperty("--accent2", data.theme.accent2);
-    if(data.theme.glow) document.documentElement.style.setProperty("--glow", data.theme.glow);
+    const accent = (data.theme.accent === "#c026d3") ? "#0284c7" : data.theme.accent;
+    const accent2 = (data.theme.accent2 === "#581c87") ? "#1e3a8a" : data.theme.accent2;
+    const glow = (data.theme.glow && data.theme.glow.includes("192, 38, 211")) ? "rgba(2, 132, 199, 0.45)" : (data.theme.glow || "rgba(2, 132, 199, 0.45)");
+    document.documentElement.style.setProperty("--accent", accent);
+    document.documentElement.style.setProperty("--accent2", accent2);
+    document.documentElement.style.setProperty("--glow", glow);
   }
   if(Array.isArray(data.products) && data.products.length > 0){
     products.length = 0;
     data.products.forEach(p => products.push(p));
-    current = Math.min(current, products.length - 1);
+    // Ensure product #1 is AERO FLOW (Ice Blue) if available
+    const blueIdx = products.findIndex(p => p.id === 3 || (p.colors && p.colors.some(c => c.name.toLowerCase().includes("blue"))));
+    if(blueIdx > 0){
+      const blueProd = products.splice(blueIdx, 1)[0];
+      products.unshift(blueProd);
+    }
+    current = 0;
     renderGrid();
     paintProduct();
   }
@@ -1994,6 +2042,14 @@ function applyStorePayload(data){
 }
 
 async function syncWithStoreData(){
+  // Clear any legacy purple theme cache so Electric Ice Blue stays default
+  try {
+    const rawLocal = localStorage.getItem("alizox_live_store_data");
+    if(rawLocal && rawLocal.includes("#c026d3")) {
+      localStorage.removeItem("alizox_live_store_data");
+    }
+  } catch(e){}
+
   // 1. Immediately apply locally persisted store data (0ms latency, never reverts!)
   let localData = null;
   try {

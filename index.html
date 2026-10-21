@@ -1126,15 +1126,21 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
     <div id="authAlertBox" style="display:none" class="auth-alert-box"></div>
 
     <!-- 1. SIGN IN FORM -->
-    <form id="customerSignInForm" class="auth-form active">
+    <form id="customerSignInForm" class="auth-form active" autocomplete="off">
+      <!-- Hidden dummy fields to prevent browser password managers from auto-filling admin credentials -->
+      <div style="opacity:0;position:absolute;top:0;left:0;height:0;width:0;z-index:-1;overflow:hidden">
+        <input type="text" name="fake_username_anti_autofill" tabindex="-1" autocomplete="off">
+        <input type="password" name="fake_password_anti_autofill" tabindex="-1" autocomplete="off">
+      </div>
+
       <div class="form-group">
         <label for="loginEmailInput">Email or Username *</label>
-        <input type="text" id="loginEmailInput" required placeholder="Enter your email or username" autocomplete="username">
+        <input type="text" id="loginEmailInput" name="alx_cust_user" required placeholder="Enter your email or username" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" onclick="this.removeAttribute('readonly')" value="">
       </div>
       <div class="form-group">
         <label for="loginPasswordInput">Password *</label>
         <div style="position:relative;display:flex;align-items:center">
-          <input type="password" id="loginPasswordInput" required placeholder="Enter your password" autocomplete="current-password" style="padding-right:42px">
+          <input type="password" id="loginPasswordInput" name="alx_cust_pass" required placeholder="Enter your password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" onclick="this.removeAttribute('readonly')" value="" style="padding-right:42px">
           <button type="button" class="auth-eye-btn" onclick="toggleAuthPass('loginPasswordInput', this)" title="Show/Hide">👁️</button>
         </div>
       </div>
@@ -1145,19 +1151,24 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
     </form>
 
     <!-- 2. CREATE ACCOUNT (SIGN UP) FORM -->
-    <form id="customerSignUpForm" class="auth-form" style="display:none">
+    <form id="customerSignUpForm" class="auth-form" style="display:none" autocomplete="off">
+      <!-- Hidden dummy fields to prevent browser autofill -->
+      <div style="opacity:0;position:absolute;top:0;left:0;height:0;width:0;z-index:-1;overflow:hidden">
+        <input type="text" name="fake_reg_user_anti_autofill" tabindex="-1" autocomplete="off">
+        <input type="password" name="fake_reg_pass_anti_autofill" tabindex="-1" autocomplete="off">
+      </div>
       <div class="form-group">
         <label for="regNameInput">Full Name *</label>
-        <input type="text" id="regNameInput" required placeholder="Ali Hamid" autocomplete="name">
+        <input type="text" id="regNameInput" name="alx_reg_name" required placeholder="Ali Hamid" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" onclick="this.removeAttribute('readonly')" value="">
       </div>
       <div class="form-group">
         <label for="regEmailInput">Email Address *</label>
-        <input type="email" id="regEmailInput" required placeholder="name@example.com" autocomplete="email">
+        <input type="email" id="regEmailInput" name="alx_reg_email" required placeholder="name@example.com" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" onclick="this.removeAttribute('readonly')" value="">
       </div>
       <div class="form-group">
         <label for="regPasswordInput">Password (Min 4 chars) *</label>
         <div style="position:relative;display:flex;align-items:center">
-          <input type="password" id="regPasswordInput" required placeholder="Enter new password" minlength="4" autocomplete="new-password" style="padding-right:42px">
+          <input type="password" id="regPasswordInput" name="alx_reg_secret" required placeholder="Enter new password" minlength="4" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" onclick="this.removeAttribute('readonly')" value="" style="padding-right:42px">
           <button type="button" class="auth-eye-btn" onclick="toggleAuthPass('regPasswordInput', this)" title="Show/Hide">👁️</button>
         </div>
       </div>
@@ -1744,6 +1755,19 @@ function updateAuthUI() {
   }
 }
 
+function clearAuthInputs() {
+  const fields = ["loginEmailInput", "loginPasswordInput", "regNameInput", "regEmailInput", "regPasswordInput", "regPhoneInput", "regCityInput", "regAddressInput"];
+  fields.forEach(id => {
+    const el = $(id);
+    if (el) {
+      el.value = "";
+      el.setAttribute("readonly", "readonly");
+      el.onfocus = function() { this.removeAttribute("readonly"); };
+      el.onclick = function() { this.removeAttribute("readonly"); };
+    }
+  });
+}
+
 function openAuthModal(message = null, targetTab = "signin") {
   const m = $("authModal");
   const b = $("authModalBackdrop");
@@ -1767,6 +1791,16 @@ function openAuthModal(message = null, targetTab = "signin") {
     }
   }
 
+  // WIPE ANY PRE-FILLED CREDENTIALS / PREVENT ADMIN AUTOFILL
+  clearAuthInputs();
+  setTimeout(clearAuthInputs, 30);
+  setTimeout(() => {
+    const e = $("loginEmailInput");
+    const p = $("loginPasswordInput");
+    if (e && (e.value === "admin" || e.value.toLowerCase().includes("ali hamid") || e.value.includes("@dmin"))) e.value = "";
+    if (p && (p.value.includes("49229") || (!e || !e.value))) p.value = "";
+  }, 120);
+
   m.classList.add("open");
   b.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -1778,6 +1812,7 @@ function closeAuthModal() {
   if (m) m.classList.remove("open");
   if (b) b.classList.remove("open");
   document.body.style.overflow = "";
+  clearAuthInputs();
 }
 
 function switchAuthTab(tab) {
@@ -1788,6 +1823,7 @@ function switchAuthTab(tab) {
   $("customerSignUpForm").style.display = !isSignIn ? "grid" : "none";
   const alertBox = $("authAlertBox");
   if (alertBox) alertBox.style.display = "none";
+  clearAuthInputs();
 }
 
 function toggleAuthPass(inputId, btn) {
@@ -1851,6 +1887,11 @@ if ($("closeAuthModal")) $("closeAuthModal").addEventListener("click", closeAuth
 if ($("authModalBackdrop")) $("authModalBackdrop").addEventListener("click", closeAuthModal);
 if ($("tabSignInBtn")) $("tabSignInBtn").addEventListener("click", () => switchAuthTab("signin"));
 if ($("tabSignUpBtn")) $("tabSignUpBtn").addEventListener("click", () => switchAuthTab("signup"));
+window.addEventListener("DOMContentLoaded", clearAuthInputs);
+window.addEventListener("load", () => {
+  clearAuthInputs();
+  setTimeout(clearAuthInputs, 200);
+});
 if ($("customerLogoutBtn")) $("customerLogoutBtn").addEventListener("click", () => {
   setCurrentUser(null);
   closeAuthModal();

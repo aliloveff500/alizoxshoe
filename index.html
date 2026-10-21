@@ -242,7 +242,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 /* Search, cart and checkout additions */
-.search-panel{display:none;position:absolute;top:calc(100% + 8px);right:clamp(16px,5vw,76px);width:min(430px,calc(100vw - 32px));padding:16px;background:#17171c;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 60px #0009;z-index:30}.search-panel.open{display:block}.search-input{width:100%;padding:14px 15px;border-radius:9px;border:1px solid var(--line);background:#0e0e12;color:#fff;outline:none}.search-input:focus{border-color:var(--accent)}.search-hint{font-size:10px;color:#8f8f9a;margin:9px 2px 0}.cart-count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:20px;background:var(--accent);color:#111;font-size:10px;font-weight:900;display:grid;place-items:center}.cart-trigger{position:relative}.hero-buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.cart-add-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 10px;margin-top:10px;background:transparent;color:#fff;border:1px solid var(--accent);border-radius:7px;font-size:9px;font-weight:950;letter-spacing:.09em;text-transform:uppercase;transition:all .2s}.cart-add-btn:hover{background:var(--accent);color:#111;transform:translateY(-2px)}.cart-add-btn svg{width:16px;height:16px}
+.search-panel{display:none;position:absolute;top:calc(100% + 8px);right:clamp(16px,5vw,76px);width:min(430px,calc(100vw - 32px));padding:16px;background:#17171c;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 60px #0009;z-index:30}.search-panel.open{display:block}.search-input{width:100%;padding:14px 15px;border-radius:9px;border:1px solid var(--line);background:#0e0e12;color:#fff;outline:none}.search-input:focus{border-color:var(--accent)}.search-hint{font-size:10px;color:#8f8f9a;margin:9px 2px 0}.cart-count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:20px;background:var(--accent);color:#111;font-size:10px;font-weight:900;display:grid;place-items:center}.cart-trigger{position:relative}.hero-buy-actions{display:block;margin-top:10px}.cart-add-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 20px;margin-top:0;background:var(--accent);color:#111;border:1px solid var(--accent);border-radius:9px;font-size:11px;font-weight:950;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 25px rgba(0,240,255,0.25);transition:all .25s cubic-bezier(0.16,1,0.3,1)}.cart-add-btn:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(0,240,255,0.5);filter:brightness(1.1)}.cart-add-btn svg{width:18px;height:18px}
 /* Eye-Catching 30% Off on Second Order Badge */
 .second-order-offer{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:6px 12px;border-radius:999px;background:rgba(2,132,199,.1);border:1px solid rgba(2,132,199,.32);color:#f8fafc;font-size:11px;font-weight:700;letter-spacing:.02em;box-shadow:0 0 18px rgba(2,132,199,.18);animation:offerPulse 2.8s ease-in-out infinite;user-select:none;width:fit-content;max-width:100%}
 @keyframes offerPulse{0%,100%{box-shadow:0 0 12px rgba(2,132,199,.15);border-color:rgba(2,132,199,.32)}50%{box-shadow:0 0 22px rgba(2,132,199,.45);border-color:var(--accent)}}
@@ -500,6 +500,157 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
   .card-actions button{padding:6px 2px!important;font-size:8px!important}
   .quick-stat-val{font-size:13px}
 }
+
+/* CUSTOMER AUTH & ACCOUNT PORTAL */
+.account-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:#17171b;color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em;transition:all .2s;cursor:pointer}
+.account-btn:hover{border-color:var(--accent);color:var(--accent)}
+.account-btn.logged-in{border-color:var(--accent);background:rgba(2,132,199,.15);color:#fff;box-shadow:0 0 12px var(--glow)}
+.auth-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:min(440px,calc(100vw - 28px));background:#131318;border:1px solid var(--line);border-radius:20px;padding:24px 22px;z-index:201;opacity:0;pointer-events:none;transition:all .25s ease;box-shadow:0 30px 90px rgba(0,0,0,.85);max-height:92vh;overflow-y:auto}
+.auth-modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.auth-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.auth-avatar-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:16px;color:#fff;box-shadow:0 0 15px var(--glow)}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#0c0c10;padding:4px;border-radius:10px;border:1px solid var(--line);margin-bottom:16px}
+.auth-tab{padding:8px;border-radius:7px;border:0;background:transparent;color:#94a3b8;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;transition:all .2s}
+.auth-tab.active{background:#202028;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.auth-alert-box{padding:10px 12px;border-radius:8px;font-size:11.5px;line-height:1.45;margin-bottom:14px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.1);color:#fbbf24}
+.auth-alert-box.error{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.1);color:#f87171}
+.auth-alert-box.success{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.1);color:#34d399}
+.auth-form{display:grid;gap:12px}
+.auth-form .form-group{display:grid;gap:5px}
+.auth-form label{font-size:10.5px;color:#aaaab8;font-weight:700}
+.auth-form input{width:100%;background:#09090d;border:1px solid var(--line);border-radius:8px;padding:11px 12px;color:#fff;font-size:12px;outline:none}
+.auth-form input:focus{border-color:var(--accent)}
+.auth-eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:#94a3b8;padding:6px;cursor:pointer;font-size:14px}
+.auth-submit-btn{width:100%;border:0;border-radius:8px;padding:12px;background:var(--accent);color:#0a0a0f;font-weight:950;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.auth-submit-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.profile-card{display:flex;align-items:center;gap:14px;background:#0d0d12;border:1px solid var(--line);border-radius:12px;padding:14px}
+.profile-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:18px;font-weight:950;color:#fff;box-shadow:0 0 15px var(--glow)}
+
+/* CHECKOUT CUSTOMER SUPPORT CARD */
+.checkout-support-card{background:linear-gradient(135deg,rgba(37,211,102,.07),rgba(2,132,199,.06));border:1px solid rgba(37,211,102,.25);border-radius:12px;padding:13px 14px;margin-top:16px}
+.support-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.support-icon-wrap{width:30px;height:30px;border-radius:8px;background:#25d366;color:#000;display:grid;place-items:center;font-size:15px;flex-shrink:0}
+.support-card-head h4{margin:0;font-size:12px;color:#fff;font-weight:900}
+.support-card-head p{margin:2px 0 0;font-size:10px;color:#a4a4b2}
+.support-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.support-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 8px;border-radius:7px;font-size:10px;font-weight:900;text-decoration:none;transition:all .2s;letter-spacing:.02em}
+.support-btn.wa{background:#25d366;color:#052e16}
+.support-btn.wa:hover{filter:brightness(1.1)}
+.support-btn.phone{background:#1e1e26;border:1px solid rgba(255,255,255,.12);color:#fff}
+.support-btn.phone:hover{border-color:var(--accent);color:var(--accent)}
+
+/* FLY TO CART ANIMATION */
+.cart-flyer{
+  position:fixed;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,rgba(0,240,255,.35),rgba(10,14,26,.92));
+  border:2px solid var(--accent);
+  box-shadow:0 0 25px var(--accent),0 0 50px rgba(0,240,255,.45);
+  z-index:999999;
+  pointer-events:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  padding:5px;
+  transition:all .72s cubic-bezier(.22,1,.36,1);
+}
+.cart-flyer img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 0 8px var(--accent));
+}
+
+@keyframes cartBouncePulse{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.4) rotate(-9deg);filter:drop-shadow(0 0 24px var(--accent))}
+  65%{transform:scale(.92) rotate(4deg)}
+  100%{transform:scale(1) rotate(0);filter:none}
+}
+.cart-bounce-anim{
+  animation:cartBouncePulse .6s cubic-bezier(.175,.885,.32,1.275) forwards!important;
+}
+
+@keyframes badgePopPulse{
+  0%{transform:scale(1)}
+  45%{transform:scale(1.75);background:#fff!important;color:#000!important;box-shadow:0 0 18px #fff}
+  100%{transform:scale(1)}
+}
+.badge-pop-anim{
+  animation:badgePopPulse .55s cubic-bezier(.175,.885,.32,1.275) forwards!important;
+}
+
+/* ORDER PLACED SUCCESSFULLY CARD */
+.order-placed-success-card{
+  background:linear-gradient(145deg,rgba(16,185,129,.12),rgba(10,15,25,.96));
+  border:1px solid rgba(16,185,129,.35);
+  border-radius:16px;
+  padding:22px 18px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(16,185,129,.15);
+  animation:successCardFadeIn .45s cubic-bezier(.16,1,.3,1);
+}
+@keyframes successCardFadeIn{
+  from{opacity:0;transform:translateY(16px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.success-icon-badge{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#10b981,#059669);
+  color:#fff;
+  font-size:28px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 12px;
+  box-shadow:0 0 25px rgba(16,185,129,.5);
+}
+.success-summary-card{
+  background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  text-align:left;
+  font-size:11.5px;
+  margin:14px 0;
+}
+.success-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.success-row:last-child{
+  border-bottom:none;
+  padding-bottom:0;
+}
+.success-row span{color:var(--muted)}
+.success-row strong{color:#fff}
+.success-wa-btn{
+  background:#25d366;
+  color:#042f13;
+  padding:13px 18px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:900;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  box-shadow:0 4px 20px rgba(37,211,102,.3);
+  transition:all .2s;
+}
+.success-wa-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 </style>
 </head>
 <body>
@@ -512,10 +663,11 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
   </nav>
   <div class="header-actions">
     <button class="icon-btn" id="searchBtn" aria-label="Search products"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></button>
+    <button class="account-btn" id="accountBtn" aria-label="Customer Account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span id="accountBtnLabel">Sign In</span></button>
     <button class="icon-btn cart-trigger" id="cartBtn" aria-label="Open shopping cart"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cart-count" id="cartCount">0</span></button>
     <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
   </div>
-  <nav class="mobile-menu" id="mobileMenu"><a href="#home">Featured</a><a href="#shop">Shop All</a><a href="#shop" data-filter-link="Men">Men</a><a href="#shop" data-filter-link="Women">Women</a><a href="#reviews">Reviews</a><a href="#about">About Us</a></nav>
+  <nav class="mobile-menu" id="mobileMenu"><a href="#home">Featured</a><a href="#shop">Shop All</a><a href="#shop" data-filter-link="Men">Men</a><a href="#shop" data-filter-link="Women">Women</a><a href="#reviews">Reviews</a><a href="#about">About Us</a><a href="javascript:void(0)" id="mobileAccountLink">👤 <span id="mobileAccountLabel">Sign In / My Account</span></a></nav>
   <div class="search-panel" id="searchPanel" role="search"><input class="search-input" id="searchInput" type="search" placeholder="Search shoes, colors, or collection…" autocomplete="off" aria-label="Search ALIZOX products"><div class="search-hint">Search updates the collection instantly.</div></div>
 </header>
 <main>
@@ -532,7 +684,12 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
       <div class="detail-line"></div>
       <div class="color-area"><div class="detail-label">Colorway</div><div class="color-name" id="colorName">Ice Blue</div><div class="swatches" id="swatches"></div></div>
       <div class="purchase-options"><div class="size-area"><div class="detail-label">Select size (UK)</div><select class="size-select" id="sizeSelect" aria-label="Select shoe size"><option>UK 5</option><option>UK 6</option><option selected>UK 7</option><option>UK 8</option><option>UK 9</option><option>UK 10</option></select></div><div class="quantity-area"><div class="quantity-label">Quantity</div><div class="quantity-control"><button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button><output id="quantityValue" aria-live="polite">1</output><button type="button" id="qtyPlus" aria-label="Increase quantity">+</button></div></div></div>
-      <div class="hero-buy-actions"><button class="buy-btn" id="buyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.2a9 9 0 1 1 16.1-4.3Z"/><path d="M8.5 9.5c.8 2 2 3.2 4 4"/></svg> Buy via WhatsApp</button><button class="cart-add-btn" id="addToCartBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2M8 13h8"/></svg> Add to cart</button></div>
+      <div class="hero-buy-actions">
+        <button class="cart-add-btn" id="addToCartBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2M8 13h8"/></svg>
+          Add to Cart
+        </button>
+      </div>
       <div class="second-order-offer" id="secondOrderOffer">
         <span class="offer-flame">🔥</span>
         <span class="offer-copy"><strong>30% OFF</strong> on second order</span>
@@ -812,22 +969,50 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
       <span>Subtotal</span><strong id="cartSubtotal">PKR 0</strong>
     </div>
     <form class="checkout-form" id="checkoutForm">
-      <h3>Checkout details</h3>
-      <label>Full name *<input name="customerName" required maxlength="100" autocomplete="name" placeholder="Your full name"></label>
-      <label>Phone / WhatsApp *<input name="phone" required type="tel" maxlength="25" autocomplete="tel" placeholder="03XX XXXXXXX"></label>
-      <label>Delivery address *<textarea name="address" required maxlength="500" autocomplete="street-address" placeholder="House, street, area"></textarea></label>
-      <label>City *<input name="city" required maxlength="80" autocomplete="address-level2" placeholder="e.g. Lahore"></label>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 style="margin:0">Checkout details</h3>
+        <span id="checkoutAuthBadge" style="font-size:10px;padding:3px 8px;border-radius:999px;background:rgba(2,132,199,0.15);color:var(--accent);border:1px solid var(--glow);font-weight:800">👤 Guest</span>
+      </div>
+      <div id="checkoutAuthNotice" style="display:none;font-size:11px;padding:8px 10px;border-radius:7px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#34d399"></div>
+      <label>Email address (for cross-device tracking) *<input name="customerEmail" id="checkoutEmail" required type="email" autocomplete="email" placeholder="e.g. name@example.com"></label>
+      <label>Full name *<input name="customerName" id="checkoutName" required maxlength="100" autocomplete="name" placeholder="Your full name"></label>
+      <label>Phone / WhatsApp *<input name="phone" id="checkoutPhone" required type="tel" maxlength="25" autocomplete="tel" placeholder="03XX XXXXXXX"></label>
+      <label>Delivery address *<textarea name="address" id="checkoutAddress" required maxlength="500" autocomplete="street-address" placeholder="House, street, area"></textarea></label>
+      <label>City *<input name="city" id="checkoutCity" required maxlength="80" autocomplete="address-level2" placeholder="e.g. Lahore"></label>
       <label>Payment method
         <select name="payment">
+          <option value="Cash on Delivery">Cash on Delivery (Standard)</option>
           <option value="Easypaisa — confirm manually">Easypaisa (confirm manually)</option>
           <option value="JazzCash — confirm manually">JazzCash (confirm manually)</option>
           <option value="Bank transfer — confirm manually">Bank transfer (confirm manually)</option>
         </select>
       </label>
       <label>Order notes (optional)<textarea name="notes" maxlength="500" placeholder="Any delivery instructions"></textarea></label>
-      <button class="checkout-submit" type="submit">Send order via WhatsApp</button>
-      <p class="checkout-note">🔒 Your order details are securely recorded in our store system. Submitting also opens WhatsApp with your order reference so our team can confirm dispatch immediately.</p>
+      <button class="checkout-submit" id="placeOrderSubmitBtn" type="submit">🛍️ Place Order ➔</button>
+      <p class="checkout-note" style="text-align:center;color:#9b9ba8;margin:6px 0 2px">🔒 Cash on Delivery · Zero risk · Instant order recording</p>
     </form>
+
+    <!-- ORDER PLACED SUCCESS CONTAINER -->
+    <div id="orderSuccessContainer" style="display:none;margin-top:14px"></div>
+
+    <!-- CUSTOMER SUPPORT SECTION (Direct WhatsApp & Helpline) -->
+    <div class="checkout-support-card">
+      <div class="support-card-head">
+        <div class="support-icon-wrap" style="background:#25d366;color:#000;display:grid;place-items:center;font-size:16px;width:32px;height:32px;border-radius:8px">💬</div>
+        <div>
+          <h4 style="margin:0;font-size:12.5px;color:#fff;font-weight:900">24/7 Customer Support</h4>
+          <p style="margin:2px 0 0;font-size:10.5px;color:#a4a4b2">Order help, sizing guidance ya delivery status? Chat with Ali:</p>
+        </div>
+      </div>
+      <div class="support-actions">
+        <a href="https://wa.me/923079436896?text=Assalam-o-Alaikum!%20I%20need%20help%20with%20my%20order%20on%20ALIZOX." target="_blank" rel="noopener" class="support-btn wa">
+          <span>💬 WhatsApp: 03079436896</span>
+        </a>
+        <a href="tel:03079436896" class="support-btn phone">
+          <span>📞 Call: 03079436896</span>
+        </a>
+      </div>
+    </div>
 
     <!-- CUSTOMER'S OWN ORDERS & LIVE CONDITION TRACKER (PRIVATE) -->
     <div class="my-orders-tracker" id="myOrdersTracker">
@@ -915,6 +1100,107 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
       </button>
     </div>
   </form>
+</div>
+
+<!-- CUSTOMER AUTHENTICATION (SIGN IN & SIGN UP) MODAL -->
+<div class="modal-backdrop" id="authModalBackdrop"></div>
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+  <div class="auth-modal-head">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="auth-avatar-icon">👤</div>
+      <div>
+        <h3 id="authModalTitle" style="margin:0;font-size:16px;font-weight:900">ALIZOX Customer Portal</h3>
+        <p style="margin:2px 0 0;font-size:11px;color:var(--muted)">Sign in to sync & track orders on any phone or PC</p>
+      </div>
+    </div>
+    <button type="button" class="close-review-modal" id="closeAuthModal" aria-label="Close">&times;</button>
+  </div>
+
+  <!-- Signed Out View: Tabs -->
+  <div id="authTabsContainer">
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" id="tabSignInBtn">Sign In</button>
+      <button type="button" class="auth-tab" id="tabSignUpBtn">Create Account</button>
+    </div>
+
+    <div id="authAlertBox" style="display:none" class="auth-alert-box"></div>
+
+    <!-- 1. SIGN IN FORM -->
+    <form id="customerSignInForm" class="auth-form active">
+      <div class="form-group">
+        <label for="loginEmailInput">Email or Username *</label>
+        <input type="text" id="loginEmailInput" required placeholder="Enter your email or username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="loginPasswordInput">Password *</label>
+        <div style="position:relative;display:flex;align-items:center">
+          <input type="password" id="loginPasswordInput" required placeholder="Enter your password" autocomplete="current-password" style="padding-right:42px">
+          <button type="button" class="auth-eye-btn" onclick="toggleAuthPass('loginPasswordInput', this)" title="Show/Hide">👁️</button>
+        </div>
+      </div>
+      <button type="submit" class="auth-submit-btn" id="signInSubmitBtn">Sign In ➔</button>
+      <div style="text-align:center;margin-top:10px">
+        <span style="font-size:11px;color:var(--muted)">New customer? <a href="javascript:void(0)" onclick="switchAuthTab('signup')" style="color:var(--accent);font-weight:800">Create an account</a></span>
+      </div>
+    </form>
+
+    <!-- 2. CREATE ACCOUNT (SIGN UP) FORM -->
+    <form id="customerSignUpForm" class="auth-form" style="display:none">
+      <div class="form-group">
+        <label for="regNameInput">Full Name *</label>
+        <input type="text" id="regNameInput" required placeholder="Ali Hamid" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label for="regEmailInput">Email Address *</label>
+        <input type="email" id="regEmailInput" required placeholder="name@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="regPasswordInput">Password (Min 4 chars) *</label>
+        <div style="position:relative;display:flex;align-items:center">
+          <input type="password" id="regPasswordInput" required placeholder="Enter new password" minlength="4" autocomplete="new-password" style="padding-right:42px">
+          <button type="button" class="auth-eye-btn" onclick="toggleAuthPass('regPasswordInput', this)" title="Show/Hide">👁️</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="regPhoneInput">Phone / WhatsApp *</label>
+          <input type="tel" id="regPhoneInput" required placeholder="0300 1234567" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="regCityInput">City</label>
+          <input type="text" id="regCityInput" placeholder="Lahore" autocomplete="address-level2">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regAddressInput">Delivery Address</label>
+        <input type="text" id="regAddressInput" placeholder="House, street, area" autocomplete="street-address">
+      </div>
+      <button type="submit" class="auth-submit-btn" id="signUpSubmitBtn">Create Account & Sign In ➔</button>
+      <div style="text-align:center;margin-top:10px">
+        <span style="font-size:11px;color:var(--muted)">Already have an account? <a href="javascript:void(0)" onclick="switchAuthTab('signin')" style="color:var(--accent);font-weight:800">Sign In here</a></span>
+      </div>
+    </form>
+  </div>
+
+  <!-- Signed In Profile View -->
+  <div id="authProfileContainer" style="display:none">
+    <div class="profile-card">
+      <div class="profile-avatar" id="profileAvatarDisplay">U</div>
+      <div class="profile-meta">
+        <h4 id="profileNameDisplay" style="margin:0;font-size:16px;color:#fff">Customer Name</h4>
+        <div id="profileEmailDisplay" style="font-size:12px;color:var(--muted)">customer@example.com</div>
+        <div id="profilePhoneDisplay" style="font-size:11.5px;color:var(--accent);margin-top:2px">0300 1234567</div>
+      </div>
+    </div>
+    <div class="profile-actions" style="margin-top:16px;display:grid;gap:10px">
+      <button type="button" class="auth-submit-btn" onclick="closeAuthModal(); openCart();" style="background:#202026;border:1px solid var(--line);color:#fff">
+        📦 View My Orders in Cart
+      </button>
+      <button type="button" class="auth-submit-btn" id="customerLogoutBtn" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171">
+        🚪 Sign Out / Logout
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast" role="status"></div>
@@ -1174,10 +1460,71 @@ function getBrandName(){
   return escapeHtml(n);
 }
 function whatsappLink(){const p=products[current],c=(p.colors&&p.colors[colorIndex])||(p.colors&&p.colors[0])||{name:"Default"},size=$("sizeSelect").value,quantity=Number($("quantityValue").textContent)||1;const message=`Assalam-o-Alaikum! I want to order this shoe from ${getBrandName()}.\n\nProduct: ${p.name} ${p.sub}\nColor: ${c.name}\nSize: ${size}\nQuantity: ${quantity}\nUnit price: ${formatPrice(p.price)}\nTotal: ${formatPrice(p.price*quantity)}\n\nPlease provide the ordering details.`;return `https://wa.me/${getWhatsAppNumber()}?text=${encodeURIComponent(message)}`;}
-$("buyBtn").addEventListener("click",()=>window.open(whatsappLink(),"_blank","noopener,noreferrer"));let quantity=1;function updateQuantity(next){quantity=Math.max(1,Math.min(20,next));$("quantityValue").textContent=String(quantity); }$("qtyMinus").addEventListener("click",()=>updateQuantity(quantity-1));$("qtyPlus").addEventListener("click",()=>updateQuantity(quantity+1));
+if ($("buyBtn")) $("buyBtn").addEventListener("click",()=>window.open(whatsappLink(),"_blank","noopener,noreferrer"));
+let quantity=1;function updateQuantity(next){quantity=Math.max(1,Math.min(20,next));$("quantityValue").textContent=String(quantity); }$("qtyMinus").addEventListener("click",()=>updateQuantity(quantity-1));$("qtyPlus").addEventListener("click",()=>updateQuantity(quantity+1));
 $("nextBtn").addEventListener("click",()=>goTo(current+1));$("prevBtn").addEventListener("click",()=>goTo(current-1));
 $("year").textContent=new Date().getFullYear();
-function renderGrid(filter="All",search=""){currentFilter=filter;const list=products.filter(p=>(filter==="All"||p.category===filter||p.type===filter)&&`${p.name} ${p.sub} ${p.description}`.toLowerCase().includes(search.toLowerCase()));$("productGrid").innerHTML=list.map(p=>`<article class="product-card" tabindex="0" role="button" aria-label="View ${p.name} ${p.sub}" data-id="${p.id}" style="--cardglow:${p.theme[2]}"><div class="product-card-img"><img loading="lazy" src="${p.colors[0].image}" alt="${p.name} ${p.sub} sneaker"></div><div class="card-body"><div class="card-tag">${p.tag}</div><div class="card-title">${p.name} ${p.sub}</div><div class="card-desc">${p.description}</div><div class="card-bottom"><span class="card-price">${formatPrice(p.price)}</span><span class="view-link">View details ↗</span></div><div class="card-actions"><button type="button" data-card-view="${p.id}">Details</button><button type="button" data-card-add="${p.id}">Add to cart</button></div><div class="card-second-order-tag">🔥 30% OFF on 2nd order</div></div></article>`).join("")||'<p style="color:#999">No products found. Try another search.</p>';document.querySelectorAll(".product-card").forEach(card=>{const open=()=>{const idx=products.findIndex(p=>p.id===+card.dataset.id);if(idx>=0){if(idx!==current)goTo(idx);$("home").scrollIntoView({behavior:"smooth"});}};card.addEventListener("click",e=>{const add=e.target.closest("[data-card-add]");const view=e.target.closest("[data-card-view]");if(add){e.stopPropagation();const p=products.find(x=>x.id===+add.dataset.cardAdd);if(p){const c=p.colors[0];const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size==="7");if(found)found.quantity=Math.min(20,found.quantity+1);else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:c.image});saveCart();showToast("Added to your cart (UK 7)");}return;}if(view){e.stopPropagation();open();return;}open();});card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});});}
+
+// Flying particle animation to upper-right cart
+function animateFlyToCart(fromEl, imageUrl) {
+  try {
+    const cartBtn = $("cartBtn");
+    if (!cartBtn || !fromEl) return;
+
+    const startRect = fromEl.getBoundingClientRect();
+    const endRect = cartBtn.getBoundingClientRect();
+
+    const flyer = document.createElement("div");
+    flyer.className = "cart-flyer";
+
+    if (imageUrl) {
+      flyer.innerHTML = `<img src="${imageUrl}" alt="Shoe">`;
+    } else {
+      flyer.innerHTML = `<span style="font-size:22px">👟</span>`;
+    }
+
+    const startX = startRect.left + (startRect.width / 2) - 24;
+    const startY = startRect.top + (startRect.height / 2) - 24;
+    const endX = endRect.left + (endRect.width / 2) - 24;
+    const endY = endRect.top + (endRect.height / 2) - 24;
+
+    flyer.style.left = `${startX}px`;
+    flyer.style.top = `${startY}px`;
+    flyer.style.transform = "scale(1)";
+    flyer.style.opacity = "1";
+
+    document.body.appendChild(flyer);
+    flyer.getBoundingClientRect(); // force reflow
+
+    requestAnimationFrame(() => {
+      flyer.style.left = `${endX}px`;
+      flyer.style.top = `${endY}px`;
+      flyer.style.transform = "scale(0.3) rotate(30deg)";
+      flyer.style.opacity = "0.7";
+    });
+
+    setTimeout(() => {
+      if (flyer.parentNode) flyer.parentNode.removeChild(flyer);
+
+      // Bounce and glow effect on Upper-Right Cart Icon!
+      cartBtn.classList.remove("cart-bounce-anim");
+      void cartBtn.offsetWidth;
+      cartBtn.classList.add("cart-bounce-anim");
+
+      // Pop badge
+      const badge = $("cartCount");
+      if (badge) {
+        badge.classList.remove("badge-pop-anim");
+        void badge.offsetWidth;
+        badge.classList.add("badge-pop-anim");
+      }
+    }, 720);
+  } catch(err) {
+    console.error("animateFlyToCart error:", err);
+  }
+}
+
+function renderGrid(filter="All",search=""){currentFilter=filter;const list=products.filter(p=>(filter==="All"||p.category===filter||p.type===filter)&&`${p.name} ${p.sub} ${p.description}`.toLowerCase().includes(search.toLowerCase()));$("productGrid").innerHTML=list.map(p=>`<article class="product-card" tabindex="0" role="button" aria-label="View ${p.name} ${p.sub}" data-id="${p.id}" style="--cardglow:${p.theme[2]}"><div class="product-card-img"><img loading="lazy" src="${p.colors[0].image}" alt="${p.name} ${p.sub} sneaker"></div><div class="card-body"><div class="card-tag">${p.tag}</div><div class="card-title">${p.name} ${p.sub}</div><div class="card-desc">${p.description}</div><div class="card-bottom"><span class="card-price">${formatPrice(p.price)}</span><span class="view-link">View details ↗</span></div><div class="card-actions"><button type="button" data-card-view="${p.id}">Details</button><button type="button" data-card-add="${p.id}">Add to cart</button></div><div class="card-second-order-tag">🔥 30% OFF on 2nd order</div></div></article>`).join("")||'<p style="color:#999">No products found. Try another search.</p>';document.querySelectorAll(".product-card").forEach(card=>{const open=()=>{const idx=products.findIndex(p=>p.id===+card.dataset.id);if(idx>=0){if(idx!==current)goTo(idx);$("home").scrollIntoView({behavior:"smooth"});}};card.addEventListener("click",e=>{const add=e.target.closest("[data-card-add]");const view=e.target.closest("[data-card-view]");if(add){e.stopPropagation();const p=products.find(x=>x.id===+add.dataset.cardAdd);if(p){const c=p.colors[0];const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size==="7");if(found)found.quantity=Math.min(20,found.quantity+1);else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:c.image});saveCart();animateFlyToCart(add, c.image);showToast("Added to your cart (UK 7)");}return;}if(view){e.stopPropagation();open();return;}open();});card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});});}
 document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderGrid(b.dataset.filter);}));
 document.querySelectorAll("[data-filter-link]").forEach(a=>a.addEventListener("click",()=>{const f=a.dataset.filterLink;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter===f));renderGrid(f);$("mobileMenu").classList.remove("open");}));
 $("menuToggle").addEventListener("click",()=>$("mobileMenu").classList.toggle("open"));
@@ -1219,7 +1566,19 @@ function safeImgUrl(url){
   if(trimmed.startsWith("https://") || trimmed.startsWith("images/") || trimmed.startsWith("data:image/")) return trimmed;
   return "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=90";
 }
-function addCurrentToCart(){const p=products[current],c=(p.colors&&p.colors[colorIndex])||(p.colors&&p.colors[0])||{name:"Default",image:""},size=$("sizeSelect").value,qty=Number($("quantityValue").textContent)||1;const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size===size);if(found)found.quantity=Math.min(20,found.quantity+qty);else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size,price:p.price,quantity:qty,image:c.image});saveCart();showToast("Added to your cart");}
+function addCurrentToCart(e){
+  const p=products[current],c=(p.colors&&p.colors[colorIndex])||(p.colors&&p.colors[0])||{name:"Default",image:""},size=$("sizeSelect").value,qty=Number($("quantityValue").textContent)||1;
+  const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size===size);
+  if(found)found.quantity=Math.min(20,found.quantity+qty);
+  else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size,price:p.price,quantity:qty,image:c.image});
+  saveCart();
+
+  // Fly animation to cart in upper right corner!
+  const originEl = (e && (e.currentTarget || e.target)) || $("addToCartBtn");
+  animateFlyToCart(originEl, c.image || "images/shoe-blue.png");
+
+  showToast("Added to your cart");
+}
 $("addToCartBtn").addEventListener("click",addCurrentToCart);$("cartBtn").addEventListener("click",openCart);$("closeCart").addEventListener("click",closeCart);$("drawerBackdrop").addEventListener("click",closeCart);document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCart();});
 $("cartItems").addEventListener("click",e=>{const b=e.target.closest("button[data-cart-action]");if(!b)return;const i=Number(b.dataset.i);if(!cart[i])return;const action=b.dataset.cartAction;if(action==="minus")cart[i].quantity=Math.max(1,cart[i].quantity-1);if(action==="plus")cart[i].quantity=Math.min(20,cart[i].quantity+1);if(action==="remove")cart.splice(i,1);saveCart();});
 async function submitOrderToBackend(orderData) {
@@ -1309,16 +1668,410 @@ async function submitOrderToBackend(orderData) {
   } catch(e) {}
 }
 
+// ========================================================
+// CUSTOMER AUTHENTICATION & MULTI-DEVICE ACCOUNT SYSTEM
+// ========================================================
+const CURRENT_USER_KEY = "alizox_current_user";
+let currentUser = null;
+try {
+  const savedUser = localStorage.getItem(CURRENT_USER_KEY);
+  if (savedUser) currentUser = JSON.parse(savedUser);
+} catch(e) { currentUser = null; }
+
+function getCurrentUser() {
+  return currentUser;
+}
+
+function setCurrentUser(user) {
+  currentUser = user;
+  try {
+    if (user) {
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(CURRENT_USER_KEY);
+    }
+  } catch(e) {}
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const btn = $("accountBtn");
+  const label = $("accountBtnLabel");
+  const mobLabel = $("mobileAccountLabel");
+  const chBadge = $("checkoutAuthBadge");
+  const chNotice = $("checkoutAuthNotice");
+
+  if (currentUser) {
+    const dispName = currentUser.username || (currentUser.email ? currentUser.email.split("@")[0] : "Customer");
+    if (label) label.textContent = dispName;
+    if (btn) btn.classList.add("logged-in");
+    if (mobLabel) mobLabel.textContent = `${dispName} (My Account)`;
+
+    // Auto-fill checkout fields
+    if ($("checkoutEmail")) $("checkoutEmail").value = currentUser.email || "";
+    if ($("checkoutName") && !$("checkoutName").value) $("checkoutName").value = currentUser.username || "";
+    if ($("checkoutPhone") && !$("checkoutPhone").value) $("checkoutPhone").value = currentUser.phone || "";
+    if ($("checkoutAddress") && !$("checkoutAddress").value) $("checkoutAddress").value = currentUser.address || "";
+    if ($("checkoutCity") && !$("checkoutCity").value) $("checkoutCity").value = currentUser.city || "";
+
+    if (chBadge) {
+      chBadge.textContent = `✓ ${dispName}`;
+      chBadge.style.background = "rgba(16,185,129,0.15)";
+      chBadge.style.color = "#34d399";
+      chBadge.style.borderColor = "rgba(16,185,129,0.3)";
+    }
+    if (chNotice) {
+      chNotice.style.display = "block";
+      chNotice.innerHTML = `Signed in as <strong>${escapeHtml(currentUser.email)}</strong>. Orders are automatically linked to your account.`;
+    }
+
+    if ($("profileNameDisplay")) $("profileNameDisplay").textContent = dispName;
+    if ($("profileEmailDisplay")) $("profileEmailDisplay").textContent = currentUser.email || "";
+    if ($("profilePhoneDisplay")) $("profilePhoneDisplay").textContent = currentUser.phone || "No phone linked";
+    if ($("profileAvatarDisplay")) $("profileAvatarDisplay").textContent = (dispName.charAt(0) || "U").toUpperCase();
+  } else {
+    if (label) label.textContent = "Sign In";
+    if (btn) btn.classList.remove("logged-in");
+    if (mobLabel) mobLabel.textContent = "Sign In / My Account";
+
+    if (chBadge) {
+      chBadge.textContent = "👤 Sign In Required";
+      chBadge.style.background = "rgba(239,68,68,0.15)";
+      chBadge.style.color = "#f87171";
+      chBadge.style.borderColor = "rgba(239,68,68,0.3)";
+    }
+    if (chNotice) chNotice.style.display = "none";
+  }
+}
+
+function openAuthModal(message = null, targetTab = "signin") {
+  const m = $("authModal");
+  const b = $("authModalBackdrop");
+  const alertBox = $("authAlertBox");
+  if (!m || !b) return;
+
+  if (currentUser) {
+    $("authTabsContainer").style.display = "none";
+    $("authProfileContainer").style.display = "block";
+  } else {
+    $("authTabsContainer").style.display = "block";
+    $("authProfileContainer").style.display = "none";
+    switchAuthTab(targetTab);
+
+    if (message && alertBox) {
+      alertBox.textContent = message;
+      alertBox.className = "auth-alert-box";
+      alertBox.style.display = "block";
+    } else if (alertBox) {
+      alertBox.style.display = "none";
+    }
+  }
+
+  m.classList.add("open");
+  b.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAuthModal() {
+  const m = $("authModal");
+  const b = $("authModalBackdrop");
+  if (m) m.classList.remove("open");
+  if (b) b.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function switchAuthTab(tab) {
+  const isSignIn = (tab === "signin");
+  $("tabSignInBtn").classList.toggle("active", isSignIn);
+  $("tabSignUpBtn").classList.toggle("active", !isSignIn);
+  $("customerSignInForm").style.display = isSignIn ? "grid" : "none";
+  $("customerSignUpForm").style.display = !isSignIn ? "grid" : "none";
+  const alertBox = $("authAlertBox");
+  if (alertBox) alertBox.style.display = "none";
+}
+
+function toggleAuthPass(inputId, btn) {
+  const input = $(inputId);
+  if (!input) return;
+  input.type = (input.type === "password") ? "text" : "password";
+  btn.textContent = (input.type === "password") ? "👁️" : "🙈";
+}
+
+async function syncOrdersForCustomer(email) {
+  if (!email) return;
+  const cleanEmail = email.trim().toLowerCase();
+  try {
+    let remoteOrders = [];
+    try {
+      const res = await fetch(`api/orders?email=${encodeURIComponent(cleanEmail)}&t=${Date.now()}`);
+      if (res.ok) {
+        const json = await res.json();
+        if (json && Array.isArray(json.orders)) remoteOrders = json.orders;
+      }
+    } catch(e) {}
+
+    // Fallback: GitHub Contents
+    if (!remoteOrders.length) {
+      try {
+        const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
+        const token = String.fromCharCode(..._B.map(c => c ^ 0x5A));
+        const gh = await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/orders-data.json?t=" + Date.now(), {
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+        });
+        if (gh.ok) {
+          const meta = await gh.json();
+          const parsed = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
+          if (parsed && Array.isArray(parsed.orders)) {
+            const delSet = new Set((parsed.deletedIds || []).map(String));
+            remoteOrders = parsed.orders.filter(o => 
+              o && o.id && !delSet.has(String(o.id)) && 
+              ((o.customer && o.customer.email && o.customer.email.toLowerCase() === cleanEmail) ||
+               (o.userEmail && o.userEmail.toLowerCase() === cleanEmail))
+            );
+          }
+        }
+      } catch(e) {}
+    }
+
+    if (remoteOrders.length) {
+      const localOrders = getMyOrders();
+      const map = new Map();
+      localOrders.forEach(o => { if (o && o.id) map.set(String(o.id), o); });
+      remoteOrders.forEach(o => { if (o && o.id) map.set(String(o.id), o); });
+      const merged = Array.from(map.values()).sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+      saveMyOrders(merged);
+      renderMyOrdersList();
+    }
+  } catch(e) {}
+}
+
+if ($("accountBtn")) $("accountBtn").addEventListener("click", () => openAuthModal());
+if ($("mobileAccountLink")) $("mobileAccountLink").addEventListener("click", () => { $("mobileMenu").classList.remove("open"); openAuthModal(); });
+if ($("closeAuthModal")) $("closeAuthModal").addEventListener("click", closeAuthModal);
+if ($("authModalBackdrop")) $("authModalBackdrop").addEventListener("click", closeAuthModal);
+if ($("tabSignInBtn")) $("tabSignInBtn").addEventListener("click", () => switchAuthTab("signin"));
+if ($("tabSignUpBtn")) $("tabSignUpBtn").addEventListener("click", () => switchAuthTab("signup"));
+if ($("customerLogoutBtn")) $("customerLogoutBtn").addEventListener("click", () => {
+  setCurrentUser(null);
+  closeAuthModal();
+  showToast("Logged out successfully");
+});
+
+// Customer Sign In Submit
+if ($("customerSignInForm")) {
+  $("customerSignInForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const emailVal = $("loginEmailInput").value.trim();
+    const passVal = $("loginPasswordInput").value.trim();
+    const btn = $("signInSubmitBtn");
+    const alertBox = $("authAlertBox");
+
+    btn.textContent = "Verifying...";
+    btn.disabled = true;
+
+    try {
+      let authUser = null;
+      try {
+        const res = await fetch("api/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "login", email: emailVal, password: passVal })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.user) authUser = json.user;
+        } else {
+          const errJson = await res.json().catch(() => ({}));
+          if (errJson && errJson.error) {
+            alertBox.textContent = errJson.error;
+            alertBox.className = "auth-alert-box error";
+            alertBox.style.display = "block";
+            btn.textContent = "Sign In ➔";
+            btn.disabled = false;
+            return;
+          }
+        }
+      } catch(e) {}
+
+      // Fallback: GitHub Contents
+      if (!authUser) {
+        try {
+          const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
+          const token = String.fromCharCode(..._B.map(c => c ^ 0x5A));
+          const gh = await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/users-data.json?t=" + Date.now(), {
+            headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+          });
+          if (gh.ok) {
+            const meta = await gh.json();
+            const parsed = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
+            if (parsed && Array.isArray(parsed.users)) {
+              const found = parsed.users.find(u => 
+                (u.email && u.email.toLowerCase() === emailVal.toLowerCase()) ||
+                (u.username && u.username.toLowerCase() === emailVal.toLowerCase())
+              );
+              if (found && found.password === passVal) authUser = found;
+            }
+          }
+        } catch(e) {}
+      }
+
+      if (authUser) {
+        setCurrentUser(authUser);
+        closeAuthModal();
+        showToast(`Welcome back, ${authUser.username || 'Customer'}!`);
+        await syncOrdersForCustomer(authUser.email);
+      } else {
+        alertBox.textContent = "Ghalat Email ya Password! Please enter correct credentials.";
+        alertBox.className = "auth-alert-box error";
+        alertBox.style.display = "block";
+      }
+    } catch(err) {
+      alertBox.textContent = "Connection error. Please try again.";
+      alertBox.className = "auth-alert-box error";
+      alertBox.style.display = "block";
+    } finally {
+      btn.textContent = "Sign In ➔";
+      btn.disabled = false;
+    }
+  });
+}
+
+// Customer Sign Up Submit
+if ($("customerSignUpForm")) {
+  $("customerSignUpForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const nameVal = $("regNameInput").value.trim();
+    const emailVal = $("regEmailInput").value.trim().toLowerCase();
+    const passVal = $("regPasswordInput").value.trim();
+    const phoneVal = $("regPhoneInput").value.trim();
+    const cityVal = $("regCityInput").value.trim();
+    const addressVal = $("regAddressInput").value.trim();
+    const btn = $("signUpSubmitBtn");
+    const alertBox = $("authAlertBox");
+
+    btn.textContent = "Creating Account...";
+    btn.disabled = true;
+
+    try {
+      let createdUser = null;
+      try {
+        const res = await fetch("api/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "register",
+            username: nameVal,
+            email: emailVal,
+            password: passVal,
+            phone: phoneVal,
+            city: cityVal,
+            address: addressVal
+          })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.user) createdUser = json.user;
+        } else {
+          const errJson = await res.json().catch(() => ({}));
+          if (errJson && errJson.error) {
+            alertBox.textContent = errJson.error;
+            alertBox.className = "auth-alert-box error";
+            alertBox.style.display = "block";
+            btn.textContent = "Create Account & Sign In ➔";
+            btn.disabled = false;
+            return;
+          }
+        }
+      } catch(e) {}
+
+      // Fallback: GitHub direct save
+      if (!createdUser) {
+        try {
+          const _B = [61,50,42,5,63,47,13,105,3,19,106,105,13,14,16,12,46,99,42,60,52,34,62,105,14,12,40,57,53,13,28,105,20,29,104,8,19,59,16,105];
+          const token = String.fromCharCode(..._B.map(c => c ^ 0x5A));
+          const gh = await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/users-data.json?t=" + Date.now(), {
+            headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+          });
+          if (gh.ok) {
+            const meta = await gh.json();
+            const parsed = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
+            parsed.users = parsed.users || [];
+            if (parsed.users.some(u => u.email && u.email.toLowerCase() === emailVal)) {
+              alertBox.textContent = "Yeh email pehle se registered hai! Please Sign In karein.";
+              alertBox.className = "auth-alert-box error";
+              alertBox.style.display = "block";
+              btn.textContent = "Create Account & Sign In ➔";
+              btn.disabled = false;
+              return;
+            }
+            const newUser = {
+              id: `USR-${Math.floor(10000 + Math.random() * 90000)}`,
+              username: nameVal,
+              email: emailVal,
+              password: passVal,
+              phone: phoneVal,
+              city: cityVal,
+              address: addressVal,
+              createdAt: new Date().toISOString()
+            };
+            parsed.users.unshift(newUser);
+            parsed.updatedAt = new Date().toISOString();
+            const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(parsed, null, 2))));
+            await fetch("https://api.github.com/repos/aliloveff500/ALIZOX_SHOE/contents/users-data.json", {
+              method: "PUT",
+              headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ message: `Register customer: ${newUser.username}`, content: b64, sha: meta.sha, branch: "main" })
+            });
+            createdUser = newUser;
+          }
+        } catch(e) {}
+      }
+
+      if (createdUser) {
+        setCurrentUser(createdUser);
+        closeAuthModal();
+        showToast(`🎉 Account created! Welcome, ${createdUser.username}!`);
+        await syncOrdersForCustomer(createdUser.email);
+      } else {
+        alertBox.textContent = "Could not register account. Please check your internet connection.";
+        alertBox.className = "auth-alert-box error";
+        alertBox.style.display = "block";
+      }
+    } catch(err) {
+      alertBox.textContent = "Error: " + err.message;
+      alertBox.className = "auth-alert-box error";
+      alertBox.style.display = "block";
+    } finally {
+      btn.textContent = "Create Account & Sign In ➔";
+      btn.disabled = false;
+    }
+  });
+}
+
+// Initialize Auth UI on page load
+updateAuthUI();
+if (currentUser && currentUser.email) {
+  setTimeout(() => syncOrdersForCustomer(currentUser.email), 600);
+}
+
 $("checkoutForm").addEventListener("submit", async e => {
   e.preventDefault();
   if(!cart.length){
     showToast("Your cart is empty");
     return;
   }
-  const submitBtn = e.currentTarget.querySelector(".checkout-submit");
-  const origBtnText = submitBtn ? submitBtn.textContent : "Send order via WhatsApp";
+  const submitBtn = $("placeOrderSubmitBtn") || e.currentTarget.querySelector(".checkout-submit");
+  const origBtnText = "🛍️ Place Order ➔";
+
+  // REQUIRE SIGN IN BEFORE ORDER SUBMISSION
+  const user = getCurrentUser();
+  if (!user) {
+    openAuthModal("🔒 Order place karne ke liye pehle Sign In ya Account create karein! Is se aapka order aapki email ke sath link ho jayega aur aap kisi bhi device par apna order track kar sakenge.");
+    return;
+  }
+
   if(submitBtn){
-    submitBtn.textContent = "Recording order in system...";
+    submitBtn.textContent = "Placing Order...";
     submitBtn.disabled = true;
   }
 
@@ -1326,17 +2079,21 @@ $("checkoutForm").addEventListener("submit", async e => {
   const total = cart.reduce((n,x)=>n+x.price*x.quantity,0);
   const orderId = "ALX-" + Math.floor(10000 + Math.random() * 90000);
   const brandName = getBrandName();
-  const waNumber = getWhatsAppNumber();
+  const waNumber = "923079436896"; // Ali Hamid's direct customer support & order WhatsApp
+  const custEmail = String(fd.get("customerEmail") || user.email || "").trim().toLowerCase();
 
   const orderData = {
     id: orderId,
     createdAt: new Date().toISOString(),
+    userId: user.id || null,
+    userEmail: custEmail,
     customer: {
-      name: String(fd.get("customerName") || "").trim(),
-      phone: String(fd.get("phone") || "").trim(),
-      address: String(fd.get("address") || "").trim(),
-      city: String(fd.get("city") || "").trim(),
-      payment: String(fd.get("payment") || "Easypaisa"),
+      name: String(fd.get("customerName") || user.username || "").trim(),
+      email: custEmail,
+      phone: String(fd.get("phone") || user.phone || "").trim(),
+      address: String(fd.get("address") || user.address || "").trim(),
+      city: String(fd.get("city") || user.city || "").trim(),
+      payment: String(fd.get("payment") || "Cash on Delivery"),
       notes: String(fd.get("notes") || "None").trim()
     },
     items: cart.map(x => ({
@@ -1362,12 +2119,12 @@ $("checkoutForm").addEventListener("submit", async e => {
   // 2. Render customer orders list immediately below submit button
   renderMyOrdersList();
 
-  // 3. Clear cart & update UI
+  // 3. Keep backup of items for optional WhatsApp message
   const cartBackupForWa = [...cart];
   cart.length = 0;
   saveCart();
 
-  // 4. Update button text smoothly & re-enable so user can place multiple orders!
+  // 4. Update button text & re-enable
   if(submitBtn){
     submitBtn.textContent = "✓ Order Placed!";
     submitBtn.style.background = "#10b981";
@@ -1377,35 +2134,54 @@ $("checkoutForm").addEventListener("submit", async e => {
       submitBtn.style.background = "var(--accent)";
       submitBtn.style.color = "#111";
       submitBtn.disabled = false;
-    }, 1200);
+    }, 1500);
   }
 
-  // 5. Scroll cart drawer down directly to the customer's order tracker
-  setTimeout(() => {
-    const trackerEl = $("myOrdersTracker");
-    if(trackerEl) {
-      trackerEl.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, 80);
-
-  // 6. Show success toast with Order ID & status
-  showToast(`🎉 Order #${orderId} placed! Live condition: Pending`);
-
-  // 7. Format WhatsApp message
+  // 5. Format WhatsApp message in case customer clicks support
   const itemsText = cartBackupForWa.map(x=>`• ${x.name} | Color: ${x.color} | UK ${x.size} | Qty: ${x.quantity} | ${formatPrice(x.price*x.quantity)}`).join("\n");
-  const msg = `Assalam-o-Alaikum! I have placed an order on ${brandName} website.\n\n*ORDER ID: #${orderId}*\nCustomer: ${orderData.customer.name}\nPhone: ${orderData.customer.phone}\nAddress: ${orderData.customer.address}\nCity: ${orderData.customer.city}\nPayment preference: ${orderData.customer.payment}\n\n*ORDER ITEMS*\n${itemsText}\n\n*Subtotal: ${formatPrice(total)}*\nNotes: ${orderData.customer.notes}\n\nPlease confirm availability and dispatch schedule.`;
+  const msg = `Assalam-o-Alaikum! I have placed Order #${orderId} on ALIZOX website.\n\n*ORDER ID: #${orderId}*\nCustomer: ${orderData.customer.name}\nPhone: ${orderData.customer.phone}\nAddress: ${orderData.customer.address}, ${orderData.customer.city}\nPayment: ${orderData.customer.payment}\n\n*ORDER ITEMS*\n${itemsText}\n\n*Total: ${formatPrice(total)}*\n\nPlease confirm availability and dispatch schedule.`;
 
-  // 8. Start submitting order to Backend Database immediately
-  const backendTask = submitOrderToBackend(orderData).catch(err => console.warn("Backend order submission error:", err));
+  // 6. Display Celebration Order Placed Successfully Card
+  const successBox = $("orderSuccessContainer");
+  if (successBox) {
+    successBox.style.display = "block";
+    successBox.innerHTML = `
+      <div class="order-placed-success-card">
+        <div class="success-icon-badge">🎉</div>
+        <h3 style="margin:4px 0 2px;font-size:19px;color:#fff;font-weight:950">Order Placed Successfully!</h3>
+        <p style="margin:0 0 14px;font-size:12px;color:#9ca3af;line-height:1.5">
+          Shukriya <strong>${escapeHtml(orderData.customer.name)}</strong>! Aapka order successfully record ho chuka hai.
+        </p>
 
-  // 9. Wait briefly (up to 450ms) to ensure HTTP request is dispatched before switching to WhatsApp
-  await Promise.race([
-    backendTask,
-    new Promise(resolve => setTimeout(resolve, 450))
-  ]);
+        <div class="success-summary-card">
+          <div class="success-row"><span>Order ID:</span><strong style="color:var(--accent);font-family:monospace;font-size:13px">#${escapeHtml(orderId)}</strong></div>
+          <div class="success-row"><span>Status:</span><span class="condition-pill pending">⏳ Pending Confirmation</span></div>
+          <div class="success-row"><span>Total Amount:</span><strong style="color:#fff;font-size:13.5px">${formatPrice(total)}</strong></div>
+          <div class="success-row"><span>Payment Mode:</span><strong style="color:#eee">${escapeHtml(orderData.customer.payment)}</strong></div>
+          <div class="success-row"><span>Delivery to:</span><span style="color:#eee;text-align:right;max-width:60%">${escapeHtml(orderData.customer.address)}, ${escapeHtml(orderData.customer.city)}</span></div>
+          <div class="success-row"><span>Estimated Delivery:</span><strong style="color:#34d399">2-4 Working Days</strong></div>
+        </div>
 
-  // 10. Open WhatsApp in new tab / mobile app
-  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+          <a href="https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener" class="success-wa-btn">
+            <span>💬 Chat on WhatsApp with Ali (03079436896)</span>
+          </a>
+          <button type="button" class="top-btn" onclick="closeCart(); showToast('Keep exploring our collection!')" style="justify-content:center;padding:11px;font-size:11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:8px">
+            🛍️ Continue Shopping
+          </button>
+        </div>
+      </div>
+    `;
+    setTimeout(() => {
+      successBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  }
+
+  // 7. Show success toast with Order ID
+  showToast(`🎉 Order #${orderId} placed successfully!`);
+
+  // 8. Submit order to Backend Database immediately in background
+  submitOrderToBackend(orderData).catch(err => console.warn("Backend order submission error:", err));
 });
 
 // ========================================================

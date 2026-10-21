@@ -385,6 +385,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
   </div>
   <div class="topbar-actions">
     <button class="top-btn" id="openOrdersBtn" style="position:relative;background:rgba(255,255,255,0.08);font-weight:700">📦 Orders <span id="ordersBadge" style="display:none;background:#ef4444;color:#fff;font-size:10px;font-weight:900;padding:2px 7px;border-radius:999px;margin-left:4px">0</span></button>
+    <button class="top-btn" id="openCustomersBtn" style="position:relative;background:rgba(255,255,255,0.08);font-weight:700">👥 Customers <span id="customersBadge" style="display:none;background:var(--accent);color:#000;font-size:10px;font-weight:900;padding:2px 7px;border-radius:999px;margin-left:4px">0</span></button>
     <button class="top-btn" id="openStoreBtn">⚙️ Store & Phone</button>
     <button class="top-btn" id="openThemeBtn">🎨 Colors</button>
     <button class="top-btn" id="openAddShoeBtn">+ Add Shoe</button>
@@ -984,7 +985,117 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
   </div>
 </div>
 
-<!-- 9. IN-APP CONFIRMATION MODAL (Replaces all browser native popups) -->
+<!-- 9. CUSTOMERS ACCOUNTS & CREDENTIALS MODAL -->
+<div class="modal-overlay" id="customersModal">
+  <div class="modal-box" style="max-width:960px;width:95%;max-height:90vh;display:flex;flex-direction:column">
+    <div class="modal-head" style="align-items:flex-start">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">👥</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <h3 style="margin:0;font-size:18px">Customer Accounts & Passwords</h3>
+            <span id="customersCountBadge" style="background:var(--accent);color:#000;font-size:11px;font-weight:900;padding:3px 10px;border-radius:999px">0 Customers</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:11px;color:var(--muted)">View customer usernames, passwords, phone numbers and change passwords when needed</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button type="button" class="top-btn" id="refreshCustomersBtn" title="Refresh customers list" style="padding:7px 14px;font-size:11px">🔄 Refresh</button>
+        <button class="close-btn" data-close="customersModal">&times;</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="orders-stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px">
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:10px;padding:12px 14px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:800">Total Registered</div>
+        <div id="statTotalCustomers" style="font-size:20px;font-weight:900;color:#fff;margin-top:4px">0</div>
+      </div>
+      <div style="background:rgba(0,240,255,0.06);border:1px solid rgba(0,240,255,0.25);border-radius:10px;padding:12px 14px">
+        <div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;font-weight:800">Active Shoppers</div>
+        <div id="statActiveCustomers" style="font-size:20px;font-weight:900;color:var(--accent);margin-top:4px">0</div>
+      </div>
+      <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);border-radius:10px;padding:12px 14px">
+        <div style="font-size:10px;color:#10b981;text-transform:uppercase;letter-spacing:1px;font-weight:800">Total Orders Placed</div>
+        <div id="statCustomerOrders" style="font-size:20px;font-weight:900;color:#10b981;margin-top:4px">0</div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="orders-filter-toolbar" style="margin-bottom:12px">
+      <input type="text" id="customerSearchInput" class="form-input" placeholder="🔍 Search by Name, Email, Username, Phone, City..." style="flex:1;min-width:200px;font-size:12px;padding:9px 12px">
+    </div>
+
+    <!-- Customers List Area -->
+    <div id="customersListContainer" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:4px;min-height:260px;max-height:55vh">
+      <div style="text-align:center;padding:40px;color:var(--muted);font-size:13px">Loading customers from backend...</div>
+    </div>
+  </div>
+</div>
+
+<!-- 10. EDIT CUSTOMER & CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="editCustomerModal">
+  <div class="modal-box" style="max-width:520px;width:95%">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:22px">✏️</span>
+        <div>
+          <h3 style="margin:0;font-size:17px">Edit Customer & Change Password</h3>
+          <p style="margin:2px 0 0;font-size:11px;color:var(--muted)">Update customer credentials and profile info live</p>
+        </div>
+      </div>
+      <button type="button" class="close-btn" data-close="editCustomerModal">&times;</button>
+    </div>
+
+    <form id="editCustomerForm" style="display:grid;gap:14px;padding:6px 0">
+      <input type="hidden" id="editCustId">
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Full Name / Username</label>
+          <input class="form-input" id="editCustName" required placeholder="Customer Name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="editCustEmail" required placeholder="customer@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" id="editCustPhone" placeholder="03001234567">
+        </div>
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input class="form-input" id="editCustCity" placeholder="Karachi, Lahore...">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Delivery Address</label>
+          <input class="form-input" id="editCustAddress" placeholder="House #, Street, Area">
+        </div>
+        <div class="form-group full">
+          <label class="form-label" style="display:flex;justify-content:space-between">
+            <span>🔑 Customer Password (Change / Reset)</span>
+            <span style="color:var(--accent);font-size:10px;font-weight:700">Admin editable</span>
+          </label>
+          <div class="input-eye-wrap">
+            <input class="form-input" id="editCustPassword" type="password" required placeholder="Enter password" minlength="4">
+            <button type="button" class="eye-toggle-btn" onclick="togglePassVisibility('editCustPassword', this)" title="Show/Hide">
+              <svg class="eye-icon-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg class="eye-icon-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            </button>
+          </div>
+          <span style="font-size:10px;color:var(--muted)">Admin can set any new password here. It takes effect on all devices immediately!</span>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px">
+        <button type="button" class="top-btn" data-close="editCustomerModal">Cancel</button>
+        <button type="submit" class="top-btn btn-primary" id="saveCustBtn">Save Customer Changes ✓</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 11. IN-APP CONFIRMATION MODAL (Replaces all browser native popups) -->
 <div class="modal-overlay" id="confirmDeleteModal" style="z-index:9999999">
   <div class="modal-box" style="max-width:440px;text-align:center;padding:28px 22px;border:1px solid rgba(239,68,68,0.35);box-shadow:0 30px 70px rgba(0,0,0,0.85),0 0 30px rgba(239,68,68,0.2)">
     <div style="width:62px;height:62px;border-radius:50%;background:rgba(239,68,68,0.14);border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:28px;display:grid;place-items:center;margin:0 auto 16px">
@@ -2823,6 +2934,355 @@ if ($("orderStatusFilter")) $("orderStatusFilter").addEventListener("change", re
 // Initial load & periodic polling
 loadOrdersFromBackend();
 setInterval(loadOrdersFromBackend, 35000);
+
+// ==========================================
+// CUSTOMER ACCOUNTS & CREDENTIALS CONTROLLER
+// ==========================================
+let allCustomers = [];
+
+async function pushUsersDataToGitHub(usersArray) {
+  try {
+    const token = getSecToken() || getMasterSecrets().token;
+    if (!token) return false;
+
+    let sha = null;
+    try {
+      const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/users-data.json?t=${Date.now()}`, {
+        headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+      });
+      if (getRes.ok) {
+        const gj = await getRes.json();
+        sha = gj.sha;
+      }
+    } catch(e) {}
+
+    const payload = {
+      updatedAt: new Date().toISOString(),
+      users: usersArray
+    };
+    const jsonStr = JSON.stringify(payload, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const body = {
+      message: "ALIZOX Admin: Sync customer accounts database",
+      content: base64Content,
+      branch: "main"
+    };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/users-data.json`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/vnd.github.v3+json"
+      },
+      body: JSON.stringify(body)
+    });
+    return putRes.ok;
+  } catch(err) {
+    console.error("pushUsersDataToGitHub error:", err);
+    return false;
+  }
+}
+
+async function loadCustomersFromBackend() {
+  let list = null;
+
+  // 1. Try /api/users
+  try {
+    const res = await fetch("api/users?t=" + Date.now());
+    if (res.ok) {
+      const json = await res.json();
+      if (json && Array.isArray(json.users)) list = json.users;
+    }
+  } catch(e) {}
+
+  // 2. Fallback: GitHub Contents API
+  if (!list) {
+    try {
+      const token = getSecToken() || getMasterSecrets().token;
+      if (token) {
+        const ghRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/users-data.json?t=${Date.now()}`, {
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+        });
+        if (ghRes.ok) {
+          const meta = await ghRes.json();
+          const parsed = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
+          if (parsed && Array.isArray(parsed.users)) list = parsed.users;
+        }
+      }
+    } catch(e) {}
+  }
+
+  // 3. Fallback: static file
+  if (!list) {
+    try {
+      const res = await fetch("users-data.json?t=" + Date.now(), { cache: "no-store" });
+      if (res.ok) {
+        const json = await res.json();
+        if (json && Array.isArray(json.users)) list = json.users;
+      }
+    } catch(e) {}
+  }
+
+  allCustomers = Array.isArray(list) ? list : [];
+
+  // Update badge in topbar
+  const count = allCustomers.length;
+  const badge = $("customersBadge");
+  if (badge) {
+    badge.textContent = String(count);
+    badge.style.display = count > 0 ? "inline-block" : "none";
+  }
+  const countBadge = $("customersCountBadge");
+  if (countBadge) countBadge.textContent = `${count} Customer${count === 1 ? '' : 's'}`;
+
+  renderCustomersList();
+}
+
+function renderCustomersList() {
+  const container = $("customersListContainer");
+  if (!container) return;
+
+  const q = ($("customerSearchInput") ? $("customerSearchInput").value : "").trim().toLowerCase();
+
+  const filtered = allCustomers.filter(u => {
+    if (!q) return true;
+    return (
+      (u.id && String(u.id).toLowerCase().includes(q)) ||
+      (u.username && u.username.toLowerCase().includes(q)) ||
+      (u.email && u.email.toLowerCase().includes(q)) ||
+      (u.phone && u.phone.toLowerCase().includes(q)) ||
+      (u.city && u.city.toLowerCase().includes(q)) ||
+      (u.address && u.address.toLowerCase().includes(q))
+    );
+  });
+
+  // Calculate stats
+  if ($("statTotalCustomers")) $("statTotalCustomers").textContent = String(allCustomers.length);
+  
+  // Count how many orders are placed by these customers
+  let linkedOrdersCount = 0;
+  const activeShoppersSet = new Set();
+  allCustomers.forEach(u => {
+    const userEmail = (u.email || "").toLowerCase();
+    const count = (allOrders || []).filter(o => o.customer && (o.customer.email || "").toLowerCase() === userEmail).length;
+    if (count > 0) {
+      linkedOrdersCount += count;
+      activeShoppersSet.add(u.id);
+    }
+  });
+
+  if ($("statActiveCustomers")) $("statActiveCustomers").textContent = String(activeShoppersSet.size);
+  if ($("statCustomerOrders")) $("statCustomerOrders").textContent = String(linkedOrdersCount);
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:50px 20px;color:var(--muted)">
+        <div style="font-size:36px;margin-bottom:10px">👥</div>
+        <div style="font-size:15px;font-weight:950;color:#fff">Koi Customer Account nahi mila</div>
+        <div style="font-size:12px;margin-top:4px">${q ? "Search filter clear karein" : "Main website par customer sign up karte hi yahan live show hoga!"}</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(u => {
+    const userEmail = (u.email || "").toLowerCase();
+    const orderCount = (allOrders || []).filter(o => o.customer && (o.customer.email || "").toLowerCase() === userEmail).length;
+    const cleanPhone = String(u.phone || "").replace(/[^0-9]/g, "");
+    let waPhone = cleanPhone;
+    if (waPhone.startsWith("03")) waPhone = "92" + waPhone.slice(1);
+    const dateStr = u.createdAt ? new Date(u.createdAt).toLocaleDateString("en-PK", { month: "short", day: "numeric", year: "numeric" }) : "Recently";
+
+    return `
+      <div class="customer-card" style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+        <!-- Customer Header -->
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#0284c7);display:grid;place-items:center;font-size:17px;font-weight:950;color:#000">
+              ${escapeHtml((u.username || u.email || "C").charAt(0).toUpperCase())}
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:15px;font-weight:950;color:#fff">${escapeHtml(u.username || "Customer")}</span>
+                <span style="font-size:10px;color:var(--muted);font-family:monospace;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px">#${escapeHtml(u.id || '')}</span>
+              </div>
+              <div style="font-size:11.5px;color:#a4a4b2;margin-top:2px">✉️ ${escapeHtml(u.email || 'No email')}</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <span style="display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:900;padding:3px 9px;border-radius:999px;background:rgba(0,240,255,0.12);color:var(--accent);border:1px solid rgba(0,240,255,0.25)">
+              📦 ${orderCount} Order${orderCount === 1 ? '' : 's'}
+            </span>
+            <div style="font-size:10.5px;color:var(--muted);margin-top:4px">📅 Joined ${dateStr}</div>
+          </div>
+        </div>
+
+        <!-- Info Grid -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:10px;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;font-size:11.5px">
+          <div>
+            <span style="color:var(--muted);font-size:10px;text-transform:uppercase">Contact Phone</span>
+            <div style="color:#fff;font-weight:800;margin-top:2px;display:flex;align-items:center;gap:6px">
+              📞 ${escapeHtml(u.phone || 'No phone')}
+              ${cleanPhone ? `<a href="https://wa.me/${waPhone}" target="_blank" rel="noopener" style="font-size:10px;background:#25d366;color:#000;font-weight:900;padding:1px 6px;border-radius:4px;text-decoration:none" title="Chat on WhatsApp">💬 WA</a>` : ''}
+            </div>
+          </div>
+          <div>
+            <span style="color:var(--muted);font-size:10px;text-transform:uppercase">City & Address</span>
+            <div style="color:#eee;margin-top:2px">📍 ${escapeHtml(u.address || 'Address not added')}${u.city ? ', ' + escapeHtml(u.city) : ''}</div>
+          </div>
+        </div>
+
+        <!-- PASSWORD REVEAL & EDIT BOX (Admin Full Visibility) -->
+        <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(0,240,255,0.2);border-radius:8px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+            <span style="color:var(--muted);font-weight:800">🔑 Customer Password:</span>
+            <span id="passMask_${escapeHtml(u.id)}" style="letter-spacing:2px;font-family:monospace;font-weight:900;color:var(--accent)">••••••••</span>
+            <span id="passRaw_${escapeHtml(u.id)}" style="display:none;font-family:monospace;font-weight:900;color:#fff;background:rgba(0,240,255,0.18);padding:3px 8px;border-radius:6px;border:1px solid var(--accent)">${escapeHtml(u.password || '')}</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button type="button" class="top-btn" onclick="toggleCustomerPassDisplay('${escapeHtml(u.id)}', this)" style="padding:4px 9px;font-size:10.5px">
+              👁️ Reveal
+            </button>
+            <button type="button" class="top-btn" onclick="navigator.clipboard.writeText('${escapeHtml(u.password || '')}');showToast('Password copied to clipboard!')" style="padding:4px 9px;font-size:10.5px">
+              📋 Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Actions Footer -->
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:2px">
+          <button type="button" class="top-btn" onclick="openEditCustomerModal('${escapeHtml(u.id)}')" style="padding:7px 14px;font-size:11px">
+            ✏️ Edit & Change Password
+          </button>
+          <button type="button" class="top-btn btn-danger" onclick="deleteCustomerAccount('${escapeHtml(u.id)}')" style="padding:7px 14px;font-size:11px">
+            🗑️ Delete
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function toggleCustomerPassDisplay(userId, btn) {
+  const mask = document.getElementById("passMask_" + userId);
+  const raw = document.getElementById("passRaw_" + userId);
+  if (!mask || !raw) return;
+
+  const isHidden = (raw.style.display === "none");
+  if (isHidden) {
+    raw.style.display = "inline-block";
+    mask.style.display = "none";
+    if (btn) btn.textContent = "🙈 Hide";
+  } else {
+    raw.style.display = "none";
+    mask.style.display = "inline-block";
+    if (btn) btn.textContent = "👁️ Reveal";
+  }
+}
+window.toggleCustomerPassDisplay = toggleCustomerPassDisplay;
+
+function openEditCustomerModal(userId) {
+  const u = allCustomers.find(x => String(x.id) === String(userId));
+  if (!u) return;
+
+  $("editCustId").value = u.id || "";
+  $("editCustName").value = u.username || "";
+  $("editCustEmail").value = u.email || "";
+  $("editCustPhone").value = u.phone || "";
+  $("editCustCity").value = u.city || "";
+  $("editCustAddress").value = u.address || "";
+  $("editCustPassword").value = u.password || "";
+
+  $("editCustomerModal").classList.add("open");
+}
+window.openEditCustomerModal = openEditCustomerModal;
+
+if ($("editCustomerForm")) {
+  $("editCustomerForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("editCustId").value.trim();
+    const name = $("editCustName").value.trim();
+    const email = $("editCustEmail").value.trim().toLowerCase();
+    const phone = $("editCustPhone").value.trim();
+    const city = $("editCustCity").value.trim();
+    const address = $("editCustAddress").value.trim();
+    const pass = $("editCustPassword").value.trim();
+    const btn = $("saveCustBtn");
+
+    btn.textContent = "Saving...";
+    btn.disabled = true;
+
+    const payload = { id, username: name, email, phone, city, address, password: pass };
+
+    // Update in-memory
+    const idx = allCustomers.findIndex(x => String(x.id) === id);
+    if (idx !== -1) {
+      allCustomers[idx] = { ...allCustomers[idx], ...payload, updatedAt: new Date().toISOString() };
+    }
+
+    showToast(`Updating customer ${name}...`);
+
+    // 1. Send PUT to /api/users
+    try {
+      await fetch("api/users", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    } catch(e) {}
+
+    // 2. Direct GitHub sync fallback
+    try {
+      await pushUsersDataToGitHub(allCustomers);
+    } catch(e) {}
+
+    btn.textContent = "Save Customer Changes ✓";
+    btn.disabled = false;
+    $("editCustomerModal").classList.remove("open");
+    showToast(`✅ Customer ${name}'s password & profile updated live!`);
+    renderCustomersList();
+  });
+}
+
+function deleteCustomerAccount(userId) {
+  const u = allCustomers.find(x => String(x.id) === String(userId));
+  const dispName = u ? (u.username || u.email) : userId;
+
+  openAppConfirm(`Delete Customer Account (${dispName})?`, `Kya aap waqai is customer account ko permanently delete karna chahte hain? Inki login details aur account hamesha ke liye delete ho jayega.`, async () => {
+    allCustomers = allCustomers.filter(x => String(x.id) !== String(userId));
+    renderCustomersList();
+    showToast(`🗑️ Customer ${dispName} deleted.`);
+
+    // 1. Send DELETE to /api/users
+    try {
+      await fetch(`api/users?id=${encodeURIComponent(userId)}`, { method: "DELETE" });
+    } catch(e) {}
+
+    // 2. Direct GitHub sync
+    try {
+      await pushUsersDataToGitHub(allCustomers);
+    } catch(e) {}
+
+    loadCustomersFromBackend();
+  });
+}
+window.deleteCustomerAccount = deleteCustomerAccount;
+
+// Wire up Customers Modal Events
+if ($("openCustomersBtn")) {
+  $("openCustomersBtn").addEventListener("click", () => {
+    $("customersModal").classList.add("open");
+    loadCustomersFromBackend();
+  });
+}
+if ($("refreshCustomersBtn")) $("refreshCustomersBtn").addEventListener("click", loadCustomersFromBackend);
+if ($("customerSearchInput")) $("customerSearchInput").addEventListener("input", renderCustomersList);
+
+// Initial load of customers
+loadCustomersFromBackend();
+setInterval(loadCustomersFromBackend, 45000);
 </script>
 </body>
 </html>

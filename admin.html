@@ -2744,7 +2744,7 @@ function renderOrdersList() {
           </div>
           <div>
             <span style="color:var(--muted);font-size:10px;text-transform:uppercase">Payment & Notes</span>
-            <div style="color:#eee;margin-top:1px">💳 ${escapeHtml(cust.payment || 'Cash on Delivery')}</div>
+            <div style="color:#eee;margin-top:1px">💳 ${escapeHtml(cust.payment || 'Not specified')}</div>
             ${cust.notes && cust.notes !== 'None' ? `<div style="color:#f59e0b;font-size:10.5px;margin-top:2px">📝 “${escapeHtml(cust.notes)}”</div>` : ''}
           </div>
         </div>

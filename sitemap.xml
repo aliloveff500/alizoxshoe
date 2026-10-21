@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://alizoxshoespk.vercel.app/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://alizoxshoespk.vercel.app/images/shoe-blue.png</image:loc>
+      <image:title>ALIZOX AERO FLOW Ice Blue Sneaker</image:title>
+      <image:caption>Lightweight aerodynamic futuristic streetwear sneaker</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://alizoxshoespk.vercel.app/images/shoe-purple.png</image:loc>
+      <image:title>ALIZOX PULSE SHIFT Voltage Purple Sneaker</image:title>
+      <image:caption>Bold everyday silhouette with futuristic edge</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://alizoxshoespk.vercel.app/images/shoe-red.png</image:loc>
+      <image:title>ALIZOX NOVA RUSH Solar Red Sneaker</image:title>
+      <image:caption>Clean athletic profile with high contrast color</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://alizoxshoespk.vercel.app/images/shoe-green.png</image:loc>
+      <image:title>ALIZOX ECLIPSE CORE Emerald Night Sneaker</image:title>
+      <image:caption>Daily rotation redefined premium sneaker</image:caption>
+    </image:image>
+  </url>
+</urlset>

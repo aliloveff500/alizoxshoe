@@ -1,0 +1,9 @@
+# ALIZOX Robots.txt for Search Engines
+User-agent: *
+Allow: /
+Allow: /images/
+Disallow: /api/
+Disallow: /admin.html
+
+# Sitemap
+Sitemap: https://alizoxshoespk.vercel.app/sitemap.xml

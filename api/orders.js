@@ -89,11 +89,20 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // 1. GET: Fetch all active orders
+    // 1. GET: Fetch all active orders (or filtered by customer email)
     if (req.method === "GET") {
       const db = await getOrdersDatabase();
       const delSet = new Set((db.data.deletedIds || []).map(String));
-      const activeOrders = (db.data.orders || []).filter(o => o && o.id && !delSet.has(String(o.id)));
+      let activeOrders = (db.data.orders || []).filter(o => o && o.id && !delSet.has(String(o.id)));
+
+      const filterEmail = String(req.query.email || "").trim().toLowerCase();
+      if (filterEmail) {
+        activeOrders = activeOrders.filter(o => 
+          (o.customer && o.customer.email && o.customer.email.toLowerCase() === filterEmail) ||
+          (o.userEmail && o.userEmail.toLowerCase() === filterEmail)
+        );
+      }
+
       return res.status(200).json({
         success: true,
         updatedAt: db.data.updatedAt,

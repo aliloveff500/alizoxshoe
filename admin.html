@@ -146,7 +146,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
 
 /* Media Library & Image Selector */
 .img-selector-wrap{border:1px dashed var(--line);border-radius:12px;padding:14px;background:#0d0d12;display:flex;flex-direction:column;gap:12px}
-.img-preview-box{width:100%;height:180px;border-radius:10px;background:#07070a;display:grid;place-items:center;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.05)}
+.img-preview-box{width:100%;height:180px;border-radius:10px;background:radial-gradient(ellipse at center,rgba(2,132,199,.15),transparent 75%),#0a0a0f;display:grid;place-items:center;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.08)}
 .img-preview-box img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .3s}
 .img-preview-box img:hover{transform:scale(1.05)}
 .img-action-row{display:flex;gap:10px;flex-wrap:wrap}
@@ -155,7 +155,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
 .img-action-btn.primary{background:var(--accent);color:#0a0a0f;border-color:var(--accent)}
 .img-action-btn.primary:hover{opacity:.9;color:#000}
 .img-lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;max-height:360px;overflow-y:auto;padding:8px 4px}
-.img-lib-card{position:relative;aspect-ratio:1;border-radius:10px;background:#0d0d14;border:2px solid var(--line);overflow:hidden;cursor:pointer;display:grid;place-items:center;padding:6px;transition:all .2s}
+.img-lib-card{position:relative;aspect-ratio:1;border-radius:10px;background:radial-gradient(ellipse at center,rgba(2,132,199,.12),transparent 75%),#0d0d14;border:2px solid var(--line);overflow:hidden;cursor:pointer;display:grid;place-items:center;padding:6px;transition:all .2s}
 .img-lib-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.5)}
 .img-lib-card.selected{border-color:var(--accent);box-shadow:0 0 15px var(--glow);background:rgba(255,255,255,.03)}
 .img-lib-card img{max-width:100%;max-height:100%;object-fit:contain}
@@ -1799,6 +1799,7 @@ let selectedMediaName = "";
 // Client-side image compression & optimization (HTML5 Canvas)
 function compressAndResizeImage(file, maxDimension = 1200, quality = 0.88) {
   return new Promise((resolve, reject) => {
+    const isPng = (file.type === "image/png" || file.type === "image/webp" || /\.png$/i.test(file.name) || /\.webp$/i.test(file.name));
     const reader = new FileReader();
     reader.onerror = reject;
     reader.onload = e => {
@@ -1820,10 +1821,16 @@ function compressAndResizeImage(file, maxDimension = 1200, quality = 0.88) {
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext("2d");
+
+        // Ensure transparent alpha pixels are preserved with zero black background fill!
+        ctx.clearRect(0, 0, width, height);
         ctx.drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL("image/jpeg", quality);
+
+        // Keep PNG as 100% transparent PNG; only use JPEG if user specifically uploaded a JPG
+        const mimeType = isPng ? "image/png" : "image/jpeg";
+        const dataUrl = isPng ? canvas.toDataURL("image/png") : canvas.toDataURL("image/jpeg", quality);
         const base64 = dataUrl.split(",")[1];
-        resolve({ dataUrl, base64, width, height, sizeKb: Math.round(base64.length * 0.75 / 1024) });
+        resolve({ dataUrl, base64, width, height, isPng, sizeKb: Math.round(base64.length * 0.75 / 1024) });
       };
       img.src = e.target.result;
     };
@@ -1844,8 +1851,9 @@ async function uploadImageFile(file, statusElemId) {
 
   try {
     const compressed = await compressAndResizeImage(file, 1200, 0.88);
-    const safeBaseName = file.name.replace(/[^a-zA-Z0-9_-]/g, "_").substring(0, 15) || "shoe";
-    const filename = `shoe_${Date.now()}_${safeBaseName}.jpg`;
+    const safeBaseName = file.name.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_").substring(0, 15) || "shoe";
+    const ext = compressed.isPng ? "png" : "jpg";
+    const filename = `shoe_${Date.now()}_${safeBaseName}.${ext}`;
 
     if (statusEl) {
       statusEl.innerHTML = `⏳ Uploading to ALIZOX repository (${compressed.sizeKb} KB)...`;

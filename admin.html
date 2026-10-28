@@ -654,7 +654,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
       <h3 id="shoeModalTitle">Edit Shoe</h3>
       <button class="close-btn" data-close="shoeModal">&times;</button>
     </div>
-    <form id="shoeForm" style="display:grid;gap:14px">
+    <form id="shoeForm" novalidate style="display:grid;gap:14px">
       <input type="hidden" id="mShoeId">
       <div class="form-grid">
         <div class="form-group">
@@ -711,7 +711,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
 
             <div id="shoeUploadStatus" style="display:none;font-size:11px;padding:8px 10px;border-radius:6px;line-height:1.5"></div>
             
-            <input type="hidden" id="mShoeImg" required>
+            <input type="hidden" id="mShoeImg">
             <div style="font-size:10px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-top:2px">
               <span id="imgSrcDisplay" style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">No image selected</span>
               <button type="button" id="manualUrlToggleBtn" style="background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer;text-decoration:underline">Enter Link Manually</button>
@@ -728,7 +728,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
       </div>
       <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px">
         <button type="button" class="top-btn" data-close="shoeModal">Cancel</button>
-        <button type="submit" class="top-btn btn-primary">Save Shoe</button>
+        <button type="submit" id="saveShoeBtn" class="top-btn btn-primary">Save Shoe</button>
       </div>
     </form>
   </div>
@@ -1462,22 +1462,35 @@ async function loadStoreData() {
     }
   }
 
-  // Ensure auth is preserved permanently
-  if (storeData) {
-    storeData.auth = storeData.auth || {};
-    const savedCustom = localStorage.getItem("alizox_custom_admin_pass");
-    if (storeData.auth.customPass) {
-      localStorage.setItem("alizox_custom_admin_pass", storeData.auth.customPass);
-    } else if (savedCustom) {
-      storeData.auth.customPass = savedCustom;
-    } else {
-      storeData.auth.customPass = "ALIZOX 49229";
-    }
-    if (!storeData.auth.username) {
-      storeData.auth.username = "ALI HAMID 49229";
-    }
-    persistStoreLocal();
+  // Ensure storeData is never null and auth is preserved permanently
+  if (!storeData) {
+    storeData = {
+      brand: { name: "AA  SHOES", tagline: "Move Different", slogan: "Step Into Your Style", whatsappNumber: "923079436896", currency: "PKR" },
+      theme: { accent: "#c026d3", accent2: "#581c87", glow: "rgba(192, 38, 211, 0.45)", bg: "#050508" },
+      auth: { username: "ALI HAMID 49229", customPass: "ALIZOX 49229", updatedAt: new Date().toISOString() },
+      products: [],
+      reviews: [],
+      about: { founderName: "ALI HAMID", founderRole: "Founder of AA  SHOES", age: "15 Years", education: "10th Grade" }
+    };
   }
+  if (!Array.isArray(storeData.products)) storeData.products = [];
+  if (!Array.isArray(storeData.reviews)) storeData.reviews = [];
+  if (!storeData.brand) storeData.brand = { name: "AA  SHOES", whatsappNumber: "923079436896" };
+  if (!storeData.theme) storeData.theme = { accent: "#c026d3", accent2: "#581c87", glow: "rgba(192, 38, 211, 0.45)" };
+
+  storeData.auth = storeData.auth || {};
+  const savedCustom = localStorage.getItem("alizox_custom_admin_pass");
+  if (storeData.auth.customPass) {
+    localStorage.setItem("alizox_custom_admin_pass", storeData.auth.customPass);
+  } else if (savedCustom) {
+    storeData.auth.customPass = savedCustom;
+  } else {
+    storeData.auth.customPass = "ALIZOX 49229";
+  }
+  if (!storeData.auth.username) {
+    storeData.auth.username = "ALI HAMID 49229";
+  }
+  persistStoreLocal();
 }
 
 // INITIAL BOOT CHECK
@@ -1532,19 +1545,20 @@ function renderLiveStore() {
 
 // HERO SLIDER
 function renderHeroSlider() {
-  if (!storeData.products || !storeData.products.length) return;
-  current = Math.min(current, storeData.products.length - 1);
+  if (!storeData || !storeData.products || !storeData.products.length) return;
+  current = Math.max(0, Math.min(current, storeData.products.length - 1));
   const p = storeData.products[current];
+  if (!p) return;
   const c = (p.colors && p.colors[colorIndex]) || (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "" };
 
   $("eyebrow").textContent = p.tag || "Featured";
-  $("productName").innerHTML = `${p.name} <span>${p.sub}</span>`;
-  $("productDescription").textContent = p.description;
+  $("productName").innerHTML = `${escapeHtml(p.name)} <span>${escapeHtml(p.sub)}</span>`;
+  $("productDescription").textContent = p.description || "";
   $("price").textContent = formatPrice(p.price);
-  $("colorName").textContent = c.name;
-  $("shoeImage").src = c.image;
+  $("colorName").textContent = c.name || "Original";
+  $("shoeImage").src = c.image || "images/shoe_chelsea.png";
 
-  if (p.theme && p.theme.length >= 2) {
+  if (Array.isArray(p.theme) && p.theme.length >= 2) {
     document.documentElement.style.setProperty("--accent", p.theme[0]);
     document.documentElement.style.setProperty("--accent2", p.theme[1]);
     if (p.theme[2]) document.documentElement.style.setProperty("--glow", p.theme[2]);
@@ -1554,7 +1568,7 @@ function renderHeroSlider() {
   const colorways = getAvailableColorwaysAdmin();
   $("swatches").innerHTML = colorways.map((cw, i) => {
     const isSelected = (cw.productIndex === current && cw.colorIndex === colorIndex);
-    return `<button class="swatch ${isSelected ? 'selected' : ''}" style="background:${cw.hex}" title="${cw.name} (${cw.product.name} ${cw.product.sub || ''})" onclick="selectAvailableColorwayAdmin(${i})"></button>`;
+    return `<button class="swatch ${isSelected ? 'selected' : ''}" style="background:${cw.hex}" title="${escapeHtml(cw.name)} (${escapeHtml(cw.product.name)} ${escapeHtml(cw.product.sub || '')})" onclick="selectAvailableColorwayAdmin(${i})"></button>`;
   }).join("");
 
   // Dots
@@ -1603,28 +1617,37 @@ window.selectAvailableColorwayAdmin = i => {
 };
 window.selectColor = i => { colorIndex = i; renderHeroSlider(); };
 window.goToShoe = i => { current = i; colorIndex = 0; renderHeroSlider(); };
-$("nextBtn").addEventListener("click", () => goToShoe((current + 1) % storeData.products.length));
-$("prevBtn").addEventListener("click", () => goToShoe((current - 1 + storeData.products.length) % storeData.products.length));
+$("nextBtn").addEventListener("click", () => {
+  if (storeData && storeData.products && storeData.products.length) {
+    goToShoe((current + 1) % storeData.products.length);
+  }
+});
+$("prevBtn").addEventListener("click", () => {
+  if (storeData && storeData.products && storeData.products.length) {
+    goToShoe((current - 1 + storeData.products.length) % storeData.products.length);
+  }
+});
 
 // COLLECTION GRID
 function renderGrid() {
   const grid = $("productGrid");
+  if (!storeData || !storeData.products) return;
   grid.innerHTML = storeData.products.map(p => `
     <article class="product-card">
       <div class="product-card-img">
-        <img src="${p.colors && p.colors[0] ? p.colors[0].image : ''}" alt="${p.name}">
+        <img src="${p.colors && p.colors[0] ? p.colors[0].image : ''}" alt="${escapeHtml(p.name)}">
       </div>
       <div class="card-body">
-        <div class="card-tag">${p.tag || 'ALIZOX'}</div>
-        <div class="card-title">${p.name} ${p.sub}</div>
-        <div class="card-desc">${p.description}</div>
+        <div class="card-tag">${escapeHtml(p.tag || 'ALIZOX')}</div>
+        <div class="card-title">${escapeHtml(p.name)} ${escapeHtml(p.sub)}</div>
+        <div class="card-desc">${escapeHtml(p.description)}</div>
         <div class="card-bottom">
           <span class="card-price">${formatPrice(p.price)}</span>
-          <span style="font-size:10px;color:var(--accent);font-weight:900">${p.category}</span>
+          <span style="font-size:10px;color:var(--accent);font-weight:900">${escapeHtml(p.category || 'Sneaker')}</span>
         </div>
         <div class="edit-badge-card">
-          <button onclick="editShoeById(${p.id})">✏️ Edit</button>
-          <button class="del-btn" onclick="deleteShoeById(${p.id})">🗑️ Delete</button>
+          <button onclick="editShoeById('${p.id}')">✏️ Edit</button>
+          <button class="del-btn" onclick="deleteShoeById('${p.id}')">🗑️ Delete</button>
         </div>
       </div>
     </article>
@@ -1634,23 +1657,24 @@ function renderGrid() {
 // REVIEWS
 function renderReviews() {
   const grid = $("reviewsGrid");
+  if (!storeData || !storeData.reviews) return;
   grid.innerHTML = storeData.reviews.map(r => `
     <div class="review-card">
       <div class="review-top">
         <div class="review-stars">${"★".repeat(r.stars || 5)}</div>
-        <span class="review-badge">${r.shoe}</span>
+        <span class="review-badge">${escapeHtml(r.shoe)}</span>
       </div>
-      <p class="review-text">“${r.text}”</p>
+      <p class="review-text">“${escapeHtml(r.text)}”</p>
       <div class="review-author">
-        <div class="review-avatar">${r.name ? r.name.substring(0, 2).toUpperCase() : 'AH'}</div>
+        <div class="review-avatar">${r.name ? escapeHtml(r.name.substring(0, 2).toUpperCase()) : 'AH'}</div>
         <div style="flex:1">
-          <h5 style="margin:0 0 2px;font-size:13px">${r.name}</h5>
-          <p style="margin:0;font-size:10px;color:var(--muted)">${r.city} · Verified Buyer</p>
+          <h5 style="margin:0 0 2px;font-size:13px">${escapeHtml(r.name)}</h5>
+          <p style="margin:0;font-size:10px;color:var(--muted)">${escapeHtml(r.city || 'Verified Buyer')} · Verified Buyer</p>
         </div>
       </div>
       <div class="edit-badge-card">
-        <button onclick="editReviewById(${r.id})">✏️ Edit</button>
-        <button class="del-btn" onclick="deleteReviewById(${r.id})">🗑️ Delete</button>
+        <button onclick="editReviewById('${r.id}')">✏️ Edit</button>
+        <button class="del-btn" onclick="deleteReviewById('${r.id}')">🗑️ Delete</button>
       </div>
     </div>
   `).join("");
@@ -1739,6 +1763,7 @@ $("themeForm").addEventListener("submit", async e => {
 // ==========================================
 
 const CURATED_MEDIA = [
+  { name: "Chelsea Boots (Transparent PNG)", colorName: "Black & Brown", hex: "#472000", url: "images/shoe_chelsea.png" },
   { name: "Voltage Purple Sneaker", colorName: "Voltage Purple", hex: "#b62dff", url: "images/shoe-purple.png" },
   { name: "Solar Red Sneaker", colorName: "Solar Red", hex: "#ff453a", url: "images/shoe-red.png" },
   { name: "Ice Blue Sneaker", colorName: "Ice Blue", hex: "#58c8ff", url: "images/shoe-blue.png" },
@@ -2126,14 +2151,20 @@ $("delCurrentShoeBtn").addEventListener("click", () => {
   });
 });
 
-window.editShoeById = id => openShoeModal(storeData.products.find(x => x.id === id));
+window.editShoeById = id => {
+  if (!storeData || !Array.isArray(storeData.products)) return;
+  const p = storeData.products.find(x => String(x.id) === String(id));
+  if (p) openShoeModal(p);
+};
+
 window.deleteShoeById = id => {
+  if (!storeData || !Array.isArray(storeData.products)) return;
   if (storeData.products.length <= 1) {
     showToast("You must keep at least 1 shoe in the store!", false);
     return;
   }
   openAppConfirm("Delete Shoe?", "Are you sure you want to delete this shoe?", async () => {
-    storeData.products = storeData.products.filter(x => x.id !== id);
+    storeData.products = storeData.products.filter(x => String(x.id) !== String(id));
     current = 0;
     await autoSaveAndPublish("Shoe deleted & saved live!");
   });
@@ -2141,55 +2172,127 @@ window.deleteShoeById = id => {
 
 $("shoeForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const idVal = $("mShoeId").value;
-  const hexVal = $("mShoeColorHex").value.trim() || "#ff453a";
-  const existingShoe = idVal ? storeData.products.find(x => x.id === Number(idVal)) : null;
-
-  // Determine theme for the shoe: preserve existing theme if hex matches, or generate theme from hex
-  let shoeTheme = null;
-  if (existingShoe && existingShoe.colors && existingShoe.colors[0] && existingShoe.colors[0].hex === hexVal && existingShoe.theme && existingShoe.theme.length === 3) {
-    shoeTheme = existingShoe.theme;
-  } else {
-    shoeTheme = themeFromHex(hexVal);
+  const saveBtn = $("saveShoeBtn") || document.querySelector("#shoeForm button[type='submit']");
+  if (saveBtn) {
+    saveBtn.disabled = true;
+    saveBtn.dataset.origText = saveBtn.textContent;
+    saveBtn.innerHTML = "⏳ Saving Shoe...";
   }
 
-  const newShoe = {
-    id: idVal ? Number(idVal) : Date.now(),
-    name: $("mShoeName").value.trim(),
-    sub: $("mShoeSub").value.trim(),
-    tag: $("mShoeTag").value.trim(),
-    price: Number($("mShoePrice").value) || 0,
-    category: $("mShoeCat").value,
-    type: "Streetwear",
-    description: $("mShoeDesc").value.trim(),
-    theme: shoeTheme,
-    colors: [
-      {
-        name: $("mShoeColorName").value.trim(),
-        hex: hexVal,
-        image: $("mShoeImg").value.trim()
-      }
-    ]
-  };
+  try {
+    const idVal = $("mShoeId").value.trim();
+    const nameVal = $("mShoeName").value.trim();
+    const subVal = $("mShoeSub").value.trim();
+    const tagVal = $("mShoeTag").value.trim() || "New Drop / 05";
+    const priceVal = Number($("mShoePrice").value);
+    const catVal = $("mShoeCat").value || "Men";
+    const descVal = $("mShoeDesc").value.trim() || "Everyday futuristic comfort sneaker.";
+    const colorNameVal = $("mShoeColorName").value.trim() || "Original Edition";
+    const hexVal = $("mShoeColorHex").value.trim() || "#b62dff";
 
-  if (existingShoe) {
-    const idx = storeData.products.findIndex(x => x.id === Number(idVal));
-    if (idx >= 0) {
-      if (existingShoe.colors && existingShoe.colors.length > 1) {
-        newShoe.colors = existingShoe.colors;
-        newShoe.colors[0].image = $("mShoeImg").value.trim();
-        newShoe.colors[0].name = $("mShoeColorName").value.trim();
-        newShoe.colors[0].hex = hexVal;
-      }
-      storeData.products[idx] = newShoe;
+    // 1. Validation checks with clear toasts
+    if (!nameVal) {
+      showToast("Please enter a Shoe Name!", false);
+      $("mShoeName").focus();
+      return;
     }
-  } else {
-    storeData.products.push(newShoe);
-    current = storeData.products.length - 1;
+    if (!subVal) {
+      showToast("Please enter a Subtitle / Series!", false);
+      $("mShoeSub").focus();
+      return;
+    }
+    if (isNaN(priceVal) || priceVal <= 0) {
+      showToast("Please enter a valid Price (PKR)!", false);
+      $("mShoePrice").focus();
+      return;
+    }
+
+    // 2. Resolve image url safely
+    let imgVal = $("mShoeImg").value.trim();
+    if (!imgVal) imgVal = $("mShoeImgManual").value.trim();
+    if (!imgVal && $("shoeImgPreview") && $("shoeImgPreview").src) {
+      const src = $("shoeImgPreview").src;
+      if (!src.includes("photo-1542291026-7eec264c27ff")) {
+        imgVal = src;
+      }
+    }
+    if (!imgVal) {
+      imgVal = (storeData && storeData.products && storeData.products[0] && storeData.products[0].colors && storeData.products[0].colors[0] && storeData.products[0].colors[0].image) || "images/shoe_chelsea.png";
+    }
+
+    if (!storeData) storeData = {};
+    if (!Array.isArray(storeData.products)) storeData.products = [];
+
+    const existingShoe = idVal ? storeData.products.find(x => String(x.id) === String(idVal)) : null;
+
+    // 3. Determine theme for the shoe
+    let shoeTheme = null;
+    if (existingShoe && existingShoe.colors && existingShoe.colors[0] && existingShoe.colors[0].hex === hexVal && Array.isArray(existingShoe.theme) && existingShoe.theme.length === 3) {
+      shoeTheme = existingShoe.theme;
+    } else {
+      shoeTheme = themeFromHex(hexVal);
+    }
+
+    const newShoe = {
+      id: idVal ? (Number(idVal) || idVal) : Date.now(),
+      name: nameVal,
+      sub: subVal,
+      tag: tagVal,
+      price: priceVal,
+      category: catVal,
+      type: "Streetwear",
+      description: descVal,
+      theme: shoeTheme,
+      colors: [
+        {
+          name: colorNameVal,
+          hex: hexVal,
+          image: imgVal
+        }
+      ]
+    };
+
+    if (existingShoe) {
+      const idx = storeData.products.findIndex(x => String(x.id) === String(idVal));
+      if (idx >= 0) {
+        if (Array.isArray(existingShoe.colors) && existingShoe.colors.length > 1) {
+          newShoe.colors = existingShoe.colors;
+          newShoe.colors[0].image = imgVal;
+          newShoe.colors[0].name = colorNameVal;
+          newShoe.colors[0].hex = hexVal;
+        }
+        storeData.products[idx] = newShoe;
+      }
+    } else {
+      storeData.products.push(newShoe);
+      current = storeData.products.length - 1;
+    }
+
+    $("shoeModal").classList.remove("open");
+    await autoSaveAndPublish(idVal ? "Shoe updated & saved live!" : "New Shoe added & saved live!");
+  } catch (err) {
+    console.error("Save Shoe Error:", err);
+    showToast("Error saving shoe: " + err.message, false);
+  } finally {
+    if (saveBtn) {
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = saveBtn.dataset.origText || "Save Shoe";
+    }
   }
-  $("shoeModal").classList.remove("open");
-  await autoSaveAndPublish("Shoe updated & saved live!");
 });
+
+// Direct button click backup handler
+if ($("saveShoeBtn")) {
+  $("saveShoeBtn").addEventListener("click", () => {
+    if ($("shoeForm")) {
+      if (typeof $("shoeForm").requestSubmit === "function") {
+        $("shoeForm").requestSubmit();
+      } else {
+        $("shoeForm").dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    }
+  });
+}
 
 // Reviews Add / Edit
 function openReviewModal(r = null) {

@@ -1,164 +1,120 @@
-{
-  "brand": {
-    "name": "FOOT WEAR",
-    "tagline": "Move Different",
-    "slogan": "Step Into Your Style",
-    "whatsappNumber": "923079436896",
-    "currency": "PKR"
-  },
-  "theme": {
-    "accent": "#0284c7",
-    "accent2": "#1e3a8a",
-    "glow": "rgba(2, 132, 199, 0.45)",
-    "bg": "#050508"
-  },
-  "auth": {
-    "username": "ALI HAMID 49229",
-    "customPass": "ALIZOX 49229",
-    "updatedAt": "2026-10-17T09:37:00Z"
-  },
-  "updatedAt": "2026-10-19T02:40:00.000Z",
-  "products": [
-    {
-      "id": 3,
-      "name": "AERO",
-      "sub": "FLOW",
-      "tag": "Motion series / 03",
-      "price": 2999,
-      "category": "Women",
-      "type": "Streetwear",
-      "description": "Light-looking lines and a versatile shape made for everyday movement and effortless fits.",
-      "theme": [
-        "#0284c7",
-        "#1e3a8a",
-        "rgba(2, 132, 199, 0.45)"
-      ],
-      "colors": [
-        {
-          "name": "Ice Blue",
-          "hex": "#58c8ff",
-          "image": "images/shoe-blue.png"
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "name": "PULSE",
-      "sub": "SHIFT",
-      "tag": "New season / 01",
-      "price": 3488,
-      "category": "Men",
-      "type": "Streetwear",
-      "description": "A bold everyday silhouette with a futuristic edge. Built for your own lane.",
-      "theme": [
-        "#c026d3",
-        "#581c87",
-        "rgba(192, 38, 211, 0.45)"
-      ],
-      "colors": [
-        {
-          "name": "Voltage Purple",
-          "hex": "#b62dff",
-          "image": "images/shoe-purple.png"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "NOVA",
-      "sub": "RUSH",
-      "tag": "Energy line / 02",
-      "price": 4546,
-      "category": "Men",
-      "type": "Streetwear",
-      "description": "A clean, athletic profile with high-contrast color and a street-ready attitude.",
-      "theme": [
-        "#e11d48",
-        "#881337",
-        "rgba(225, 29, 72, 0.45)"
-      ],
-      "colors": [
-        {
-          "name": "Solar Red",
-          "hex": "#ff453a",
-          "image": "images/shoe-red.png"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "ECLIPSE",
-      "sub": "CORE",
-      "tag": "Core collection / 04",
-      "price": 4999,
-      "category": "Women",
-      "type": "Streetwear",
-      "description": "Understated from a distance, impossible to ignore up close. Your daily rotation, redefined.",
-      "theme": [
-        "#059669",
-        "#064e3b",
-        "rgba(5, 150, 105, 0.45)"
-      ],
-      "colors": [
-        {
-          "name": "Emerald Night",
-          "hex": "#10b981",
-          "image": "images/shoe-green.png"
-        }
-      ]
-    }
-  ],
-  "reviews": [
-    {
-      "id": 1,
-      "name": "Hamza Malik",
-      "city": "Lahore",
-      "stars": 5,
-      "shoe": "PULSE SHIFT",
-      "text": "Bohot zabardast quality hai! Picture se bhi zyada premium lagte hain real mein. Lightweight hain aur daily wear ke liye best comfort hai. WhatsApp pe response bhi bohot fast mila."
-    },
-    {
-      "id": 2,
-      "name": "Saad Rehman",
-      "city": "Karachi",
-      "stars": 5,
-      "shoe": "NOVA RUSH",
-      "text": "Streetwear look bilkul top-tier hai. 15 saal ke Ali bhai ka brand hai aur itni solid quality deliver kar rahe hain, salute! Delivery bhi sirf 3 din mein mil gayi Karachi mein."
-    },
-    {
-      "id": 3,
-      "name": "Ayesha Khan",
-      "city": "Islamabad",
-      "stars": 5,
-      "shoe": "AERO FLOW",
-      "text": "Sole cushioning bohot soft hai, gym aur daily university fits ke sath perfect match hoti hai. Colorway bohot unique hai, definitely ordering another pair soon!"
-    },
-    {
-      "id": 4,
-      "name": "Usman Tariq",
-      "city": "Faisalabad",
-      "stars": 5,
-      "shoe": "ECLIPSE CORE",
-      "text": "Finishing aur stitching 10/10. Advance payment Easypaisa se ki thi, bhai ne payment aate hi tracking update de di. Trustworthy seller, highly recommended!"
-    },
-    {
-      "id": 5,
-      "name": "Zayan Ahmed",
-      "city": "Rawalpindi",
-      "stars": 5,
-      "shoe": "PULSE SHIFT",
-      "text": "Sole grip aur fit bilkul true to size hai (UK 8). Streetwear community ko aise young creators ko zaroor support karna chahiye. ALIZOX rock kar raha hai!"
-    }
-  ],
-  "about": {
-    "founderName": "ALI HAMID",
-    "founderRole": "Founder of ALIZOX",
-    "age": "15 Years",
-    "education": "10th Grade",
-    "storyTitle": "Turning Passion Into a Growing Brand",
-    "storyText": "Welcome to ALIZOX — a brand built on passion, ambition, and a vision for style.\n\nMy name is Ali Hamid, and I am a 15-year-old student currently studying in Class 10th. I started ALIZOX with a dream of building something of my own and turning my passion for sneakers and fashion into a growing brand.\n\nAt ALIZOX, our goal is to make discovering stylish sneakers simple, enjoyable, and convenient. We believe that great style is not just about what you wear — it's about expressing your personality and confidence.",
-    "mission": "Our mission is to provide customers with stylish sneaker options, a smooth shopping experience, and friendly customer service. We aim to build a brand that customers can trust and that continues to grow through dedication, creativity, and hard work.",
-    "vision": "We dream of growing ALIZOX into a recognized footwear brand, reaching more customers, expanding our collection, and creating a name that stands for style, ambition, and trust.",
-    "quote": "Age is just a number when you have a dream, a clear vision, and the courage to work for it. ALIZOX is only the beginning of my journey, and I hope to build something meaningful through hard work, consistency, and the trust of my customers."
-  }
+﻿{
+    "brand":  {
+                  "name":  "AA  SHOES",
+                  "tagline":  "Move Different",
+                  "slogan":  "Step Into Your Style",
+                  "whatsappNumber":  "923079436896",
+                  "currency":  "PKR"
+              },
+    "theme":  {
+                  "accent":  "#c026d3",
+                  "accent2":  "#581c87",
+                  "glow":  "rgba(192, 38, 211, 0.45)",
+                  "bg":  "#050508"
+              },
+    "auth":  {
+                 "username":  "ALI HAMID 49229",
+                 "customPass":  "ALIZOX 49229",
+                 "updatedAt":  "2026-10-17T09:37:00Z"
+             },
+    "updatedAt":  "2026-10-28T09:17:42.843Z",
+    "products":  [
+                     {
+                         "id":  1793177139919,
+                         "name":  "Chelsea",
+                         "sub":  "Shoes",
+                         "tag":  "New Drop / 05",
+                         "price":  8500,
+                         "category":  "Men",
+                         "type":  "Streetwear",
+                         "description":  "Everyday luxury  and Royal vide",
+                         "theme":  [
+                                       "#000000",
+                                       "#000000",
+                                       "rgba(0,0,0,0.45)"
+                                   ],
+                         "colors":  [
+                                        {
+                                            "name":  "Black and brown",
+                                            "hex":  "#000000",
+                                            "image":  "images/shoe_chelsea.png"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  1793177641670,
+                         "name":  "Chelsea",
+                         "sub":  "Shoes",
+                         "tag":  "New Drop / 05",
+                         "price":  8500,
+                         "category":  "Men",
+                         "type":  "Streetwear",
+                         "description":  "Everyday luxury and Royal vide",
+                         "theme":  [
+                                       "#472000",
+                                       "#1f0e00",
+                                       "rgba(71,32,0,0.45)"
+                                   ],
+                         "colors":  [
+                                        {
+                                            "name":  "Voltage Purple",
+                                            "hex":  "#472000",
+                                            "image":  "images/shoe_chelsea.png"
+                                        }
+                                    ]
+                     }
+                 ],
+    "reviews":  [
+                    {
+                        "id":  1,
+                        "name":  "Hamza Malik",
+                        "city":  "Lahore",
+                        "shoe":  "PULSE SHIFT",
+                        "stars":  5,
+                        "text":  "Bohot zabardast quality hai! Picture se bhi zyada premium lagte hain real mein."
+                    },
+                    {
+                        "id":  2,
+                        "name":  "Saad Rehman",
+                        "city":  "Karachi",
+                        "shoe":  "NOVA RUSH",
+                        "stars":  5,
+                        "text":  "Streetwear look bilkul top-tier hai."
+                    },
+                    {
+                        "id":  3,
+                        "name":  "Ayesha Khan",
+                        "city":  "Islamabad",
+                        "shoe":  "AERO FLOW",
+                        "stars":  5,
+                        "text":  "Sole cushioning bohot soft hai, gym aur daily university fits ke sath perfect match hoti hai. Colorway bohot unique hai, definitely ordering another pair soon!"
+                    },
+                    {
+                        "id":  4,
+                        "name":  "Usman Tariq",
+                        "city":  "Faisalabad",
+                        "shoe":  "ECLIPSE CORE",
+                        "stars":  5,
+                        "text":  "Finishing aur stitching 10/10. Advance payment Easypaisa se ki thi, bhai ne payment aate hi tracking update de di. Trustworthy seller."
+                    },
+                    {
+                        "id":  5,
+                        "name":  "Zayan Ahmed",
+                        "city":  "Rawalpindi",
+                        "shoe":  "PULSE SHIFT",
+                        "stars":  5,
+                        "text":  "Sole grip aur fit bilkul true to size hai (UK 8). Streetwear community ko aise young creators ko zaroor support karna chahiye."
+                    }
+                ],
+    "about":  {
+                  "founderName":  "ALI HAMID",
+                  "founderRole":  "Founder of AA  SHOES",
+                  "age":  "15 Years",
+                  "education":  "10th Grade",
+                  "storyTitle":  "Turning Passion Into a Growing Brand",
+                  "storyText":  "Welcome to AA  SHOES — a brand built on passion, ambition, and a vision for style.\n\nMy name is Ali Hamid, and I am a 15-year-old student currently studying in Class 10th. I started AA  SHOES with a dream of building something of my own and turning my passion for sneakers and fashion into a growing brand.\n\nAt AA  SHOES, our goal is to make discovering stylish sneakers simple, enjoyable, and convenient. We believe that great style is not just about what you wear — it\u0027s about expressing your personality and confidence.",
+                  "mission":  "Our mission is to provide customers with stylish sneaker options, a smooth shopping experience, and friendly customer service. We aim to build a brand that customers can trust and that continues to grow through dedication, creativity, and hard work.",
+                  "vision":  "We dream of growing AA  SHOES into a recognized footwear brand, reaching more customers, expanding our collection, and creating a name that stands for style, ambition, and trust.",
+                  "quote":  "Age is just a number when you have a dream, a clear vision, and the courage to work for it. AA  SHOES is only the beginning of my journey, and I hope to build something meaningful through hard work, consistency, and the trust of my customers."
+              }
 }

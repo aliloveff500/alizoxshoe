@@ -1243,13 +1243,14 @@ const formatPrice=n=>"PKR "+n.toLocaleString("en-PK");
 const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function applyTheme(p){
-  const glow = (p.theme && p.theme[2]) ? p.theme[2] : "rgba(2,132,199,.45)";
-  document.documentElement.style.setProperty("--accent", p.theme[0]);
-  document.documentElement.style.setProperty("--accent2", p.theme[1]);
+  const t = (p && Array.isArray(p.theme) && p.theme.length >= 2) ? p.theme : ["#c026d3", "#581c87", "rgba(192, 38, 211, 0.45)"];
+  const glow = t[2] || "rgba(192, 38, 211, 0.45)";
+  document.documentElement.style.setProperty("--accent", t[0]);
+  document.documentElement.style.setProperty("--accent2", t[1]);
   document.documentElement.style.setProperty("--glow", glow);
   const amb = $("ambient");
   if(amb){
-    amb.style.background = `radial-gradient(ellipse at 20% 20%, ${glow}, transparent 50%), radial-gradient(ellipse at 85% 78%, ${p.theme[1]}, transparent 44%), #050508`;
+    amb.style.background = `radial-gradient(ellipse at 20% 20%, ${glow}, transparent 50%), radial-gradient(ellipse at 85% 78%, ${t[1]}, transparent 44%), #050508`;
   }
 }
 
@@ -1377,20 +1378,22 @@ function paintProduct(){
 }
 
 function goTo(index){
+  if(!products || !products.length) return;
   if(animating || index === current) return;
   animating = true;
   const img = $("shoeImage");
   img.classList.add("exit");
   $("price").classList.add("changing");
   setTimeout(() => {
-    current = (index + products.length) % products.length;
+    current = ((index % products.length) + products.length) % products.length;
     colorIndex = 0;
     const p = products[current];
+    if(!p) { animating = false; return; }
     const c = (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "" };
     applyTheme(p);
-    $("eyebrow").textContent = p.tag;
+    $("eyebrow").textContent = p.tag || "Featured";
     $("productName").innerHTML = `${p.name} <span>${p.sub}</span>`;
-    $("productDescription").textContent = p.description;
+    $("productDescription").textContent = p.description || "";
     $("price").textContent = formatPrice(p.price);
     $("colorName").textContent = c.name;
     img.src = c.image;
@@ -1536,7 +1539,53 @@ function animateFlyToCart(fromEl, imageUrl) {
   }
 }
 
-function renderGrid(filter="All",search=""){currentFilter=filter;const list=products.filter(p=>(filter==="All"||p.category===filter||p.type===filter)&&`${p.name} ${p.sub} ${p.description}`.toLowerCase().includes(search.toLowerCase()));$("productGrid").innerHTML=list.map(p=>`<article class="product-card" tabindex="0" role="button" aria-label="View ${p.name} ${p.sub}" data-id="${p.id}" style="--cardglow:${p.theme[2]}"><div class="product-card-img"><img loading="lazy" src="${p.colors[0].image}" alt="${p.name} ${p.sub} sneaker"></div><div class="card-body"><div class="card-tag">${p.tag}</div><div class="card-title">${p.name} ${p.sub}</div><div class="card-desc">${p.description}</div><div class="card-bottom"><span class="card-price">${formatPrice(p.price)}</span><span class="view-link">View details ↗</span></div><div class="card-actions"><button type="button" data-card-view="${p.id}">Details</button><button type="button" data-card-add="${p.id}">Add to cart</button></div><div class="card-second-order-tag">🔥 30% OFF on 2nd order</div></div></article>`).join("")||'<p style="color:#999">No products found. Try another search.</p>';document.querySelectorAll(".product-card").forEach(card=>{const open=()=>{const idx=products.findIndex(p=>p.id===+card.dataset.id);if(idx>=0){if(idx!==current)goTo(idx);$("home").scrollIntoView({behavior:"smooth"});}};card.addEventListener("click",e=>{const add=e.target.closest("[data-card-add]");const view=e.target.closest("[data-card-view]");if(add){e.stopPropagation();const p=products.find(x=>x.id===+add.dataset.cardAdd);if(p){const c=p.colors[0];const found=cart.find(x=>x.productId===p.id&&x.color===c.name&&x.size==="7");if(found)found.quantity=Math.min(20,found.quantity+1);else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:c.image});saveCart();animateFlyToCart(add, c.image);showToast("Added to your cart (UK 7)");}return;}if(view){e.stopPropagation();open();return;}open();});card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});});}
+function renderGrid(filter="All",search=""){
+  currentFilter=filter;
+  const list=products.filter(p=>(filter==="All"||p.category===filter||p.type===filter)&&`${p.name} ${p.sub} ${p.description}`.toLowerCase().includes(search.toLowerCase()));
+  $("productGrid").innerHTML=list.map(p=>{
+    const cardImg = (p.colors && p.colors[0] && p.colors[0].image) || 'images/shoe_chelsea.png';
+    const cardGlow = (p.theme && p.theme[2]) || 'rgba(192,38,211,0.45)';
+    return `<article class="product-card" tabindex="0" role="button" aria-label="View ${escHtml(p.name)} ${escHtml(p.sub)}" data-id="${p.id}" style="--cardglow:${cardGlow}">
+      <div class="product-card-img"><img loading="lazy" src="${cardImg}" alt="${escHtml(p.name)} ${escHtml(p.sub)} sneaker"></div>
+      <div class="card-body">
+        <div class="card-tag">${escHtml(p.tag || 'ALIZOX')}</div>
+        <div class="card-title">${escHtml(p.name)} ${escHtml(p.sub)}</div>
+        <div class="card-desc">${escHtml(p.description || '')}</div>
+        <div class="card-bottom"><span class="card-price">${formatPrice(p.price)}</span><span class="view-link">View details ↗</span></div>
+        <div class="card-actions"><button type="button" data-card-view="${p.id}">Details</button><button type="button" data-card-add="${p.id}">Add to cart</button></div>
+        <div class="card-second-order-tag">🔥 30% OFF on 2nd order</div>
+      </div>
+    </article>`;
+  }).join("")||'<p style="color:#999">No products found. Try another search.</p>';
+
+  document.querySelectorAll(".product-card").forEach(card=>{
+    const open=()=>{
+      const idx=products.findIndex(p=>String(p.id)===String(card.dataset.id));
+      if(idx>=0){if(idx!==current)goTo(idx);$("home").scrollIntoView({behavior:"smooth"});}
+    };
+    card.addEventListener("click",e=>{
+      const add=e.target.closest("[data-card-add]");
+      const view=e.target.closest("[data-card-view]");
+      if(add){
+        e.stopPropagation();
+        const p=products.find(x=>String(x.id)===String(add.dataset.cardAdd));
+        if(p){
+          const c=(p.colors && p.colors[0]) || { name:"Standard", image: card.querySelector("img") ? card.querySelector("img").src : "images/shoe_chelsea.png" };
+          const found=cart.find(x=>String(x.productId)===String(p.id)&&x.color===c.name&&x.size==="7");
+          if(found) found.quantity=Math.min(20,found.quantity+1);
+          else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:c.image});
+          saveCart();
+          animateFlyToCart(add, c.image);
+          showToast("Added to your cart (UK 7)");
+        }
+        return;
+      }
+      if(view){e.stopPropagation();open();return;}
+      open();
+    });
+    card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+  });
+}
 document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderGrid(b.dataset.filter);}));
 document.querySelectorAll("[data-filter-link]").forEach(a=>a.addEventListener("click",()=>{const f=a.dataset.filterLink;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter===f));renderGrid(f);$("mobileMenu").classList.remove("open");}));
 $("menuToggle").addEventListener("click",()=>$("mobileMenu").classList.toggle("open"));

@@ -53,8 +53,8 @@
 <style>
 :root{--accent:#0284c7;--accent2:#1e3a8a;--glow:rgba(2,132,199,.45);--page1:#0284c7;--page2:#1e3a8a;--ink:#f8f8fb;--muted:#a4a4b1;--panel:#121216;--line:rgba(255,255,255,.09)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050508;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
-@keyframes siteEntrance{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
-.site-app{animation:siteEntrance .75s cubic-bezier(.16,1,.3,1) both;width:100%;overflow-x:hidden}
+@keyframes siteEntrance{0%{opacity:0}100%{opacity:1}}
+.site-app{animation:siteEntrance .35s ease both;width:100%;overflow-x:hidden}
 .ambient{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 18% 20%,var(--glow),transparent 48%),radial-gradient(ellipse at 85% 78%,var(--accent2),transparent 42%),#050508;transition:background 850ms ease}
 .site-header{height:84px;padding:0 clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:10;background:rgba(10,10,13,.75);backdrop-filter:blur(18px)}
 .brand{font-weight:950;letter-spacing:.16em;font-size:22px;display:flex;align-items:center;gap:10px}
@@ -1217,6 +1217,12 @@ if (window.top !== window.self) {
   try { window.top.location = window.self.location; } catch(e) { window.location = "about:blank"; }
 }
 
+// PREVENT UNWANTED AUTO-SCROLL / JUMPING ON REFRESH
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 const products = [
  {id:3,name:"AERO",sub:"FLOW",tag:"Motion series / 03",description:"Light-looking lines and a versatile shape made for everyday movement and effortless fits.",price:2999,category:"Women",type:"Streetwear",theme:["#0284c7","#1e3a8a","rgba(2,132,199,.45)"],colors:[
   {name:"Ice Blue",hex:"#58c8ff",image:"images/shoe-blue.png"}
@@ -1882,10 +1888,16 @@ if ($("closeAuthModal")) $("closeAuthModal").addEventListener("click", closeAuth
 if ($("authModalBackdrop")) $("authModalBackdrop").addEventListener("click", closeAuthModal);
 if ($("tabSignInBtn")) $("tabSignInBtn").addEventListener("click", () => switchAuthTab("signin"));
 if ($("tabSignUpBtn")) $("tabSignUpBtn").addEventListener("click", () => switchAuthTab("signup"));
-window.addEventListener("DOMContentLoaded", clearAuthInputs);
+window.addEventListener("DOMContentLoaded", () => {
+  clearAuthInputs();
+});
 window.addEventListener("load", () => {
   clearAuthInputs();
   setTimeout(clearAuthInputs, 200);
+  window.scrollTo(0, 0);
+});
+window.addEventListener("beforeunload", () => {
+  window.scrollTo(0, 0);
 });
 if ($("customerLogoutBtn")) $("customerLogoutBtn").addEventListener("click", () => {
   setCurrentUser(null);

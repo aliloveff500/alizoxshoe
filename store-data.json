@@ -33,11 +33,17 @@
                                        "#000000",
                                        "rgba(0,0,0,0.45)"
                                    ],
+                         "images":  [
+                                        "images/shoe_chelsea.png"
+                                    ],
                          "colors":  [
                                         {
                                             "name":  "Black and brown",
                                             "hex":  "#000000",
-                                            "image":  "images/shoe_chelsea.png"
+                                            "image":  "images/shoe_chelsea.png",
+                                            "images":  [
+                                                           "images/shoe_chelsea.png"
+                                                       ]
                                         }
                                     ]
                      },
@@ -55,11 +61,17 @@
                                        "#1f0e00",
                                        "rgba(71,32,0,0.45)"
                                    ],
+                         "images":  [
+                                        "images/shoe_chelsea.png"
+                                    ],
                          "colors":  [
                                         {
                                             "name":  "Voltage Purple",
                                             "hex":  "#472000",
-                                            "image":  "images/shoe_chelsea.png"
+                                            "image":  "images/shoe_chelsea.png",
+                                            "images":  [
+                                                           "images/shoe_chelsea.png"
+                                                       ]
                                         }
                                     ]
                      }

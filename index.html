@@ -85,8 +85,20 @@
 .copy-cta{display:inline-flex;align-items:center;gap:10px;margin-top:27px;font-size:10px;letter-spacing:.16em;font-weight:900;text-transform:uppercase}
 .play-dot{height:39px;width:39px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#111;box-shadow:0 0 24px var(--glow);transition:all .4s}
 .copy-cta:hover .play-dot{transform:scale(1.1)}
-.shoe-stage{min-width:0;display:flex;align-items:center;justify-content:center;perspective:1000px;overflow:visible;padding:10px 0}
+.shoe-stage{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;perspective:1000px;overflow:visible;padding:10px 0;position:relative}
 .shoe-image{max-width:92%;max-height:340px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 28px 32px rgba(0,0,0,.8));transform:rotate(-4deg) translateY(0);transition:opacity .25s,transform .65s cubic-bezier(.2,.8,.2,1),filter .5s;mix-blend-mode:normal;background:transparent!important}
+.shoe-gallery-strip{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap;z-index:5;max-width:100%}
+.shoe-thumb-btn{width:46px;height:46px;padding:3px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s ease;position:relative;overflow:hidden}
+.shoe-thumb-btn img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:transform .2s}
+.shoe-thumb-btn:hover{border-color:var(--accent);background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.shoe-thumb-btn.active{border-color:var(--accent);background:rgba(255,255,255,.14);box-shadow:0 0 14px var(--glow);transform:scale(1.08)}
+.shoe-thumb-badge{position:absolute;bottom:1px;right:2px;font-size:7px;color:#fff;font-weight:900;text-transform:uppercase;background:rgba(0,0,0,.7);padding:0 3px;border-radius:3px;pointer-events:none}
+.card-angle-count-tag{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.18);border-radius:6px;padding:2px 7px;font-size:9px;color:#eee;font-weight:900;backdrop-filter:blur(6px);display:flex;align-items:center;gap:4px;z-index:2;pointer-events:none}
+@media (max-width:768px){
+  .shoe-thumb-btn{width:36px;height:36px;padding:2px;border-radius:8px}
+  .shoe-gallery-strip{gap:5px;margin-top:6px}
+  .shoe-thumb-badge{font-size:6.5px}
+}
 .shoe-image.enter{opacity:0;transform:translateX(75px) rotate(-4deg) scale(.92)}
 .shoe-image.exit{opacity:0;transform:translateX(-70px) rotate(-14deg) scale(.94)}
 .product-info{align-self:center;padding-left:10px}
@@ -672,7 +684,10 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
    <div class="hero-content" id="slider" aria-live="polite">
     <div class="ghost-word">ALIZOX</div>
     <div class="product-copy"><div class="eyebrow" id="eyebrow">Motion series / 03</div><h1 id="productName">AERO <span>FLOW</span></h1><p class="description" id="productDescription">Light-looking lines and a versatile shape made for everyday movement and effortless fits.</p><a href="#shop" class="copy-cta"><span class="play-dot">↗</span> Explore collection</a></div>
-    <div class="shoe-stage"><img class="shoe-image" id="shoeImage" alt="Featured ALIZOX sneaker" src="images/shoe-blue.png"></div>
+    <div class="shoe-stage">
+      <img class="shoe-image" id="shoeImage" alt="Featured ALIZOX sneaker" src="images/shoe-blue.png">
+      <div class="shoe-gallery-strip" id="shoeGalleryStrip"></div>
+    </div>
     <aside class="product-info">
       <div class="price-label">ALIZOX price</div><div class="price" id="price">PKR 2,999</div>
       <div class="detail-line"></div>
@@ -1360,19 +1375,83 @@ function selectAvailableColorway(cw){
   }
 }
 
+let activeHeroAngle = 0;
+
+function getShoeImages(p) {
+  if (!p) return ["images/shoe_chelsea.png"];
+  if (Array.isArray(p.images) && p.images.length > 0) {
+    const v = p.images.filter(x => typeof x === "string" && x.trim());
+    if (v.length > 0) return v;
+  }
+  if (p.colors && p.colors[0]) {
+    if (Array.isArray(p.colors[0].images) && p.colors[0].images.length > 0) {
+      const v = p.colors[0].images.filter(x => typeof x === "string" && x.trim());
+      if (v.length > 0) return v;
+    }
+    if (p.colors[0].image && typeof p.colors[0].image === "string" && p.colors[0].image.trim()) {
+      return [p.colors[0].image.trim()];
+    }
+  }
+  return ["images/shoe_chelsea.png"];
+}
+
+const HERO_ANGLE_NAMES = ["Front", "Back", "Side", "Inner", "Top", "Sole"];
+
+function renderHeroGallery(p) {
+  const strip = $("shoeGalleryStrip");
+  if (!strip) return;
+  const imgs = getShoeImages(p);
+  if (imgs.length <= 1) {
+    strip.style.display = "none";
+    strip.innerHTML = "";
+    return;
+  }
+  strip.style.display = "flex";
+  strip.innerHTML = imgs.map((url, i) => {
+    const isAct = (i === activeHeroAngle);
+    const label = HERO_ANGLE_NAMES[i] || `Angle ${i+1}`;
+    return `<button type="button" class="shoe-thumb-btn ${isAct ? 'active' : ''}" onclick="selectShoeAngle(${i})" aria-label="${escHtml(p.name)} ${label} view" title="${label} view">
+      <img src="${url}" alt="${escHtml(p.name)} ${label}">
+      <span class="shoe-thumb-badge">${label}</span>
+    </button>`;
+  }).join("");
+}
+
+window.selectShoeAngle = function(idx) {
+  activeHeroAngle = idx;
+  const p = products[current];
+  if (!p) return;
+  const imgs = getShoeImages(p);
+  if (imgs[idx]) {
+    const img = $("shoeImage");
+    img.style.opacity = "0.2";
+    img.style.transform = "scale(0.96) rotate(-3deg)";
+    setTimeout(() => {
+      img.src = imgs[idx];
+      img.style.opacity = "1";
+      img.style.transform = "scale(1) rotate(-3deg)";
+      renderHeroGallery(p);
+    }, 120);
+  }
+};
+
 function paintProduct(){
   if(!products.length) return;
   current = Math.min(current, products.length - 1);
   const p = products[current];
   const c = (p.colors && p.colors[colorIndex]) || (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "images/shoe-purple.png" };
   applyTheme(p);
-  $("eyebrow").textContent = p.tag;
+  $("eyebrow").textContent = p.tag || "Featured";
   $("productName").innerHTML = `${p.name} <span>${p.sub}</span>`;
-  $("productDescription").textContent = p.description;
+  $("productDescription").textContent = p.description || "";
   $("price").textContent = formatPrice(p.price);
   $("colorName").textContent = c.name;
-  $("shoeImage").src = c.image;
+
+  const shoeImgs = getShoeImages(p);
+  if (activeHeroAngle >= shoeImgs.length) activeHeroAngle = 0;
+  $("shoeImage").src = shoeImgs[activeHeroAngle] || c.image || "images/shoe_chelsea.png";
   $("shoeImage").alt = `ALIZOX ${p.name} ${p.sub} sneaker in ${c.name}`;
+  renderHeroGallery(p);
   renderSwatches();
   renderDots();
 }
@@ -1387,6 +1466,7 @@ function goTo(index){
   setTimeout(() => {
     current = ((index % products.length) + products.length) % products.length;
     colorIndex = 0;
+    activeHeroAngle = 0;
     const p = products[current];
     if(!p) { animating = false; return; }
     const c = (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "" };
@@ -1396,8 +1476,10 @@ function goTo(index){
     $("productDescription").textContent = p.description || "";
     $("price").textContent = formatPrice(p.price);
     $("colorName").textContent = c.name;
-    img.src = c.image;
+    const shoeImgs = getShoeImages(p);
+    img.src = shoeImgs[0] || c.image || "images/shoe_chelsea.png";
     img.alt = `ALIZOX ${p.name} ${p.sub} sneaker in ${c.name}`;
+    renderHeroGallery(p);
     img.classList.remove("exit");
     img.classList.add("enter");
     renderSwatches();
@@ -1543,10 +1625,17 @@ function renderGrid(filter="All",search=""){
   currentFilter=filter;
   const list=products.filter(p=>(filter==="All"||p.category===filter||p.type===filter)&&`${p.name} ${p.sub} ${p.description}`.toLowerCase().includes(search.toLowerCase()));
   $("productGrid").innerHTML=list.map(p=>{
-    const cardImg = (p.colors && p.colors[0] && p.colors[0].image) || 'images/shoe_chelsea.png';
+    const imgs = getShoeImages(p);
+    const cardImg = imgs[0];
+    const cardImgHover = imgs[1] || imgs[0];
     const cardGlow = (p.theme && p.theme[2]) || 'rgba(192,38,211,0.45)';
-    return `<article class="product-card" tabindex="0" role="button" aria-label="View ${escHtml(p.name)} ${escHtml(p.sub)}" data-id="${p.id}" style="--cardglow:${cardGlow}">
-      <div class="product-card-img"><img loading="lazy" src="${cardImg}" alt="${escHtml(p.name)} ${escHtml(p.sub)} sneaker"></div>
+    const hasMulti = imgs.length > 1;
+
+    return `<article class="product-card" tabindex="0" role="button" aria-label="View ${escHtml(p.name)} ${escHtml(p.sub)}" data-id="${p.id}" data-main="${cardImg}" data-hover="${cardImgHover}" style="--cardglow:${cardGlow}">
+      <div class="product-card-img" style="position:relative">
+        ${hasMulti ? `<div class="card-angle-count-tag">📸 ${imgs.length} Angles</div>` : ''}
+        <img loading="lazy" src="${cardImg}" alt="${escHtml(p.name)} ${escHtml(p.sub)} sneaker">
+      </div>
       <div class="card-body">
         <div class="card-tag">${escHtml(p.tag || 'ALIZOX')}</div>
         <div class="card-title">${escHtml(p.name)} ${escHtml(p.sub)}</div>
@@ -1559,6 +1648,19 @@ function renderGrid(filter="All",search=""){
   }).join("")||'<p style="color:#999">No products found. Try another search.</p>';
 
   document.querySelectorAll(".product-card").forEach(card=>{
+    const cardImgEl = card.querySelector(".product-card-img img");
+    const mainSrc = card.dataset.main;
+    const hoverSrc = card.dataset.hover;
+
+    if (mainSrc && hoverSrc && mainSrc !== hoverSrc && cardImgEl) {
+      card.addEventListener("mouseenter", () => {
+        cardImgEl.src = hoverSrc;
+      });
+      card.addEventListener("mouseleave", () => {
+        cardImgEl.src = mainSrc;
+      });
+    }
+
     const open=()=>{
       const idx=products.findIndex(p=>String(p.id)===String(card.dataset.id));
       if(idx>=0){if(idx!==current)goTo(idx);$("home").scrollIntoView({behavior:"smooth"});}
@@ -1570,12 +1672,13 @@ function renderGrid(filter="All",search=""){
         e.stopPropagation();
         const p=products.find(x=>String(x.id)===String(add.dataset.cardAdd));
         if(p){
-          const c=(p.colors && p.colors[0]) || { name:"Standard", image: card.querySelector("img") ? card.querySelector("img").src : "images/shoe_chelsea.png" };
+          const imgs = getShoeImages(p);
+          const c=(p.colors && p.colors[0]) || { name:"Standard", image: imgs[0] };
           const found=cart.find(x=>String(x.productId)===String(p.id)&&x.color===c.name&&x.size==="7");
           if(found) found.quantity=Math.min(20,found.quantity+1);
-          else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:c.image});
+          else cart.push({productId:p.id,name:`${p.name} ${p.sub}`,color:c.name,size:"7",price:p.price,quantity:1,image:imgs[0]});
           saveCart();
-          animateFlyToCart(add, c.image);
+          animateFlyToCart(add, imgs[0]);
           showToast("Added to your cart (UK 7)");
         }
         return;

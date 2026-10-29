@@ -161,6 +161,30 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
 .img-lib-card img{max-width:100%;max-height:100%;object-fit:contain}
 .img-lib-badge{position:absolute;bottom:4px;left:4px;right:4px;background:rgba(0,0,0,.75);color:#fff;font-size:8.5px;padding:2px 4px;border-radius:4px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+/* Multi-Angle Photography Studio & Gallery Thumbnails */
+.angle-slots-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:6px}
+@media (max-width:720px){.angle-slots-grid{grid-template-columns:repeat(3,1fr)}}
+.angle-slot-card{position:relative;aspect-ratio:1;border-radius:9px;background:#101017;border:1px dashed rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:4px;transition:all .2s ease;overflow:hidden;user-select:none}
+.angle-slot-card:hover{border-color:var(--accent);background:#171724;transform:translateY(-2px)}
+.angle-slot-card.active{border-color:var(--accent);border-style:solid;box-shadow:0 0 14px var(--glow);background:rgba(255,255,255,.05)}
+.angle-slot-card.has-img{border-style:solid;border-color:rgba(255,255,255,.22);background:radial-gradient(ellipse at center,rgba(255,255,255,.04),transparent 75%),#0e0e15}
+.angle-slot-card img{max-width:100%;max-height:calc(100% - 16px);object-fit:contain}
+.angle-slot-name{font-size:8px;font-weight:900;text-transform:uppercase;color:#8e8e9e;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center}
+.angle-slot-card.active .angle-slot-name{color:var(--accent)}
+.angle-slot-del{position:absolute;top:2px;right:2px;width:17px;height:17px;background:rgba(239,68,68,.88);color:#fff;border:none;border-radius:50%;font-size:9px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:transform .15s;z-index:4}
+.angle-slot-del:hover{transform:scale(1.15);background:#ef4444}
+.angle-slot-empty-icon{font-size:16px;color:var(--muted);line-height:1}
+.angle-slot-empty-text{font-size:7.5px;color:var(--muted);text-align:center;margin-top:2px}
+
+/* Live Stage Gallery Thumbnails Strip */
+.shoe-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.shoe-gallery-strip{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px;flex-wrap:wrap;z-index:5;max-width:100%}
+.shoe-thumb-btn{width:44px;height:44px;padding:3px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;position:relative;overflow:hidden}
+.shoe-thumb-btn img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:transform .2s}
+.shoe-thumb-btn:hover{border-color:var(--accent);background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.shoe-thumb-btn.active{border-color:var(--accent);background:rgba(255,255,255,.12);box-shadow:0 0 12px var(--glow);transform:scale(1.06)}
+.shoe-thumb-badge{position:absolute;bottom:1px;right:2px;font-size:7px;color:#fff;font-weight:900;text-transform:uppercase;background:rgba(0,0,0,.7);padding:0 3px;border-radius:3px;pointer-events:none}
+
 /* LOGIN OVERLAY */
 .login-screen{position:fixed;inset:0;background:#050508;z-index:100000;display:grid;place-items:center;padding:20px}
 .login-box{width:min(420px,100%);background:linear-gradient(145deg,#15151c,#0c0c10);border:1px solid var(--line);border-radius:24px;padding:36px 32px;box-shadow:0 30px 90px rgba(0,0,0,.85);text-align:center}
@@ -440,6 +464,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
 
           <div class="shoe-stage">
             <img class="shoe-image" id="shoeImage" alt="Sneaker" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=90">
+            <div class="shoe-gallery-strip" id="adminShoeGalleryStrip"></div>
           </div>
 
           <aside class="product-info">
@@ -693,16 +718,26 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
           </div>
         </div>
         <div class="form-group full">
-          <label class="form-label">Shoe Image (Select from Library or Upload from Device)</label>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <label class="form-label" style="margin-bottom:0">Product Photos & Angles (1 to 6 Images)</label>
+            <span style="font-size:11px;color:var(--accent);font-weight:900" id="photoCountBadge">1 / 6 Photos</span>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin:0 0 10px;line-height:1.4">
+            Aap 1 product ki 4 se 6 photos upload kar saktay hain (Front, Back, Left Side, Right Side, Top, Sole). Customer website par inhein click kar k har taraf se shoe dekh sakega.
+          </p>
+
           <div class="img-selector-wrap">
-            <div class="img-preview-box" id="shoeImgPreviewContainer">
-              <img id="shoeImgPreview" src="" alt="Shoe Preview" onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80'">
+            <div class="img-preview-box" id="shoeImgPreviewContainer" style="position:relative">
+              <img id="shoeImgPreview" src="" alt="Shoe Preview" onerror="this.src='images/shoe_chelsea.png'">
+              <div id="previewAngleBadge" style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:3px 9px;font-size:10px;color:#fff;font-weight:800;backdrop-filter:blur(6px)">
+                Slot 1: Front / Main
+              </div>
             </div>
             
             <div class="img-action-row">
               <label class="img-action-btn primary" style="margin:0;cursor:pointer">
-                <span>📁 Upload From Device</span>
-                <input type="file" id="shoeFileInput" accept="image/*" style="display:none">
+                <span>📁 Upload Photos (Select 1 to 6 at once)</span>
+                <input type="file" id="shoeFileInput" accept="image/*" multiple style="display:none">
               </label>
               <button type="button" class="img-action-btn" id="openMediaLibraryBtn">
                 <span>🖼️ Select From Library</span>
@@ -710,14 +745,22 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:28px clamp(20px,5vw,76
             </div>
 
             <div id="shoeUploadStatus" style="display:none;font-size:11px;padding:8px 10px;border-radius:6px;line-height:1.5"></div>
+
+            <!-- Angle Slots Grid (6 Angles: Front, Back, Left, Right, Top, Sole) -->
+            <div style="margin-top:6px">
+              <div style="font-size:10.5px;font-weight:800;color:#aaa;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">
+                Product Angle Slots (Click slot to view/replace):
+              </div>
+              <div id="angleSlotsGrid" class="angle-slots-grid"></div>
+            </div>
             
             <input type="hidden" id="mShoeImg">
             <div style="font-size:10px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-top:2px">
-              <span id="imgSrcDisplay" style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">No image selected</span>
+              <span id="imgSrcDisplay" style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Main photo</span>
               <button type="button" id="manualUrlToggleBtn" style="background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer;text-decoration:underline">Enter Link Manually</button>
             </div>
             <div id="manualUrlContainer" style="display:none;margin-top:4px">
-              <input class="form-input" id="mShoeImgManual" placeholder="Paste custom URL here..." style="font-size:11px;padding:8px">
+              <input class="form-input" id="mShoeImgManual" placeholder="Paste custom URL for active angle..." style="font-size:11px;padding:8px">
             </div>
           </div>
         </div>
@@ -1543,6 +1586,36 @@ function renderLiveStore() {
   renderAbout();
 }
 
+// MULTI-ANGLE HELPERS
+const ANGLE_PRESETS = [
+  { label: "Front / Main", hint: "Main Front View", short: "Front", icon: "👟" },
+  { label: "Back View", hint: "Back Heel Angle", short: "Back", icon: "🔄" },
+  { label: "Left / Outer", hint: "Outer Side Profile", short: "Left", icon: "⬅️" },
+  { label: "Right / Inner", hint: "Inner Arch Angle", short: "Right", icon: "➡️" },
+  { label: "Top View", hint: "Upper / Laces Angle", short: "Top", icon: "⬆️" },
+  { label: "Sole / Bottom", hint: "Tread / Outsole", short: "Sole", icon: "⬇️" }
+];
+
+let adminActiveAngle = 0;
+
+function getShoeImages(p) {
+  if (!p) return ["images/shoe_chelsea.png"];
+  if (Array.isArray(p.images) && p.images.length > 0) {
+    const v = p.images.filter(x => typeof x === "string" && x.trim());
+    if (v.length > 0) return v;
+  }
+  if (p.colors && p.colors[0]) {
+    if (Array.isArray(p.colors[0].images) && p.colors[0].images.length > 0) {
+      const v = p.colors[0].images.filter(x => typeof x === "string" && x.trim());
+      if (v.length > 0) return v;
+    }
+    if (p.colors[0].image && typeof p.colors[0].image === "string" && p.colors[0].image.trim()) {
+      return [p.colors[0].image.trim()];
+    }
+  }
+  return ["images/shoe_chelsea.png"];
+}
+
 // HERO SLIDER
 function renderHeroSlider() {
   if (!storeData || !storeData.products || !storeData.products.length) return;
@@ -1551,12 +1624,35 @@ function renderHeroSlider() {
   if (!p) return;
   const c = (p.colors && p.colors[colorIndex]) || (p.colors && p.colors[0]) || { name: "Default", hex: "#b62dff", image: "" };
 
+  const shoeImgs = getShoeImages(p);
+  if (adminActiveAngle >= shoeImgs.length) adminActiveAngle = 0;
+  const activeAngleImg = shoeImgs[adminActiveAngle] || c.image || "images/shoe_chelsea.png";
+
   $("eyebrow").textContent = p.tag || "Featured";
   $("productName").innerHTML = `${escapeHtml(p.name)} <span>${escapeHtml(p.sub)}</span>`;
   $("productDescription").textContent = p.description || "";
   $("price").textContent = formatPrice(p.price);
   $("colorName").textContent = c.name || "Original";
-  $("shoeImage").src = c.image || "images/shoe_chelsea.png";
+  $("shoeImage").src = activeAngleImg;
+
+  // Render multi-angle gallery thumbnails in admin hero preview
+  const strip = $("adminShoeGalleryStrip");
+  if (strip) {
+    if (shoeImgs.length <= 1) {
+      strip.style.display = "none";
+      strip.innerHTML = "";
+    } else {
+      strip.style.display = "flex";
+      strip.innerHTML = shoeImgs.map((imgUrl, i) => {
+        const isCurrent = (i === adminActiveAngle);
+        const preset = ANGLE_PRESETS[i] || { short: `Angle ${i+1}` };
+        return `<button type="button" class="shoe-thumb-btn ${isCurrent ? 'active' : ''}" onclick="selectAdminShoeAngle(${i})" title="${preset.short} Angle">
+          <img src="${imgUrl}" alt="${preset.short}">
+          <span class="shoe-thumb-badge">${preset.short}</span>
+        </button>`;
+      }).join("");
+    }
+  }
 
   if (Array.isArray(p.theme) && p.theme.length >= 2) {
     document.documentElement.style.setProperty("--accent", p.theme[0]);
@@ -1577,6 +1673,18 @@ function renderHeroSlider() {
   `).join("");
   $("slideCount").textContent = `0${current + 1} / 0${storeData.products.length}`;
 }
+
+window.selectAdminShoeAngle = function(idx) {
+  adminActiveAngle = idx;
+  const p = storeData && storeData.products && storeData.products[current];
+  if (p) {
+    const shoeImgs = getShoeImages(p);
+    if (shoeImgs[idx]) {
+      $("shoeImage").src = shoeImgs[idx];
+      renderHeroSlider();
+    }
+  }
+};
 
 function getAvailableColorwaysAdmin() {
   const list = [];
@@ -1613,17 +1721,20 @@ window.selectAvailableColorwayAdmin = i => {
   if (!cw) return;
   current = cw.productIndex;
   colorIndex = cw.colorIndex;
+  adminActiveAngle = 0;
   renderHeroSlider();
 };
-window.selectColor = i => { colorIndex = i; renderHeroSlider(); };
-window.goToShoe = i => { current = i; colorIndex = 0; renderHeroSlider(); };
+window.selectColor = i => { colorIndex = i; adminActiveAngle = 0; renderHeroSlider(); };
+window.goToShoe = i => { current = i; colorIndex = 0; adminActiveAngle = 0; renderHeroSlider(); };
 $("nextBtn").addEventListener("click", () => {
   if (storeData && storeData.products && storeData.products.length) {
+    adminActiveAngle = 0;
     goToShoe((current + 1) % storeData.products.length);
   }
 });
 $("prevBtn").addEventListener("click", () => {
   if (storeData && storeData.products && storeData.products.length) {
+    adminActiveAngle = 0;
     goToShoe((current - 1 + storeData.products.length) % storeData.products.length);
   }
 });
@@ -1632,10 +1743,14 @@ $("prevBtn").addEventListener("click", () => {
 function renderGrid() {
   const grid = $("productGrid");
   if (!storeData || !storeData.products) return;
-  grid.innerHTML = storeData.products.map(p => `
+  grid.innerHTML = storeData.products.map(p => {
+    const imgs = getShoeImages(p);
+    const hasMulti = imgs.length > 1;
+    return `
     <article class="product-card">
-      <div class="product-card-img">
-        <img src="${p.colors && p.colors[0] ? p.colors[0].image : ''}" alt="${escapeHtml(p.name)}">
+      <div class="product-card-img" style="position:relative">
+        <img src="${imgs[0]}" alt="${escapeHtml(p.name)}">
+        ${hasMulti ? `<div style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.18);border-radius:5px;padding:2px 7px;font-size:8.5px;color:#eee;font-weight:900;backdrop-filter:blur(4px)">📸 ${imgs.length} Angles</div>` : ''}
       </div>
       <div class="card-body">
         <div class="card-tag">${escapeHtml(p.tag || 'ALIZOX')}</div>
@@ -1651,7 +1766,8 @@ function renderGrid() {
         </div>
       </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 }
 
 // REVIEWS
@@ -2001,15 +2117,74 @@ function renderMediaLibrary() {
   });
 }
 
+let currentShoeImages = ["", "", "", "", "", ""];
+let activeAngleSlot = 0;
+
+function renderAngleSlots() {
+  const grid = $("angleSlotsGrid");
+  if (!grid) return;
+
+  const filledCount = currentShoeImages.filter(x => x && x.trim()).length;
+  if ($("photoCountBadge")) {
+    $("photoCountBadge").textContent = `${filledCount} / 6 Photos`;
+  }
+
+  // Active slot URL or fallback
+  const activeUrl = currentShoeImages[activeAngleSlot] || currentShoeImages.find(x => x && x.trim()) || "images/shoe_chelsea.png";
+  if ($("shoeImgPreview")) $("shoeImgPreview").src = activeUrl;
+  if ($("mShoeImg")) $("mShoeImg").value = currentShoeImages[0] || activeUrl;
+  if ($("mShoeImgManual")) $("mShoeImgManual").value = currentShoeImages[activeAngleSlot] || "";
+
+  if ($("previewAngleBadge")) {
+    $("previewAngleBadge").textContent = `Slot ${activeAngleSlot + 1}: ${ANGLE_PRESETS[activeAngleSlot].label}`;
+  }
+  if ($("imgSrcDisplay")) {
+    const curImg = currentShoeImages[activeAngleSlot];
+    $("imgSrcDisplay").textContent = curImg ? (ANGLE_PRESETS[activeAngleSlot].label + " (" + (curImg.startsWith("data:") ? "Custom Upload" : curImg.split("/").pop().split("?")[0]) + ")") : `Slot ${activeAngleSlot + 1} (${ANGLE_PRESETS[activeAngleSlot].label}) is empty`;
+  }
+
+  grid.innerHTML = ANGLE_PRESETS.map((preset, i) => {
+    const imgUrl = currentShoeImages[i];
+    const isAct = (i === activeAngleSlot);
+    if (imgUrl && imgUrl.trim()) {
+      return `
+        <div class="angle-slot-card has-img ${isAct ? 'active' : ''}" onclick="selectAngleSlot(${i})" title="${preset.hint} - Click to view">
+          <button type="button" class="angle-slot-del" onclick="deleteAngleSlot(${i}, event)" title="Remove this photo">&times;</button>
+          <img src="${imgUrl}" alt="${preset.label}">
+          <div class="angle-slot-name">${preset.short}</div>
+        </div>
+      `;
+    } else {
+      return `
+        <div class="angle-slot-card ${isAct ? 'active' : ''}" onclick="selectAngleSlot(${i})" title="${preset.hint} - Click to upload or select">
+          <div class="angle-slot-empty-icon">${preset.icon}</div>
+          <div class="angle-slot-name">${preset.short}</div>
+          <div class="angle-slot-empty-text">+ Add</div>
+        </div>
+      `;
+    }
+  }).join("");
+}
+
+window.selectAngleSlot = function(idx) {
+  activeAngleSlot = Math.max(0, Math.min(5, idx));
+  renderAngleSlots();
+};
+
+window.deleteAngleSlot = function(idx, e) {
+  if (e) e.stopPropagation();
+  currentShoeImages[idx] = "";
+  renderAngleSlots();
+  showToast(`Slot ${idx + 1} (${ANGLE_PRESETS[idx].label}) photo removed.`);
+};
+
 function applySelectedMediaToShoe() {
   if (!selectedMediaUrl) {
     alert("Please click on a photo to select it first!");
     return;
   }
-  $("mShoeImg").value = selectedMediaUrl;
-  $("mShoeImgManual").value = selectedMediaUrl;
-  $("shoeImgPreview").src = selectedMediaUrl;
-  $("imgSrcDisplay").textContent = selectedMediaName || "Selected from library";
+  currentShoeImages[activeAngleSlot] = selectedMediaUrl;
+  renderAngleSlots();
 
   const curated = CURATED_MEDIA.find(m => m.url === selectedMediaUrl);
   if (curated) {
@@ -2023,7 +2198,7 @@ function applySelectedMediaToShoe() {
   }
 
   $("mediaLibraryModal").classList.remove("open");
-  showToast("Image selected from library!");
+  showToast(`Image set for Slot ${activeAngleSlot + 1} (${ANGLE_PRESETS[activeAngleSlot].label})!`);
 }
 
 // Add / Edit Shoe
@@ -2031,6 +2206,7 @@ function openShoeModal(p = null) {
   $("shoeUploadStatus").style.display = "none";
   $("manualUrlContainer").style.display = "none";
   $("shoeFileInput").value = "";
+  activeAngleSlot = 0;
 
   if (p) {
     $("shoeModalTitle").textContent = "Edit Shoe: " + p.name;
@@ -2046,10 +2222,12 @@ function openShoeModal(p = null) {
     const hex = col.hex || (p.theme && p.theme[0]) || "#b62dff";
     $("mShoeColorHex").value = hex;
     $("mShoeColorPicker").value = /^#[0-9a-f]{6}$/i.test(hex) ? hex : "#b62dff";
-    $("mShoeImg").value = col.image;
-    $("mShoeImgManual").value = col.image;
-    $("shoeImgPreview").src = col.image;
-    $("imgSrcDisplay").textContent = col.name + " (" + (col.image.startsWith("data:") ? "Custom Upload" : col.image.split("/").pop().split("?")[0]) + ")";
+
+    const shoeImgs = getShoeImages(p);
+    currentShoeImages = ["", "", "", "", "", ""];
+    for (let i = 0; i < 6; i++) {
+      currentShoeImages[i] = shoeImgs[i] || "";
+    }
   } else {
     $("shoeModalTitle").textContent = "Add New Shoe";
     $("mShoeId").value = "";
@@ -2062,12 +2240,11 @@ function openShoeModal(p = null) {
     $("mShoeColorName").value = "Voltage Purple";
     $("mShoeColorHex").value = "#b62dff";
     $("mShoeColorPicker").value = "#b62dff";
-    const defaultImg = "images/shoe-purple.png";
-    $("mShoeImg").value = defaultImg;
-    $("mShoeImgManual").value = defaultImg;
-    $("shoeImgPreview").src = defaultImg;
-    $("imgSrcDisplay").textContent = "Voltage Purple (Preset)";
+    const defaultImg = "images/shoe_chelsea.png";
+    currentShoeImages = [defaultImg, "", "", "", "", ""];
   }
+
+  renderAngleSlots();
   $("shoeModal").classList.add("open");
 }
 
@@ -2081,26 +2258,55 @@ $("mShoeColorHex").addEventListener("input", e => {
 
 // Wire up Library Modal Buttons
 $("openMediaLibraryBtn").addEventListener("click", () => {
-  selectedMediaUrl = $("mShoeImg").value || "";
+  selectedMediaUrl = currentShoeImages[activeAngleSlot] || "";
   renderMediaLibrary();
   $("mediaLibraryModal").classList.add("open");
 });
 
 $("confirmSelectMediaBtn").addEventListener("click", applySelectedMediaToShoe);
 
-// Upload from Device inside Shoe Modal
+// Upload from Device inside Shoe Modal (Supports selecting 1 to 6 photos at once!)
 $("shoeFileInput").addEventListener("change", async e => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
 
-  const res = await uploadImageFile(file, "shoeUploadStatus");
-  if (res.success) {
-    $("mShoeImg").value = res.url;
-    $("mShoeImgManual").value = res.url;
-    $("shoeImgPreview").src = res.url;
-    $("imgSrcDisplay").textContent = file.name + " (Uploaded)";
-    showToast("Photo uploaded and selected!");
+  const statusEl = $("shoeUploadStatus");
+  statusEl.style.display = "block";
+  statusEl.style.background = "rgba(255,255,255,.05)";
+  statusEl.style.color = "#ccc";
+  statusEl.style.border = "1px solid rgba(255,255,255,.1)";
+
+  let startSlot = activeAngleSlot;
+  if (files.length > 1) {
+    if (currentShoeImages[startSlot] && startSlot !== 0) {
+      // Keep starting at user selected slot
+    } else {
+      startSlot = 0;
+    }
   }
+
+  let uploadedCount = 0;
+  for (let i = 0; i < files.length && (startSlot + i) < 6; i++) {
+    const file = files[i];
+    const targetSlot = startSlot + i;
+    statusEl.innerHTML = `⏳ Uploading photo ${i + 1} of ${Math.min(files.length, 6 - startSlot)}: <strong>${file.name}</strong> (${ANGLE_PRESETS[targetSlot].label})...`;
+
+    const res = await uploadImageFile(file, "shoeUploadStatus");
+    if (res.success) {
+      currentShoeImages[targetSlot] = res.url;
+      uploadedCount++;
+      renderAngleSlots();
+    }
+  }
+
+  statusEl.style.background = "rgba(16,185,129,.12)";
+  statusEl.style.border = "1px solid rgba(16,185,129,.3)";
+  statusEl.style.color = "#a7f3d0";
+  statusEl.innerHTML = `✅ <strong>${uploadedCount} Photo(s) Uploaded!</strong> All angles saved and ready.`;
+
+  activeAngleSlot = startSlot;
+  renderAngleSlots();
+  showToast(`${uploadedCount} photo(s) added successfully!`);
 });
 
 // Upload from Device inside Media Library Modal
@@ -2128,11 +2334,8 @@ $("manualUrlToggleBtn").addEventListener("click", () => {
 
 $("mShoeImgManual").addEventListener("input", e => {
   const val = e.target.value.trim();
-  if (val) {
-    $("mShoeImg").value = val;
-    $("shoeImgPreview").src = val;
-    $("imgSrcDisplay").textContent = "Custom URL";
-  }
+  currentShoeImages[activeAngleSlot] = val;
+  renderAngleSlots();
 });
 
 $("openAddShoeBtn").addEventListener("click", () => openShoeModal());
@@ -2147,6 +2350,7 @@ $("delCurrentShoeBtn").addEventListener("click", () => {
   openAppConfirm("Delete Shoe?", "Are you sure you want to delete this shoe from the store?", async () => {
     storeData.products.splice(current, 1);
     current = 0;
+    adminActiveAngle = 0;
     await autoSaveAndPublish("Shoe removed & saved live!");
   });
 });
@@ -2166,6 +2370,7 @@ window.deleteShoeById = id => {
   openAppConfirm("Delete Shoe?", "Are you sure you want to delete this shoe?", async () => {
     storeData.products = storeData.products.filter(x => String(x.id) !== String(id));
     current = 0;
+    adminActiveAngle = 0;
     await autoSaveAndPublish("Shoe deleted & saved live!");
   });
 };
@@ -2207,17 +2412,10 @@ $("shoeForm").addEventListener("submit", async e => {
       return;
     }
 
-    // 2. Resolve image url safely
-    let imgVal = $("mShoeImg").value.trim();
-    if (!imgVal) imgVal = $("mShoeImgManual").value.trim();
-    if (!imgVal && $("shoeImgPreview") && $("shoeImgPreview").src) {
-      const src = $("shoeImgPreview").src;
-      if (!src.includes("photo-1542291026-7eec264c27ff")) {
-        imgVal = src;
-      }
-    }
-    if (!imgVal) {
-      imgVal = (storeData && storeData.products && storeData.products[0] && storeData.products[0].colors && storeData.products[0].colors[0] && storeData.products[0].colors[0].image) || "images/shoe_chelsea.png";
+    // 2. Resolve image URLs safely (1 to 6 images)
+    const finalImages = currentShoeImages.filter(url => url && typeof url === "string" && url.trim().length > 0);
+    if (finalImages.length === 0) {
+      finalImages.push("images/shoe_chelsea.png");
     }
 
     if (!storeData) storeData = {};
@@ -2243,11 +2441,13 @@ $("shoeForm").addEventListener("submit", async e => {
       type: "Streetwear",
       description: descVal,
       theme: shoeTheme,
+      images: finalImages,
       colors: [
         {
           name: colorNameVal,
           hex: hexVal,
-          image: imgVal
+          image: finalImages[0],
+          images: finalImages
         }
       ]
     };
@@ -2257,7 +2457,8 @@ $("shoeForm").addEventListener("submit", async e => {
       if (idx >= 0) {
         if (Array.isArray(existingShoe.colors) && existingShoe.colors.length > 1) {
           newShoe.colors = existingShoe.colors;
-          newShoe.colors[0].image = imgVal;
+          newShoe.colors[0].image = finalImages[0];
+          newShoe.colors[0].images = finalImages;
           newShoe.colors[0].name = colorNameVal;
           newShoe.colors[0].hex = hexVal;
         }
@@ -2268,6 +2469,7 @@ $("shoeForm").addEventListener("submit", async e => {
       current = storeData.products.length - 1;
     }
 
+    adminActiveAngle = 0;
     $("shoeModal").classList.remove("open");
     await autoSaveAndPublish(idVal ? "Shoe updated & saved live!" : "New Shoe added & saved live!");
   } catch (err) {
